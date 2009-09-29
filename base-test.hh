@@ -6,28 +6,75 @@
 
 #include <list>
 
+/**
+ * General kvtest interfaces.
+ */
 namespace kvtest {
 
+    /**
+     * An individual kv storage (or way to access a kv storage).
+     */
     class ThingUnderTest {
     public:
         ThingUnderTest() {};
+        /**
+         * Called after each test to reinitialize the test.
+         */
         virtual void reset() = 0;
+
+        /**
+         * Set a given key and value.
+         *
+         * @param key the key to set
+         * @param val the value to set
+         * @return true if the set succeeded.
+         */
         virtual bool set(std::string &key, std::string &val) = 0;
+
+        /**
+         * Get the value for the given key.
+         *
+         * @param key the key
+         * @return the value or NULL if there's no value under this key
+         */
         virtual std::string get(std::string &key) = 0;
     };
 
+    /**
+     * A test to run.
+     */
     class Test {
     public:
+        /**
+         * Run the test.
+         */
         virtual bool run(ThingUnderTest *tut) = 0;
+        /**
+         * Name of the test.
+         */
         virtual std::string name() = 0;
+        /**
+         * Tests print out their names.
+         */
         friend std::ostream& operator<<(std::ostream& s, Test &t) {
             return s << t.name();
         }
     };
+
+    /**
+     * A series of tests to run.
+     */
     class TestSuite {
     public:
+
+        /**
+         * Construct a test suite with the given thing under test.
+         */
         TestSuite(ThingUnderTest *t);
 
+        /**
+         * Run the test suite.
+         */
         bool run() {
             std::list<Test*>::iterator it;
             for (it=tests.begin() ; it != tests.end(); it++ ) {
@@ -38,6 +85,10 @@ namespace kvtest {
             }
         }
 
+        /**
+         * Add a test to the test suite.
+         * (note: this is typically not necessary to do manually)
+         */
         void addTest(Test *test) {
             tests.push_back(test);
         }
