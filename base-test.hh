@@ -37,6 +37,14 @@ namespace kvtest {
          * @return the value or NULL if there's no value under this key
          */
         virtual std::string get(std::string &key) = 0;
+
+        /**
+         * Delete a value for a key.
+         *
+         * @param key the key
+         * @return true if the value was there and is now deleted
+         */
+        virtual bool del(std::string &key) = 0;
     };
 
     /**
