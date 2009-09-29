@@ -14,6 +14,3 @@ clean:
 
 .cc.o: $< $(COMMON)
 	$(CXX) -c -o $@ $(CFLAGS) $<
-
-main.o: main.cc $(COMMON)
-tests.o: tests.cc $(COMMON)
