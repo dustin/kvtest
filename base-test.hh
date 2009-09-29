@@ -24,8 +24,10 @@ namespace testing {
     public:
         virtual bool run(ThingUnderTest *tut) = 0;
         virtual std::string name() = 0;
+        friend std::ostream& operator<<(std::ostream& s, Test &t) {
+            return s << t.name();
+        }
     };
-
     class TestSuite {
     public:
         TestSuite(ThingUnderTest *t);
@@ -34,7 +36,7 @@ namespace testing {
             std::list<Test*>::iterator it;
             for (it=tests.begin() ; it != tests.end(); it++ ) {
                 Test *t = *it;
-                std::cout << "Running test ``" << t->name() << "''" << std::endl;
+                std::cout << "Running test ``" << *t << "''" << std::endl;
                 assert(!tut->isOpen());
                 t->run(tut);
                 assert(!tut->isOpen());
