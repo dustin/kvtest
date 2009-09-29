@@ -5,9 +5,6 @@
 
 class SimpleThing : public kvtest::ThingUnderTest {
 public:
-    void reset() {
-    }
-
     bool set(std::string &key, std::string &val) {
         return true;
     }
@@ -15,9 +12,6 @@ public:
     std::string get(std::string &key) {
         return NULL;
     }
-
-private:
-    bool openState;
 };
 
 int main(int argc, char **args) {

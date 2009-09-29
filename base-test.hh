@@ -19,7 +19,7 @@ namespace kvtest {
         /**
          * Called after each test to reinitialize the test.
          */
-        virtual void reset() = 0;
+        virtual void reset() {};
 
         /**
          * Set a given key and value.
