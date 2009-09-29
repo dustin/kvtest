@@ -6,7 +6,7 @@
 
 #include <list>
 
-namespace testing {
+namespace kvtest {
 
     class ThingUnderTest {
     public:

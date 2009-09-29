@@ -3,7 +3,7 @@
 
 #include "base-test.hh"
 
-class SimpleThing : public testing::ThingUnderTest {
+class SimpleThing : public kvtest::ThingUnderTest {
 public:
     void reset() {
     }
@@ -23,7 +23,7 @@ private:
 int main(int argc, char **args) {
     SimpleThing *thing = new SimpleThing();
 
-    testing::TestSuite suite(thing);
+    kvtest::TestSuite suite(thing);
     suite.run();
 
     return 0;
