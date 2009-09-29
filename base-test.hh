@@ -11,11 +11,7 @@ namespace testing {
     class ThingUnderTest {
     public:
         ThingUnderTest() {};
-        virtual bool isOpen() = 0;
-
-        virtual bool open() = 0;
-        virtual bool close() = 0;
-
+        virtual void reset() = 0;
         virtual bool set(std::string &key, std::string &val) = 0;
         virtual std::string get(std::string &key) = 0;
     };
@@ -37,9 +33,8 @@ namespace testing {
             for (it=tests.begin() ; it != tests.end(); it++ ) {
                 Test *t = *it;
                 std::cout << "Running test ``" << *t << "''" << std::endl;
-                assert(!tut->isOpen());
                 t->run(tut);
-                assert(!tut->isOpen());
+                tut->reset();
             }
         }
 

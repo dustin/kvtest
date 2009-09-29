@@ -5,22 +5,7 @@
 
 class SimpleThing : public testing::ThingUnderTest {
 public:
-    SimpleThing() {
-        openState = false;
-    }
-
-    bool isOpen() {
-        return openState;
-    }
-
-    bool open() {
-        openState = true;
-        return true;
-    }
-
-    bool close() {
-        openState = false;
-        return true;
+    void reset() {
     }
 
     bool set(std::string &key, std::string &val) {
