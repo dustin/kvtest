@@ -1,5 +1,5 @@
-CFLAGS=-O3
-LDFLAGS=-lsqlite3
+CFLAGS=-O3 -g
+LDFLAGS=-g -lsqlite3
 
 COMMON=base-test.hh
 OBJS=main.o tests.o
@@ -11,6 +11,9 @@ sqlite3-test: $(OBJS) $(COMMON)
 
 clean:
 	-rm $(OBJS)
+
+.cc.o: $< $(COMMON)
+	$(CXX) -c -o $@ $(CFLAGS) $<
 
 main.o: main.cc $(COMMON)
 tests.o: tests.cc $(COMMON)
