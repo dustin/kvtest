@@ -16,7 +16,6 @@ namespace kvtest {
      */
     class ThingUnderTest {
     public:
-        ThingUnderTest() {};
         /**
          * Called after each test to reinitialize the test.
          */
