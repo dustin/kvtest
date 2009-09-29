@@ -1,3 +1,5 @@
 *~
 *.o
 sqlite3-test
+/docs/
+
