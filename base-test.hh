@@ -3,6 +3,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
+#include <stdexcept>
 
 #include <list>
 
@@ -36,7 +37,7 @@ namespace kvtest {
          * @param key the key
          * @return the value or NULL if there's no value under this key
          */
-        virtual std::string get(std::string &key) = 0;
+        virtual std::string* get(std::string &key) = 0;
 
         /**
          * Delete a value for a key.
@@ -48,9 +49,45 @@ namespace kvtest {
     };
 
     /**
+     * Assertion errors.
+     */
+    class AssertionError : public std::runtime_error {
+    public:
+        AssertionError(const char *s) : std::runtime_error(s) { };
+        AssertionError(const std::string s) : std::runtime_error(s) { };
+    };
+
+    /**
+     * Assertion mixins.
+     */
+    class Assertions {
+    public:
+        inline void assertTrue(bool v, std::string msg) {
+            if(!v) {
+                throw AssertionError(msg);
+            }
+        };
+
+        inline void assertFalse(bool v, std::string msg) {
+            assertTrue(!v, msg);
+        };
+
+        inline void assertEquals(std::string s1, std::string s2) {
+            assertTrue(s1 == s2, "failed string compare");
+        };
+
+        inline void assertNull(std::string *s) {
+            if (s != NULL) {
+                std::string msg = "expected null, got ``" + *s + "''";
+                throw AssertionError(msg);
+            }
+        };
+    };
+
+    /**
      * A test to run.
      */
-    class Test {
+    class Test : public Assertions {
     public:
         /**
          * Run the test.
@@ -84,12 +121,20 @@ namespace kvtest {
          */
         bool run() {
             std::list<Test*>::iterator it;
+            bool success = true;
             for (it=tests.begin() ; it != tests.end(); it++ ) {
                 Test *t = *it;
-                std::cout << "Running test ``" << *t << "''" << std::endl;
-                t->run(tut);
+                std::cout << "Running test ``" << *t << "'' ";
+                try {
+                    t->run(tut);
+                    std::cout << "PASS" << std::endl;
+                } catch(AssertionError &e) {
+                    success = false;
+                    std::cout << "FAIL: " << e.what() << std::endl;
+                }
                 tut->reset();
             }
+            return success;
         }
 
         /**

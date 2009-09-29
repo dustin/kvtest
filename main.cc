@@ -11,8 +11,10 @@ public:
         return true;
     }
 
-    std::string get(std::string &key) {
-        return storage.find(key)->second;
+    std::string* get(std::string &key) {
+        std::map<std::string, std::string>::iterator it = storage.find(key);
+        std::string *rv = it == storage.end() ? NULL : &(it->second);
+        return rv;
     }
 
     bool del(std::string &key) {
@@ -32,7 +34,5 @@ int main(int argc, char **args) {
     SimpleThing *thing = new SimpleThing();
 
     kvtest::TestSuite suite(thing);
-    suite.run();
-
-    return 0;
+    return suite.run() ? 0 : 1;
 }
