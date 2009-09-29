@@ -1,8 +1,8 @@
 CFLAGS=-O3 -g
 LDFLAGS=-g -lsqlite3
 
-COMMON=base-test.hh
-OBJS=main.o tests.o
+COMMON=base-test.hh tests.hh
+OBJS=main.o tests.o suite.o
 
 .PHONY: clean
 

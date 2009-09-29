@@ -4,7 +4,6 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdexcept>
-
 #include <list>
 
 /**
@@ -119,31 +118,13 @@ namespace kvtest {
         /**
          * Run the test suite.
          */
-        bool run() {
-            std::list<Test*>::iterator it;
-            bool success = true;
-            for (it=tests.begin() ; it != tests.end(); it++ ) {
-                Test *t = *it;
-                std::cout << "Running test ``" << *t << "'' ";
-                try {
-                    t->run(tut);
-                    std::cout << "PASS" << std::endl;
-                } catch(AssertionError &e) {
-                    success = false;
-                    std::cout << "FAIL: " << e.what() << std::endl;
-                }
-                tut->reset();
-            }
-            return success;
-        }
+        bool run();
 
         /**
          * Add a test to the test suite.
          * (note: this is typically not necessary to do manually)
          */
-        void addTest(Test *test) {
-            tests.push_back(test);
-        }
+        void addTest(Test *test);
 
     private:
         ThingUnderTest   *tut;
