@@ -21,3 +21,6 @@ clean:
 
 .cc.o: $< $(COMMON)
 	$(CXX) $(CFLAGS) -c -o $@ $<
+
+$(OBJS): $(COMMON)
+
