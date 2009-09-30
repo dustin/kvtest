@@ -1,5 +1,5 @@
 *~
 *.o
+example-test
 sqlite3-test
 /docs/
-

@@ -1,16 +1,21 @@
 CFLAGS=-O3 -g
-LDFLAGS=-g -lsqlite3
+LDFLAGS=-g
 
 COMMON=base-test.hh tests.hh
-OBJS=main.o tests.o suite.o
+OBJS=tests.o suite.o
+PROG_OBJS=example-test.o sqlite3-test.o
+ALL_OBJS=$(OBJS) $(PROG_OBJS)
 
 .PHONY: clean
 
-sqlite3-test: $(OBJS) $(COMMON)
-	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
+example-test: example-test.o $(OBJS) $(COMMON)
+	$(CXX) -o $@ example-test.o $(OBJS) $(LDFLAGS) -lsqlite3
+
+sqlite3-test: sqlite3-test.o $(OBJS) $(COMMON)
+	$(CXX) -o $@ sqlite3-test.o $(OBJS) $(LDFLAGS) -lsqlite3
 
 clean:
-	-rm $(OBJS)
+	-rm $(ALL_OBJS)
 
 .cc.o: $< $(COMMON)
-	$(CXX) -c -o $@ $(CFLAGS) $<
+	$(CXX) $(CFLAGS) -c -o $@ $<
