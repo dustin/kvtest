@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
 
 #include "base-test.hh"
 #include "tests.hh"
@@ -22,4 +23,18 @@ bool TestTest::run(ThingUnderTest *tut) {
     assertTrue(tut->del(testKey),  string("Failed to delete value."));
     assertFalse(tut->del(testKey), string("Doubly deleted value"));
     assertNull(tut->get(testKey));
+}
+
+bool WriteTest::run(ThingUnderTest *tut) {
+    for(int i = 0; i < 1000000; i++) {
+        std::stringstream kStream;
+        std::stringstream vStream;
+        kStream << "testKey" << i;
+        vStream << "testValue" << i;
+
+        std::string key = kStream.str();
+        std::string value = vStream.str();
+
+        assertTrue(tut->set(key, value), "Expected to set something");
+    }
 }
