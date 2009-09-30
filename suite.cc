@@ -21,13 +21,13 @@ bool TestSuite::run() {
         Test *t = *it;
         std::cout << "Running test ``" << *t << "'' ";
         try {
+            tut->reset();
             t->run(tut);
             std::cout << "PASS" << std::endl;
         } catch(AssertionError &e) {
             success = false;
             std::cout << "FAIL: " << e.what() << std::endl;
         }
-        tut->reset();
     }
     return success;
 }
