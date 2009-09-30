@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <signal.h>
 #include <iostream>
 #include <sstream>
 
@@ -7,6 +8,25 @@
 
 using namespace kvtest;
 using namespace std;
+
+bool alarmed = false;
+
+static void caught_alarm(int which)
+{
+    alarmed = true;
+}
+
+static void setup_alarm(int duration) {
+    struct sigaction sig_handler;
+
+    sig_handler.sa_handler = caught_alarm;
+    sig_handler.sa_flags = 0;
+
+    sigaction(SIGALRM, &sig_handler, NULL);
+
+    alarmed = false;
+    alarm(duration);
+}
 
 //
 // ----------------------------------------------------------------------
@@ -26,7 +46,9 @@ bool TestTest::run(ThingUnderTest *tut) {
 }
 
 bool WriteTest::run(ThingUnderTest *tut) {
-    for(int i = 0; i < 1000000; i++) {
+    int i = 0;
+    setup_alarm(5);
+    for(i = 0 ; !alarmed; i++) {
         std::stringstream kStream;
         std::stringstream vStream;
         kStream << "testKey" << i;
@@ -37,4 +59,9 @@ bool WriteTest::run(ThingUnderTest *tut) {
 
         assertTrue(tut->set(key, value), "Expected to set something");
     }
+
+    std::cout << "Ran " << i << " operations in 5s ("
+              << (i/5) << " ops/s)"
+              << std::endl;
+    return true;
 }
