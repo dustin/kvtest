@@ -17,6 +17,7 @@ bool TestTest::run(ThingUnderTest *tut) {
     string testKey("some key");
     string testValue("some value");
     assertTrue(tut->set(testKey, testValue), string("Failed to set value."));
+    assertNotNull(tut->get(testKey));
     assertEquals(*(tut->get(testKey)), testValue);
     assertTrue(tut->del(testKey),  string("Failed to delete value."));
     assertFalse(tut->del(testKey), string("Doubly deleted value"));

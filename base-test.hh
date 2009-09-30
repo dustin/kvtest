@@ -81,6 +81,10 @@ namespace kvtest {
                 throw AssertionError(msg);
             }
         };
+
+        inline void assertNotNull(std::string *s) {
+            assertTrue(s != NULL, "expected nonnull");
+        };
     };
 
     /**
