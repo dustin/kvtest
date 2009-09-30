@@ -8,6 +8,8 @@ ALL_OBJS=$(OBJS) $(PROG_OBJS)
 
 .PHONY: clean
 
+all: example-test sqlite3-test
+
 example-test: example-test.o $(OBJS) $(COMMON)
 	$(CXX) -o $@ example-test.o $(OBJS) $(LDFLAGS) -lsqlite3
 
