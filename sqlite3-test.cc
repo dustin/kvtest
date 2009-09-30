@@ -71,7 +71,6 @@ public:
     }
 
     ~Sqlite3() {
-        free_errmsg();
         close();
     }
 
@@ -131,23 +130,13 @@ public:
 
 protected:
     void execute(const char *query) {
-        free_errmsg();
-        if(sqlite3_exec(db, query, NULL, NULL, &errmsg) != SQLITE_OK) {
-            throw std::runtime_error(errmsg);
-        }
+        PreparedStatement st(db, query);
+        st.execute();
     }
 
 private:
     const char *filename;
-    char *errmsg;
     sqlite3 *db;
-
-    void free_errmsg() {
-        if(errmsg) {
-            sqlite3_free(errmsg);
-            errmsg = NULL;
-        }
-    }
 };
 
 int main(int argc, char **args) {
