@@ -87,20 +87,26 @@ public:
     void close() {
         if(db) {
             sqlite3_close(db);
+            db = NULL;
         }
     }
 
     void initTables() {
-        execute("drop table if exists kv");
-        execute("vacuum");
         execute("create table if not exists kv"
                 " (k varchar(250) primary key on conflict replace,"
                 "  v text)");
     }
 
+    void destroyTables() {
+        execute("drop table if exists kv");
+    }
+
     void reset() {
         close();
         open();
+        destroyTables();
+        initTables();
+        execute("vacuum");
     }
 
     bool set(std::string &key, std::string &val) {
