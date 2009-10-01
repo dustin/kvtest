@@ -126,11 +126,21 @@ public:
 
     CountingCallback() {
         x = 0;
+        if(pthread_mutex_init(&mutex, NULL) != 0) {
+            throw std::runtime_error("Failed to create mutex.");
+        }
+    }
+
+    ~CountingCallback() {
+        pthread_mutex_destroy(&mutex);
     }
 
     void callback(bool &val) {
+        LockHolder lh(&mutex);
         x++;
     }
+private:
+    pthread_mutex_t mutex;
 };
 
 bool WriteTest::run(ThingUnderTest *tut) {
