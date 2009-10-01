@@ -107,28 +107,6 @@ namespace kvtest {
             assertTrue(s != NULL, "expected nonnull");
         };
     };
-
-    /**
-     * A test to run.
-     */
-    class Test : public Assertions {
-    public:
-        /**
-         * Run the test.
-         */
-        virtual bool run(ThingUnderTest *tut) = 0;
-        /**
-         * Name of the test.
-         */
-        virtual std::string name() = 0;
-        /**
-         * Tests print out their names.
-         */
-        friend std::ostream& operator<<(std::ostream& s, Test &t) {
-            return s << t.name();
-        }
-    };
-
 }
 
 #endif /* BASE_TEST_H */
