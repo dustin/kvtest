@@ -124,12 +124,14 @@ public:
 
     void commit() {
         if(intransaction) {
+            intransaction = false;
             execute("commit");
         }
     }
 
     void rollback() {
         if(intransaction) {
+            intransaction = false;
             execute("rollback");
         }
     }
