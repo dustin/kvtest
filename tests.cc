@@ -46,7 +46,11 @@ public:
             throw std::runtime_error("Failed to initialize condition.");
         }
         fired = false;
-    };
+    }
+
+    RememberingCallback(RememberingCallback &copy) {
+        throw std::runtime_error("Copying!");
+    }
 
     ~RememberingCallback() {
         pthread_mutex_destroy(&mutex);
@@ -57,6 +61,7 @@ public:
         LockHolder lh(&mutex);
         val = value;
         fired = true;
+        std::cout << "Firing to " << &cond << std::endl;
         if(pthread_cond_broadcast(&cond) != 0) {
             throw std::runtime_error("Failed to broadcast change.");
         }
@@ -65,6 +70,7 @@ public:
     void waitForValue() {
         LockHolder lh(&mutex);
         if (!fired) {
+            std::cout << "Waiting for value from " << &cond << std::endl;
             if(pthread_cond_wait(&cond, &mutex) != 0) {
                 throw std::runtime_error("Failed to wait for condition.");
             }
@@ -114,9 +120,23 @@ bool TestTest::run(ThingUnderTest *tut) {
     assertFalse(getCb2.val.success, "Expected failure getting final value.");
 }
 
+class CountingCallback : public kvtest::Callback<bool> {
+public:
+    int x;
+
+    CountingCallback() {
+        x = 0;
+    }
+
+    void callback(bool &val) {
+        x++;
+    }
+};
+
 bool WriteTest::run(ThingUnderTest *tut) {
     int i = 0;
     setup_alarm(5);
+    CountingCallback cb;
     for(i = 0 ; !alarmed; i++) {
         std::stringstream kStream;
         std::stringstream vStream;
@@ -126,14 +146,10 @@ bool WriteTest::run(ThingUnderTest *tut) {
         std::string key = kStream.str();
         std::string value = vStream.str();
 
-        RememberingCallback<bool> cb;
-        assertFalse(cb.fired, "Expected callback to not have fired.");
         tut->set(key, value, cb);
-        assertTrue(cb.fired, "Expected callback to have fired.");
-        assertTrue(cb.val, "Expected to set something");
     }
 
-    std::cout << "Ran " << i << " operations in 5s ("
+    std::cout << "Ran " << i << "(" << cb.x << ") operations in 5s ("
               << (i/5) << " ops/s)"
               << std::endl;
     return true;
