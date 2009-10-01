@@ -8,6 +8,7 @@
 #include <sqlite3.h>
 
 #include "base-test.hh"
+#include "suite.hh"
 
 #define MAX_STEPS 10000
 

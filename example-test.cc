@@ -3,6 +3,7 @@
 #include <map>
 
 #include "base-test.hh"
+#include "suite.hh"
 
 class SimpleThing : public kvtest::ThingUnderTest {
 public:
