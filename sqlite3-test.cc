@@ -142,7 +142,6 @@ public:
         st.bind(1, key.c_str());
         st.bind(2, val.c_str());
         bool rv = st.execute() == 1;
-        std::cout << "Calling callback on " << &cb << std::endl;
         cb.callback(rv);
     }
 
