@@ -7,23 +7,12 @@
 #include <list>
 
 #include "locks.hh"
+#include "callbacks.hh"
 
 /**
  * General kvtest interfaces.
  */
 namespace kvtest {
-
-    /**
-     * Interface for callbacks from storage APIs.
-     */
-    template <typename RV>
-    class Callback {
-    public:
-        /**
-         * Method called on callback.
-         */
-        virtual void callback(RV &value) {};
-    };
 
     /**
      * Value for callback for GET operations.
