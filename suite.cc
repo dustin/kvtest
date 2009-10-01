@@ -5,6 +5,7 @@
 
 #include "base-test.hh"
 #include "tests.hh"
+#include "suite.hh"
 
 using namespace kvtest;
 

@@ -1,7 +1,7 @@
 CFLAGS=-g
 LDFLAGS=-g
 
-COMMON=base-test.hh tests.hh
+COMMON=base-test.hh suite.hh tests.hh
 OBJS=tests.o suite.o
 PROG_OBJS=example-test.o sqlite3-test.o
 ALL_OBJS=$(OBJS) $(PROG_OBJS)
