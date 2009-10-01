@@ -1,4 +1,4 @@
-CFLAGS=-O3 -g
+CFLAGS=-g
 LDFLAGS=-g
 
 COMMON=base-test.hh tests.hh
