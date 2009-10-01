@@ -7,18 +7,21 @@
 class SimpleThing : public kvtest::ThingUnderTest {
 public:
     void set(std::string &key, std::string &val,
-             kvtest::Callback<bool> cb) {
+             kvtest::Callback<bool> &cb) {
         storage[key] = val;
-        cb.callback(true);
-    }
-
-    void get(std::string &key, kvtest::Callback<std::string*> cb) {
-        std::map<std::string, std::string>::iterator it = storage.find(key);
-        std::string *rv = it == storage.end() ? NULL : &(it->second);
+        bool rv = true;
         cb.callback(rv);
     }
 
-    void del(std::string &key, kvtest::Callback<bool> cb) {
+    void get(std::string &key, kvtest::Callback<kvtest::GetValue> &cb) {
+        std::map<std::string, std::string>::iterator it = storage.find(key);
+        bool success = it != storage.end();
+        kvtest::GetValue rv(success ? it->second : std::string(":("),
+                            success);
+        cb.callback(rv);
+    }
+
+    void del(std::string &key, kvtest::Callback<bool> &cb) {
         bool rv = true;
         if(storage.find(key) == storage.end()) {
             rv = false;

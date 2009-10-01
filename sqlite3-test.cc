@@ -111,29 +111,34 @@ public:
     }
 
     void set(std::string &key, std::string &val,
-             kvtest::Callback<bool> cb) {
+             kvtest::Callback<bool> &cb) {
         PreparedStatement st(db, "insert into kv(k,v) values(?, ?)");
         st.bind(1, key.c_str());
         st.bind(2, val.c_str());
-        cb.callback(st.execute() == 1);
+        bool rv = st.execute() == 1;
+        cb.callback(rv);
     }
 
-    void get(std::string &key, kvtest::Callback<std::string*> cb) {
+    void get(std::string &key, kvtest::Callback<kvtest::GetValue> &cb) {
         PreparedStatement st(db, "select v from kv where k = ?");
         st.bind(1, key.c_str());
 
-        if(!st.fetch()) {
-            cb.callback(NULL);
+        if(st.fetch()) {
+            std::string str(st.column(0));
+            kvtest::GetValue rv(str, true);
+            cb.callback(rv);
         } else {
-            std::string val(st.column(0));
-            cb.callback(&val);
+            std::string str(":(");
+            kvtest::GetValue rv(str, false);
+            cb.callback(rv);
         }
     }
 
-    void del(std::string &key, kvtest::Callback<bool> cb) {
+    void del(std::string &key, kvtest::Callback<bool> &cb) {
         PreparedStatement st(db, "delete from kv where k = ?");
         st.bind(1, key.c_str());
-        cb.callback(st.execute() == 1);
+        bool rv = st.execute() == 1;
+        cb.callback(rv);
     }
 
 protected:

@@ -20,7 +20,24 @@ namespace kvtest {
         /**
          * Method called on callback.
          */
-        virtual void callback(RV value) {};
+        virtual void callback(RV &value) = 0;
+    };
+
+    /**
+     * Value for callback for GET operations.
+     */
+    class GetValue {
+    public:
+        GetValue() {
+        };
+
+        GetValue(std::string v, bool s) {
+            value = v;
+            success = s;
+        };
+
+        std::string value;
+        bool success;
     };
 
     /**
@@ -41,7 +58,7 @@ namespace kvtest {
          * @return true if the set succeeded.
          */
         virtual void set(std::string &key, std::string &val,
-                         Callback<bool> cb) = 0;
+                         Callback<bool> &cb) = 0;
 
         /**
          * Get the value for the given key.
@@ -49,7 +66,7 @@ namespace kvtest {
          * @param key the key
          * @return the value or NULL if there's no value under this key
          */
-        virtual void get(std::string &key, Callback<std::string*> cb) = 0;
+        virtual void get(std::string &key, Callback<GetValue> &cb) = 0;
 
         /**
          * Delete a value for a key.
@@ -57,7 +74,7 @@ namespace kvtest {
          * @param key the key
          * @return true if the value was there and is now deleted
          */
-        virtual void del(std::string &key, Callback<bool>) = 0;
+        virtual void del(std::string &key, Callback<bool> &cb) = 0;
     };
 
     /**
@@ -85,7 +102,7 @@ namespace kvtest {
         };
 
         inline void assertEquals(std::string s1, std::string s2) {
-            assertTrue(s1 == s2, "failed string compare");
+            assertTrue(s1.compare(s2) == 0, "failed string compare");
         };
 
         inline void assertNull(std::string *s) {
