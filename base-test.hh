@@ -19,13 +19,12 @@ namespace kvtest {
      */
     class GetValue {
     public:
-        GetValue() {
-        };
+        GetValue() { }
 
         GetValue(std::string v, bool s) {
             value = v;
             success = s;
-        };
+        }
 
         std::string value;
         bool success;
@@ -39,7 +38,7 @@ namespace kvtest {
         /**
          * Called after each test to reinitialize the test.
          */
-        virtual void reset() {};
+        virtual void reset() {}
 
         /**
          * Set a given key and value.
@@ -73,8 +72,8 @@ namespace kvtest {
      */
     class AssertionError : public std::runtime_error {
     public:
-        AssertionError(const char *s) : std::runtime_error(s) { };
-        AssertionError(const std::string s) : std::runtime_error(s) { };
+        AssertionError(const char *s) : std::runtime_error(s) { }
+        AssertionError(const std::string s) : std::runtime_error(s) { }
     };
 
     /**
@@ -86,26 +85,26 @@ namespace kvtest {
             if(!v) {
                 throw AssertionError(msg);
             }
-        };
+        }
 
         inline void assertFalse(bool v, std::string msg) {
             assertTrue(!v, msg);
-        };
+        }
 
         inline void assertEquals(std::string s1, std::string s2) {
             assertTrue(s1.compare(s2) == 0, "failed string compare");
-        };
+        }
 
         inline void assertNull(std::string *s) {
             if (s != NULL) {
                 std::string msg = "expected null, got ``" + *s + "''";
                 throw AssertionError(msg);
             }
-        };
+        }
 
         inline void assertNotNull(std::string *s) {
             assertTrue(s != NULL, "expected nonnull");
-        };
+        }
     };
 }
 

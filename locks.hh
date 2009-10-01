@@ -18,7 +18,7 @@ namespace kvtest {
             if(pthread_mutex_lock(mutex) != 0) {
                 throw std::runtime_error("Failed to acquire lock.");
             }
-        };
+        }
 
         /**
          * Release the lock.
