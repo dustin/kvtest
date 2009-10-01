@@ -110,29 +110,30 @@ public:
         execute("vacuum");
     }
 
-    bool set(std::string &key, std::string &val) {
+    void set(std::string &key, std::string &val,
+             kvtest::Callback<bool> cb) {
         PreparedStatement st(db, "insert into kv(k,v) values(?, ?)");
         st.bind(1, key.c_str());
         st.bind(2, val.c_str());
-        st.execute();
-        return true;
+        cb.callback(st.execute() == 1);
     }
 
-    std::string* get(std::string &key) {
+    void get(std::string &key, kvtest::Callback<std::string*> cb) {
         PreparedStatement st(db, "select v from kv where k = ?");
         st.bind(1, key.c_str());
 
         if(!st.fetch()) {
-            return NULL;
+            cb.callback(NULL);
+        } else {
+            std::string val(st.column(0));
+            cb.callback(&val);
         }
-
-        return new std::string(st.column(0));
     }
 
-    bool del(std::string &key) {
+    void del(std::string &key, kvtest::Callback<bool> cb) {
         PreparedStatement st(db, "delete from kv where k = ?");
         st.bind(1, key.c_str());
-        return st.execute() == 1;
+        cb.callback(st.execute() == 1);
     }
 
 protected:

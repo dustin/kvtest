@@ -6,24 +6,25 @@
 
 class SimpleThing : public kvtest::ThingUnderTest {
 public:
-    bool set(std::string &key, std::string &val) {
+    void set(std::string &key, std::string &val,
+             kvtest::Callback<bool> cb) {
         storage[key] = val;
-        return true;
+        cb.callback(true);
     }
 
-    std::string* get(std::string &key) {
+    void get(std::string &key, kvtest::Callback<std::string*> cb) {
         std::map<std::string, std::string>::iterator it = storage.find(key);
         std::string *rv = it == storage.end() ? NULL : &(it->second);
-        return rv;
+        cb.callback(rv);
     }
 
-    bool del(std::string &key) {
+    void del(std::string &key, kvtest::Callback<bool> cb) {
         bool rv = true;
         if(storage.find(key) == storage.end()) {
             rv = false;
         }
         storage.erase(key);
-        return rv;
+        cb.callback(rv);
     }
 
 private:

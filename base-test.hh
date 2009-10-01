@@ -12,6 +12,18 @@
 namespace kvtest {
 
     /**
+     * Interface for callbacks from storage APIs.
+     */
+    template <typename RV>
+    class Callback {
+    public:
+        /**
+         * Method called on callback.
+         */
+        virtual void callback(RV value) {};
+    };
+
+    /**
      * An individual kv storage (or way to access a kv storage).
      */
     class ThingUnderTest {
@@ -28,7 +40,8 @@ namespace kvtest {
          * @param val the value to set
          * @return true if the set succeeded.
          */
-        virtual bool set(std::string &key, std::string &val) = 0;
+        virtual void set(std::string &key, std::string &val,
+                         Callback<bool> cb) = 0;
 
         /**
          * Get the value for the given key.
@@ -36,7 +49,7 @@ namespace kvtest {
          * @param key the key
          * @return the value or NULL if there's no value under this key
          */
-        virtual std::string* get(std::string &key) = 0;
+        virtual void get(std::string &key, Callback<std::string*> cb) = 0;
 
         /**
          * Delete a value for a key.
@@ -44,7 +57,7 @@ namespace kvtest {
          * @param key the key
          * @return true if the value was there and is now deleted
          */
-        virtual bool del(std::string &key) = 0;
+        virtual void del(std::string &key, Callback<bool>) = 0;
     };
 
     /**
