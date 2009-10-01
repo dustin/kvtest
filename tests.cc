@@ -97,6 +97,8 @@ bool WriteTest::run(ThingUnderTest *tut) {
     int i = 0;
     setup_alarm(5);
     CountingCallback cb;
+    time_t start = time(NULL);
+
     for(i = 0 ; !alarmed; i++) {
         std::stringstream kStream;
         std::stringstream vStream;
@@ -109,8 +111,20 @@ bool WriteTest::run(ThingUnderTest *tut) {
         tut->set(key, value, cb);
     }
 
-    std::cout << "Ran " << i << "(" << cb.x << ") operations in 5s ("
-              << (i/5) << " ops/s)"
+    // Last one to wait for a commit.
+    RememberingCallback<bool> cbLast;
+    std::string aKey("nonexistent");
+    tut->del(aKey, cbLast);
+    cbLast.waitForValue();
+    assertFalse(cbLast.val, string("Deleted something that wasn't there?"));
+    time_t end = time(NULL);
+
+    i++; // Did another transaction
+
+    int delta = end - start;
+    std::cout << "Ran " << i << "(" << cb.x << ") operations in "
+              << delta << "s ("
+              << (i/delta) << " ops/s)"
               << std::endl;
     return true;
 }
