@@ -12,7 +12,9 @@ namespace kvtest {
         /**
          * Method called on callback.
          */
-        virtual void callback(RV &value) {}
+        virtual void callback(RV &value) {
+            throw std::runtime_error("Nobody should call this.");
+        }
     };
 
     template <typename T>
