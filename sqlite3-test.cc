@@ -180,8 +180,27 @@ private:
 
 class DBOperation {
 public:
-    virtual bool execute(Sqlite3 *db) {};
+    virtual bool execute(Sqlite3 *db) {}
 };
+
+class ResetOperation : public DBOperation {
+public:
+
+    ResetOperation(kvtest::Callback<bool> *c) {
+        cb = c;
+    }
+
+    bool execute(Sqlite3 *db) {
+        db->rollback();
+        db->reset();
+        bool rv = true;
+        cb->callback(rv);
+    }
+
+private:
+    kvtest::Callback<bool> *cb;
+};
+
 
 class SetOperation : public DBOperation {
 public:
@@ -337,6 +356,13 @@ public:
         delete db;
         delete iq;
         delete executor;
+    }
+
+    void reset() {
+        std::queue<DBOperation*> opq;
+        kvtest::RememberingCallback<bool> cb;
+        iq->addOperation(new ResetOperation(&cb));
+        cb.waitForValue();
     }
 
     void set(std::string &key, std::string &val,
