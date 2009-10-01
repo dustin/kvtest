@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdexcept>
+#include <iostream>
 #include <list>
 
 #include "locks.hh"
@@ -24,6 +25,11 @@ namespace kvtest {
         GetValue(std::string v, bool s) {
             value = v;
             success = s;
+        }
+
+        friend std::ostream& operator<<(std::ostream &o, GetValue &gv) {
+            return o << "{GetValue success=" << gv.success
+                     << ", value=\"" << gv.value << "\"}";
         }
 
         std::string value;
