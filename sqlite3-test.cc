@@ -110,6 +110,18 @@ public:
         execute("vacuum");
     }
 
+    void begin() {
+        execute("begin");
+    }
+
+    void commit() {
+        execute("commit");
+    }
+
+    void rollback() {
+        execute("rollback");
+    }
+
     void set(std::string &key, std::string &val,
              kvtest::Callback<bool> &cb) {
         PreparedStatement st(db, "insert into kv(k,v) values(?, ?)");
