@@ -84,12 +84,14 @@ public:
                 throw std::runtime_error("Error initializing sqlite3");
             }
 
+            intransaction = false;
             initTables();
         }
     }
 
     void close() {
         if(db) {
+            intransaction = false;
             sqlite3_close(db);
             db = NULL;
         }
@@ -114,15 +116,22 @@ public:
     }
 
     void begin() {
-        execute("begin");
+        if(!intransaction) {
+            execute("begin");
+            intransaction = true;
+        }
     }
 
     void commit() {
-        execute("commit");
+        if(intransaction) {
+            execute("commit");
+        }
     }
 
     void rollback() {
-        execute("rollback");
+        if(intransaction) {
+            execute("rollback");
+        }
     }
 
     void set(std::string &key, std::string &val,
@@ -165,7 +174,8 @@ protected:
 
 private:
     const char *filename;
-    sqlite3 *db;
+    sqlite3    *db;
+    bool        intransaction;
 };
 
 class DBOperation {
