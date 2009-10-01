@@ -49,23 +49,24 @@ bool TestTest::run(ThingUnderTest *tut) {
     RememberingCallback<GetValue> getCb;
     assertFalse(getCb.fired, "Expected callback to not have fired");
     tut->get(testKey, getCb);
-    cb.waitForValue();
+    getCb.waitForValue();
+    std::cout << "getValue value:  " << getCb.val.value << std::endl;
     assertTrue(getCb.val.success, "Expected success getting initial value");
     assertEquals(getCb.val.value, testValue);
 
     RememberingCallback<bool> delCb1;
     tut->del(testKey, delCb1);
-    cb.waitForValue();
+    delCb1.waitForValue();
     assertTrue(delCb1.val,  string("Failed to delete value."));
 
     RememberingCallback<bool> delCb2;
     tut->del(testKey, delCb2);
-    cb.waitForValue();
+    delCb2.waitForValue();
     assertFalse(delCb2.val, string("Doubly deleted value"));
 
     RememberingCallback<GetValue> getCb2;
     tut->get(testKey, getCb2);
-    cb.waitForValue();
+    getCb2.waitForValue();
     assertFalse(getCb2.val.success, "Expected failure getting final value.");
 }
 
