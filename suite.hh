@@ -2,6 +2,7 @@
 #define SUITE_H 1
 
 #include "base-test.hh"
+#include "tests.hh"
 
 namespace kvtest {
 
