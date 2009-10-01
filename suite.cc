@@ -13,7 +13,7 @@ TestSuite::TestSuite(ThingUnderTest *t) {
     tut = t;
 
     addTest(new TestTest());
-    // addTest(new WriteTest());
+    addTest(new WriteTest());
 }
 
 bool TestSuite::run() {
