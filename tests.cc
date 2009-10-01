@@ -35,23 +35,6 @@ static void setup_alarm(int duration) {
 // ----------------------------------------------------------------------
 //
 
-class LockHolder {
-public:
-    LockHolder(pthread_mutex_t *m) {
-        mutex = m;
-        if(pthread_mutex_lock(mutex) != 0) {
-            throw std::runtime_error("Failed to acquire lock.");
-        }
-    };
-
-    ~LockHolder() {
-        pthread_mutex_unlock(mutex);
-    }
-
-private:
-    pthread_mutex_t *mutex;
-};
-
 template <typename T>
 class RememberingCallback : public Callback<T> {
 public:
