@@ -24,4 +24,4 @@ clean:
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
 $(OBJS): $(COMMON)
-
+$(PROG_OBJS): $(COMMON)
