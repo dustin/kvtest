@@ -12,8 +12,7 @@
 using namespace kvtest;
 
 int main(int argc, char **args) {
-    Sqlite3 *thing = new Sqlite3("/tmp/test.db");
-
-    TestSuite suite(thing);
+    Sqlite3 thing("/tmp/test.db");
+    TestSuite suite(&thing);
     return suite.run() ? 0 : 1;
 }

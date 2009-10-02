@@ -36,8 +36,7 @@ private:
 };
 
 int main(int argc, char **args) {
-    SimpleThing *thing = new SimpleThing();
-
-    kvtest::TestSuite suite(thing);
+    SimpleThing thing;
+    kvtest::TestSuite suite(&thing);
     return suite.run() ? 0 : 1;
 }

@@ -13,8 +13,8 @@ using namespace std;
 using namespace kvtest;
 
 int main(int argc, char **args) {
-    BDBStore *thing = new BDBStore("/tmp/test.bdb");
+    BDBStore thing("/tmp/test.bdb");
 
-    TestSuite suite(thing);
+    TestSuite suite(&thing);
     return suite.run() ? 0 : 1;
 }

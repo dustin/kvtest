@@ -251,6 +251,7 @@ namespace kvtest {
 
                     op->execute(tut);
                     count++;
+                    delete op;
                 }
 
                 tut->commit();

@@ -14,13 +14,9 @@ using namespace std;
 using namespace kvtest;
 
 int main(int argc, char **args) {
-    BDBStore *bdb = new BDBStore("/tmp/test.bdb", false);
-    QueuedKVStore *thing = new QueuedKVStore(bdb);
+    BDBStore bdb("/tmp/test.bdb", false);
+    QueuedKVStore thing(&bdb);
 
-    TestSuite suite(thing);
-    int rv = suite.run() ? 0 : 1;
-    delete thing;
-    delete bdb;
-
-    return rv;
+    TestSuite suite(&thing);
+    return suite.run() ? 0 : 1;
 }

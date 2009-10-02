@@ -12,13 +12,9 @@
 using namespace kvtest;
 
 int main(int argc, char **args) {
-    Sqlite3 *sq = new Sqlite3("/tmp/test.db");
-    QueuedKVStore *thing = new QueuedKVStore(sq);
+    Sqlite3 sq("/tmp/test.db");
+    QueuedKVStore thing(&sq);
 
-    TestSuite suite(thing);
-    int rv = suite.run() ? 0 : 1;
-    delete thing;
-    delete sq;
-
-    return rv;
+    TestSuite suite(&thing);
+    return suite.run() ? 0 : 1;
 }
