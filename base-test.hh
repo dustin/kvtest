@@ -11,7 +11,13 @@
 #include "locks.hh"
 #include "callbacks.hh"
 
-/**
+/*! \mainpage kvtest
+ *
+ * \section intro_sec Introduction
+ *
+ * kvtest is a tool for benchmarking simple low-level data stores and
+ * experimenting with strategies to get better results from them.
+ *
  * \example example-test.cc
  * \example sqlite3-test.cc
  * \example sqlite3-async-test.cc
