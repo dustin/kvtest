@@ -39,15 +39,15 @@ Collaboration diagram for kvtest::AsyncExecutor:</div>
 <div class="dynsection">
 <div class="center"><img src="classkvtest_1_1_async_executor__coll__graph.png" border="0" usemap="#kvtest_1_1_async_executor_coll__map" alt="Collaboration graph"/></div>
 <map name="kvtest_1_1_async_executor_coll__map" id="kvtest_1_1_async_executor_coll__map">
-<area shape="rect" id="node2" href="classkvtest_1_1_async_queue.html" title="Async operations queue." alt="" coords="5,6,147,34"/><area shape="rect" id="node4" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="171,6,333,34"/></map>
+<area shape="rect" id="node2" href="classkvtest_1_1_async_queue.html" title="Async operations queue." alt="" coords="5,6,147,34"/><area shape="rect" id="node4" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="171,6,285,34"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classkvtest_1_1_async_executor-members.html">List of all members.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51665d125cfbe15814d66f80f82b00c0"></a><!-- doxytag: member="kvtest::AsyncExecutor::AsyncExecutor" ref="a51665d125cfbe15814d66f80f82b00c0" args="(ThingUnderTest *d, AsyncQueue *q)" -->
-&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkvtest_1_1_async_executor.html#a51665d125cfbe15814d66f80f82b00c0">AsyncExecutor</a> (<a class="el" href="classkvtest_1_1_thing_under_test.html">ThingUnderTest</a> *d, <a class="el" href="classkvtest_1_1_async_queue.html">AsyncQueue</a> *q)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Construct an <a class="el" href="classkvtest_1_1_async_executor.html" title="Asynchronous executor.">AsyncExecutor</a> over the given underlying <a class="el" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> with the given input queue. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a60ab036fa265854f12bebef9f2973d"></a><!-- doxytag: member="kvtest::AsyncExecutor::AsyncExecutor" ref="a9a60ab036fa265854f12bebef9f2973d" args="(KVStore *d, AsyncQueue *q)" -->
+&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkvtest_1_1_async_executor.html#a9a60ab036fa265854f12bebef9f2973d">AsyncExecutor</a> (<a class="el" href="classkvtest_1_1_k_v_store.html">KVStore</a> *d, <a class="el" href="classkvtest_1_1_async_queue.html">AsyncQueue</a> *q)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Construct an <a class="el" href="classkvtest_1_1_async_executor.html" title="Asynchronous executor.">AsyncExecutor</a> over the given underlying <a class="el" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> with the given input queue. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79beaa9c3153ff628dbc79a81b5015c1"></a><!-- doxytag: member="kvtest::AsyncExecutor::run" ref="a79beaa9c3153ff628dbc79a81b5015c1" args="()" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkvtest_1_1_async_executor.html#a79beaa9c3153ff628dbc79a81b5015c1">run</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Run forever. <br/></td></tr>
@@ -58,7 +58,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <li><a class="el" href="async_8hh_source.html">async.hh</a></li>
 </ul>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:10:54 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:35:31 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

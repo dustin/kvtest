@@ -1,5 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="5,30,168,58"/>
-<area shape="rect" id="node3" href="$classkvtest_1_1_queued_thing_under_test.html" title="Asynchronous wrapper for a synchronous ThingUnderTest." alt="" coords="217,5,425,33"/>
-<area shape="rect" id="node5" href="$classkvtest_1_1_sqlite3.html" title="The sqlite driver." alt="" coords="268,55,375,83"/>
+<area shape="rect" id="node1" href="$classkvtest_1_1_test_suite.html" title="A series of tests to run." alt="" coords="5,5,128,33"/>
 </map>

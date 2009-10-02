@@ -1,3 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classkvtest_1_1_lock_holder.html" title="pthread mutex holder (maintains lock while active)." alt="" coords="7,5,137,33"/>
+<area shape="rect" id="node1" href="$classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="5,30,120,58"/>
+<area shape="rect" id="node3" href="$classkvtest_1_1_queued_k_v_store.html" title="Asynchronous wrapper for a synchronous KVStore." alt="" coords="168,5,331,33"/>
+<area shape="rect" id="node5" href="$classkvtest_1_1_sqlite3.html" title="The sqlite driver." alt="" coords="196,55,303,83"/>
 </map>

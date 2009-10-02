@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="5,6,120,34"/>
+<area shape="rect" id="node7" href="$classkvtest_1_1_async_executor.html" title="Asynchronous executor." alt="" coords="103,99,257,127"/>
+<area shape="rect" id="node4" href="$classkvtest_1_1_async_queue.html" title="Async operations queue." alt="" coords="169,6,311,34"/>
+</map>

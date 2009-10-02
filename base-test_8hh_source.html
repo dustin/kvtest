@@ -56,11 +56,11 @@
 <a name="l00055"></a><a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44">00055</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44" title="True if a value was successfully retrieved.">success</a>;
 <a name="l00056"></a>00056     };
 <a name="l00057"></a>00057 
-<a name="l00061"></a><a class="code" href="classkvtest_1_1_thing_under_test.html">00061</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> {
+<a name="l00061"></a><a class="code" href="classkvtest_1_1_k_v_store.html">00061</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> {
 <a name="l00062"></a>00062     <span class="keyword">public</span>:
-<a name="l00066"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9">00066</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9" title="Called after each test to reinitialize the test.">reset</a>() {}
+<a name="l00066"></a><a class="code" href="classkvtest_1_1_k_v_store.html#a942422558efefe4add4dca4e342dab6b">00066</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_k_v_store.html#a942422558efefe4add4dca4e342dab6b" title="Called after each test to reinitialize the test.">reset</a>() {}
 <a name="l00067"></a>00067 
-<a name="l00073"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3">00073</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3" title="Method that should not return until the driver has done its job.">noop</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;c) {
+<a name="l00073"></a><a class="code" href="classkvtest_1_1_k_v_store.html#a5e988fcacb4a490f44a5f4bdf2a9adbb">00073</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_k_v_store.html#a5e988fcacb4a490f44a5f4bdf2a9adbb" title="Method that should not return until the driver has done its job.">noop</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;c) {
 <a name="l00074"></a>00074             <span class="keywordtype">bool</span> t = <span class="keyword">true</span>;
 <a name="l00075"></a>00075             c.<a class="code" href="classkvtest_1_1_callback.html#a07c80f0c039c79725f7f701010d3455b" title="Method called on callback.">callback</a>(t);
 <a name="l00076"></a>00076         }
@@ -70,13 +70,13 @@
 <a name="l00087"></a>00087 
 <a name="l00094"></a>00094         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <span class="keyword">get</span>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;GetValue&gt;</a> &amp;cb) = 0;
 <a name="l00095"></a>00095 
-<a name="l00103"></a>00103         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#a90b1b2a9a45cd232900a00c7d343258c" title="Delete a value for a key.">del</a>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) = 0;
+<a name="l00103"></a>00103         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_k_v_store.html#a22e4b9be7d2db520dc76c2607b1a86e9" title="Delete a value for a key.">del</a>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) = 0;
 <a name="l00104"></a>00104 
-<a name="l00109"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#a3d64e5e926c43a1ff1ac73ee003981b1">00109</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#a3d64e5e926c43a1ff1ac73ee003981b1" title="For things that support transactions, this signals the beginning of one.">begin</a>() {}
+<a name="l00109"></a><a class="code" href="classkvtest_1_1_k_v_store.html#ad8c873c44e0a8fdc0ce66683e56e7f59">00109</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_k_v_store.html#ad8c873c44e0a8fdc0ce66683e56e7f59" title="For things that support transactions, this signals the beginning of one.">begin</a>() {}
 <a name="l00110"></a>00110 
-<a name="l00115"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#a53bd8f4a4f65f459a7f49adf9d88f0f3">00115</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#a53bd8f4a4f65f459a7f49adf9d88f0f3" title="For things that support transactions, this signals the successful completion of one...">commit</a>() {}
+<a name="l00115"></a><a class="code" href="classkvtest_1_1_k_v_store.html#aa2e73b810577263d64265b136bc2e0ec">00115</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_k_v_store.html#aa2e73b810577263d64265b136bc2e0ec" title="For things that support transactions, this signals the successful completion of one...">commit</a>() {}
 <a name="l00116"></a>00116 
-<a name="l00121"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#a038e6af55b32c6b02704da89c736c1ec">00121</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#a038e6af55b32c6b02704da89c736c1ec" title="For things that support transactions, this signals the unsuccessful completion of...">rollback</a>() {}
+<a name="l00121"></a><a class="code" href="classkvtest_1_1_k_v_store.html#add24275ac54e507f706c0ac4e03eb123">00121</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_k_v_store.html#add24275ac54e507f706c0ac4e03eb123" title="For things that support transactions, this signals the unsuccessful completion of...">rollback</a>() {}
 <a name="l00122"></a>00122 
 <a name="l00123"></a>00123     };
 <a name="l00124"></a>00124 
@@ -123,7 +123,7 @@
 <a name="l00171"></a>00171 
 <a name="l00172"></a>00172 <span class="preprocessor">#endif </span><span class="comment">/* BASE_TEST_H */</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:10:51 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:35:29 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

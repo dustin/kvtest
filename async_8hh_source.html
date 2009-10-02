@@ -33,7 +33,7 @@
 <a name="l00011"></a><a class="code" href="classkvtest_1_1_async_operation.html">00011</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_async_operation.html" title="Abstract base class for all asynchronous operations.">AsyncOperation</a> {
 <a name="l00012"></a>00012     <span class="keyword">public</span>:
 <a name="l00013"></a>00013 
-<a name="l00017"></a><a class="code" href="classkvtest_1_1_async_operation.html#a81846256a94c053000b5e89a973a01fb">00017</a>         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_async_operation.html#a81846256a94c053000b5e89a973a01fb" title="Perform this operation.">execute</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *tut) {
+<a name="l00017"></a><a class="code" href="classkvtest_1_1_async_operation.html#a8447e05dcdb4e8817d40f779ade7d9bc">00017</a>         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_async_operation.html#a8447e05dcdb4e8817d40f779ade7d9bc" title="Perform this operation.">execute</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *tut) {
 <a name="l00018"></a>00018             <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;not implemented&quot;</span>);
 <a name="l00019"></a>00019         }
 <a name="l00020"></a>00020 
@@ -54,8 +54,8 @@
 <a name="l00048"></a>00048     <span class="keyword">public</span>:
 <a name="l00049"></a>00049         <a class="code" href="classkvtest_1_1_reset_operation.html" title="Async interface to reset.">ResetOperation</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> *c) : <a class="code" href="classkvtest_1_1_bool_operation.html#a8895f8f05f9852b2b9169303c6984e2d" title="Store the callback.">BoolOperation</a>(c) {}
 <a name="l00050"></a>00050 
-<a name="l00054"></a><a class="code" href="classkvtest_1_1_reset_operation.html#ad95a3959ef89a1c817830ed552472afa">00054</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_reset_operation.html#ad95a3959ef89a1c817830ed552472afa" title="Call reset, callback(true).">execute</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *tut) {
-<a name="l00055"></a>00055             tut-&gt;<a class="code" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9" title="Called after each test to reinitialize the test.">reset</a>();
+<a name="l00054"></a><a class="code" href="classkvtest_1_1_reset_operation.html#a4d7fad1afc156adc6fd6d3dfc52e8317">00054</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_reset_operation.html#a4d7fad1afc156adc6fd6d3dfc52e8317" title="Call reset, callback(true).">execute</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *tut) {
+<a name="l00055"></a>00055             tut-&gt;<a class="code" href="classkvtest_1_1_k_v_store.html#a942422558efefe4add4dca4e342dab6b" title="Called after each test to reinitialize the test.">reset</a>();
 <a name="l00056"></a>00056             <span class="keywordtype">bool</span> t = <span class="keyword">true</span>;
 <a name="l00057"></a>00057             <a class="code" href="classkvtest_1_1_bool_operation.html#a7492df1075088586ca4beb788d8b51b9" title="The callback to be fired during execute().">cb</a>-&gt;<a class="code" href="classkvtest_1_1_callback.html#a07c80f0c039c79725f7f701010d3455b" title="Method called on callback.">callback</a>(t);
 <a name="l00058"></a>00058             <span class="keywordflow">return</span> <span class="keyword">true</span>;
@@ -66,7 +66,7 @@
 <a name="l00066"></a>00066     <span class="keyword">public</span>:
 <a name="l00067"></a>00067         <a class="code" href="classkvtest_1_1_n_o_o_p_operation.html" title="A NOOP that ensures it runs on the async&amp;#39;s thread.">NOOPOperation</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> *c) : <a class="code" href="classkvtest_1_1_bool_operation.html#a8895f8f05f9852b2b9169303c6984e2d" title="Store the callback.">BoolOperation</a>(c) {}
 <a name="l00068"></a>00068 
-<a name="l00072"></a><a class="code" href="classkvtest_1_1_n_o_o_p_operation.html#a90597d5c628295a38217de9df2f2a128">00072</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_n_o_o_p_operation.html#a90597d5c628295a38217de9df2f2a128" title="callback(true).">execute</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *tut) {
+<a name="l00072"></a><a class="code" href="classkvtest_1_1_n_o_o_p_operation.html#a738931e4e8ded9a0e8349150e9bcab41">00072</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_n_o_o_p_operation.html#a738931e4e8ded9a0e8349150e9bcab41" title="callback(true).">execute</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *tut) {
 <a name="l00073"></a>00073             <span class="keywordtype">bool</span> rv = <span class="keyword">true</span>;
 <a name="l00074"></a>00074             <a class="code" href="classkvtest_1_1_bool_operation.html#a7492df1075088586ca4beb788d8b51b9" title="The callback to be fired during execute().">cb</a>-&gt;<a class="code" href="classkvtest_1_1_callback.html#a07c80f0c039c79725f7f701010d3455b" title="Method called on callback.">callback</a>(rv);
 <a name="l00075"></a>00075             <span class="keywordflow">return</span> <span class="keyword">true</span>;
@@ -82,8 +82,8 @@
 <a name="l00091"></a>00091             value = v;
 <a name="l00092"></a>00092         }
 <a name="l00093"></a>00093 
-<a name="l00097"></a><a class="code" href="classkvtest_1_1_set_operation.html#aab968e0d53bacb81de011bc56b82894f">00097</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_set_operation.html#aab968e0d53bacb81de011bc56b82894f" title="Call the underlying set method.">execute</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *tut) {
-<a name="l00098"></a>00098             tut-&gt;<a class="code" href="classkvtest_1_1_thing_under_test.html#a46b443ce10a36a3669409bc050d73e92" title="Set a given key and value.">set</a>(key, value, *<a class="code" href="classkvtest_1_1_bool_operation.html#a7492df1075088586ca4beb788d8b51b9" title="The callback to be fired during execute().">cb</a>);
+<a name="l00097"></a><a class="code" href="classkvtest_1_1_set_operation.html#a6ebbb27331959b94f409cb652cf3a62d">00097</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_set_operation.html#a6ebbb27331959b94f409cb652cf3a62d" title="Call the underlying set method.">execute</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *tut) {
+<a name="l00098"></a>00098             tut-&gt;<a class="code" href="classkvtest_1_1_k_v_store.html#abb08b6ab18832bc7823af6193a202e56" title="Set a given key and value.">set</a>(key, value, *<a class="code" href="classkvtest_1_1_bool_operation.html#a7492df1075088586ca4beb788d8b51b9" title="The callback to be fired during execute().">cb</a>);
 <a name="l00099"></a>00099             <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00100"></a>00100         }
 <a name="l00101"></a>00101     <span class="keyword">private</span>:
@@ -98,8 +98,8 @@
 <a name="l00116"></a>00116             key = k;
 <a name="l00117"></a>00117         }
 <a name="l00118"></a>00118 
-<a name="l00122"></a><a class="code" href="classkvtest_1_1_delete_operation.html#a6c1218ed2b13649481069f5ff9efa58a">00122</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_delete_operation.html#a6c1218ed2b13649481069f5ff9efa58a" title="Execute the underlying delete.">execute</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *db) {
-<a name="l00123"></a>00123             db-&gt;<a class="code" href="classkvtest_1_1_thing_under_test.html#a90b1b2a9a45cd232900a00c7d343258c" title="Delete a value for a key.">del</a>(key, *<a class="code" href="classkvtest_1_1_bool_operation.html#a7492df1075088586ca4beb788d8b51b9" title="The callback to be fired during execute().">cb</a>);
+<a name="l00122"></a><a class="code" href="classkvtest_1_1_delete_operation.html#ac8ae588188f1c44dffcdfc6cf79a5c39">00122</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_delete_operation.html#ac8ae588188f1c44dffcdfc6cf79a5c39" title="Execute the underlying delete.">execute</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *db) {
+<a name="l00123"></a>00123             db-&gt;<a class="code" href="classkvtest_1_1_k_v_store.html#a22e4b9be7d2db520dc76c2607b1a86e9" title="Delete a value for a key.">del</a>(key, *<a class="code" href="classkvtest_1_1_bool_operation.html#a7492df1075088586ca4beb788d8b51b9" title="The callback to be fired during execute().">cb</a>);
 <a name="l00124"></a>00124             <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00125"></a>00125         }
 <a name="l00126"></a>00126 
@@ -114,8 +114,8 @@
 <a name="l00141"></a>00141             cb = c;
 <a name="l00142"></a>00142         }
 <a name="l00143"></a>00143 
-<a name="l00147"></a><a class="code" href="classkvtest_1_1_get_operation.html#a61858a789f5699086d598dd3fe8f2446">00147</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_get_operation.html#a61858a789f5699086d598dd3fe8f2446" title="Execute the underlying get and fire the result to the callback.">execute</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *db) {
-<a name="l00148"></a>00148             db-&gt;<a class="code" href="classkvtest_1_1_thing_under_test.html#afaea3d4f87e92a9f0e0fd1419f03b6f2" title="Get the value for the given key.">get</a>(key, *cb);
+<a name="l00147"></a><a class="code" href="classkvtest_1_1_get_operation.html#a61e0e12d0a72608f317c3b3ccca22a89">00147</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_get_operation.html#a61e0e12d0a72608f317c3b3ccca22a89" title="Execute the underlying get and fire the result to the callback.">execute</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *db) {
+<a name="l00148"></a>00148             db-&gt;<a class="code" href="classkvtest_1_1_k_v_store.html#a16f23eaf30ac86939394e98ddb6679a8" title="Get the value for the given key.">get</a>(key, *cb);
 <a name="l00149"></a>00149             <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00150"></a>00150         }
 <a name="l00151"></a>00151 
@@ -167,7 +167,7 @@
 <a name="l00223"></a><a class="code" href="classkvtest_1_1_async_executor.html">00223</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_async_executor.html" title="Asynchronous executor.">AsyncExecutor</a> {
 <a name="l00224"></a>00224     <span class="keyword">public</span>:
 <a name="l00225"></a>00225 
-<a name="l00230"></a><a class="code" href="classkvtest_1_1_async_executor.html#a51665d125cfbe15814d66f80f82b00c0">00230</a>         <a class="code" href="classkvtest_1_1_async_executor.html#a51665d125cfbe15814d66f80f82b00c0" title="Construct an AsyncExecutor over the given underlying ThingUnderTest with the given...">AsyncExecutor</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *d, <a class="code" href="classkvtest_1_1_async_queue.html" title="Async operations queue.">AsyncQueue</a> *q) {
+<a name="l00230"></a><a class="code" href="classkvtest_1_1_async_executor.html#a9a60ab036fa265854f12bebef9f2973d">00230</a>         <a class="code" href="classkvtest_1_1_async_executor.html#a9a60ab036fa265854f12bebef9f2973d" title="Construct an AsyncExecutor over the given underlying KVStore with the given input...">AsyncExecutor</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *d, <a class="code" href="classkvtest_1_1_async_queue.html" title="Async operations queue.">AsyncQueue</a> *q) {
 <a name="l00231"></a>00231             tut     = d;
 <a name="l00232"></a>00232             iq      = q;
 <a name="l00233"></a>00233             running = <span class="keyword">true</span>;
@@ -177,24 +177,24 @@
 <a name="l00240"></a>00240             <span class="keywordflow">while</span>(running) {
 <a name="l00241"></a>00241                 std::queue&lt;AsyncOperation*&gt; ops;
 <a name="l00242"></a>00242                 iq-&gt;<a class="code" href="classkvtest_1_1_async_queue.html#a77269e09d5e3f5759ab168f5a403eac1" title="Drain some operations to the given queue.">drainTo</a>(ops);
-<a name="l00243"></a>00243                 tut-&gt;<a class="code" href="classkvtest_1_1_thing_under_test.html#a3d64e5e926c43a1ff1ac73ee003981b1" title="For things that support transactions, this signals the beginning of one.">begin</a>();
+<a name="l00243"></a>00243                 tut-&gt;<a class="code" href="classkvtest_1_1_k_v_store.html#ad8c873c44e0a8fdc0ce66683e56e7f59" title="For things that support transactions, this signals the beginning of one.">begin</a>();
 <a name="l00244"></a>00244                 <span class="keywordtype">int</span> count = 0;
 <a name="l00245"></a>00245 
 <a name="l00246"></a>00246                 <span class="keywordflow">while</span>(!ops.empty()) {
 <a name="l00247"></a>00247                     <a class="code" href="classkvtest_1_1_async_operation.html" title="Abstract base class for all asynchronous operations.">AsyncOperation</a> *op = ops.front();
 <a name="l00248"></a>00248                     ops.pop();
 <a name="l00249"></a>00249 
-<a name="l00250"></a>00250                     op-&gt;<a class="code" href="classkvtest_1_1_async_operation.html#a81846256a94c053000b5e89a973a01fb" title="Perform this operation.">execute</a>(tut);
+<a name="l00250"></a>00250                     op-&gt;<a class="code" href="classkvtest_1_1_async_operation.html#a8447e05dcdb4e8817d40f779ade7d9bc" title="Perform this operation.">execute</a>(tut);
 <a name="l00251"></a>00251                     count++;
 <a name="l00252"></a>00252                 }
 <a name="l00253"></a>00253 
-<a name="l00254"></a>00254                 tut-&gt;<a class="code" href="classkvtest_1_1_thing_under_test.html#a53bd8f4a4f65f459a7f49adf9d88f0f3" title="For things that support transactions, this signals the successful completion of one...">commit</a>();
+<a name="l00254"></a>00254                 tut-&gt;<a class="code" href="classkvtest_1_1_k_v_store.html#aa2e73b810577263d64265b136bc2e0ec" title="For things that support transactions, this signals the successful completion of one...">commit</a>();
 <a name="l00255"></a>00255             }
 <a name="l00256"></a>00256         }
 <a name="l00257"></a>00257 
 <a name="l00258"></a>00258     <span class="keyword">private</span>:
 <a name="l00259"></a>00259         <span class="keywordtype">bool</span>            running;
-<a name="l00260"></a>00260         <a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *tut;
+<a name="l00260"></a>00260         <a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *tut;
 <a name="l00261"></a>00261         <a class="code" href="classkvtest_1_1_async_queue.html" title="Async operations queue.">AsyncQueue</a>     *iq;
 <a name="l00262"></a>00262     };
 <a name="l00263"></a>00263 
@@ -207,10 +207,10 @@
 <a name="l00270"></a>00270         }
 <a name="l00271"></a>00271     }
 <a name="l00272"></a>00272 
-<a name="l00276"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html">00276</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_queued_thing_under_test.html" title="Asynchronous wrapper for a synchronous ThingUnderTest.">QueuedThingUnderTest</a> : <span class="keyword">public</span> <a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> {
+<a name="l00276"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html">00276</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_queued_k_v_store.html" title="Asynchronous wrapper for a synchronous KVStore.">QueuedKVStore</a> : <span class="keyword">public</span> <a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> {
 <a name="l00277"></a>00277     <span class="keyword">public</span>:
 <a name="l00278"></a>00278 
-<a name="l00282"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a4be32991b0ddd0e60bae5ea959552bba">00282</a>         <a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a4be32991b0ddd0e60bae5ea959552bba" title="Construct a QueuedThingUnderTest wrapping the given thing.">QueuedThingUnderTest</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *t) {
+<a name="l00282"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html#a68b07bbaba2ca09267c6def4bb29173a">00282</a>         <a class="code" href="classkvtest_1_1_queued_k_v_store.html#a68b07bbaba2ca09267c6def4bb29173a" title="Construct a QueuedKVStore wrapping the given thing.">QueuedKVStore</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *t) {
 <a name="l00283"></a>00283             tut = t;
 <a name="l00284"></a>00284             iq = <span class="keyword">new</span> <a class="code" href="classkvtest_1_1_async_queue.html" title="Async operations queue.">AsyncQueue</a>();
 <a name="l00285"></a>00285             executor = <span class="keyword">new</span> <a class="code" href="classkvtest_1_1_async_executor.html" title="Asynchronous executor.">AsyncExecutor</a>(tut, iq);
@@ -221,37 +221,37 @@
 <a name="l00290"></a>00290             }
 <a name="l00291"></a>00291         }
 <a name="l00292"></a>00292 
-<a name="l00296"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a0c35008f8a15a9f004b26ac1d2bbd829">00296</a>         <a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a0c35008f8a15a9f004b26ac1d2bbd829" title="Clean up.">~QueuedThingUnderTest</a>() {
+<a name="l00296"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html#abc2f68fbda307ee79b4a13f507f550ef">00296</a>         <a class="code" href="classkvtest_1_1_queued_k_v_store.html#abc2f68fbda307ee79b4a13f507f550ef" title="Clean up.">~QueuedKVStore</a>() {
 <a name="l00297"></a>00297             <span class="keyword">delete</span> iq;
 <a name="l00298"></a>00298             <span class="keyword">delete</span> executor;
 <a name="l00299"></a>00299         }
 <a name="l00300"></a>00300 
-<a name="l00304"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a20aa1921d4c470ab5655aa4d3e53bd95">00304</a>         <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a20aa1921d4c470ab5655aa4d3e53bd95" title="Perform an async reset.">reset</a>() {
+<a name="l00304"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html#aee87937e0a4f965d3b2d5ab074268ec6">00304</a>         <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_queued_k_v_store.html#aee87937e0a4f965d3b2d5ab074268ec6" title="Perform an async reset.">reset</a>() {
 <a name="l00305"></a>00305             std::queue&lt;AsyncOperation*&gt; opq;
 <a name="l00306"></a>00306             <a class="code" href="classkvtest_1_1_remembering_callback.html" title="Threadsafe callback implementation that just captures the value.">RememberingCallback&lt;bool&gt;</a> cb;
 <a name="l00307"></a>00307             iq-&gt;<a class="code" href="classkvtest_1_1_async_queue.html#aa48c4811df89128900718ee0b129a46a" title="Add an operation to an async queue.">addOperation</a>(<span class="keyword">new</span> <a class="code" href="classkvtest_1_1_reset_operation.html" title="Async interface to reset.">ResetOperation</a>(&amp;cb));
 <a name="l00308"></a>00308             cb.<a class="code" href="classkvtest_1_1_remembering_callback.html#a4419e86f41c4a17373c75c15cc9bcbd7" title="Wait for a value to be available.">waitForValue</a>();
 <a name="l00309"></a>00309         }
 <a name="l00310"></a>00310 
-<a name="l00314"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a1499efa69b4935355f3225ea99dfc4f4">00314</a>         <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string &amp;key, std::string &amp;val,
+<a name="l00314"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html#a0c8da00a2913eb46203a7945f61a0dfd">00314</a>         <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string &amp;key, std::string &amp;val,
 <a name="l00315"></a>00315                  <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) {
 <a name="l00316"></a>00316             iq-&gt;<a class="code" href="classkvtest_1_1_async_queue.html#aa48c4811df89128900718ee0b129a46a" title="Add an operation to an async queue.">addOperation</a>(<span class="keyword">new</span> <a class="code" href="classkvtest_1_1_set_operation.html" title="Async set operation.">SetOperation</a>(key, val, &amp;cb));
 <a name="l00317"></a>00317         }
 <a name="l00318"></a>00318 
-<a name="l00322"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a69a9276ad2ea76480dfe15c4433c3575">00322</a>         <span class="keywordtype">void</span> <span class="keyword">get</span>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;GetValue&gt;</a> &amp;cb) {
+<a name="l00322"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html#a7c813fa95a5c2b0d7d45da19d48752ac">00322</a>         <span class="keywordtype">void</span> <span class="keyword">get</span>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;GetValue&gt;</a> &amp;cb) {
 <a name="l00323"></a>00323             iq-&gt;<a class="code" href="classkvtest_1_1_async_queue.html#aa48c4811df89128900718ee0b129a46a" title="Add an operation to an async queue.">addOperation</a>(<span class="keyword">new</span> <a class="code" href="classkvtest_1_1_get_operation.html" title="Asynchronous get operation.">GetOperation</a>(key, &amp;cb));
 <a name="l00324"></a>00324         }
 <a name="l00325"></a>00325 
-<a name="l00329"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a7c8e3f4e50ddc2abcd6bbcc09c61ce2e">00329</a>         <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_queued_thing_under_test.html#a7c8e3f4e50ddc2abcd6bbcc09c61ce2e" title="perform an async delete.">del</a>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) {
+<a name="l00329"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html#a83b4d281a7d9f20611f7e5ccd1bba542">00329</a>         <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_queued_k_v_store.html#a83b4d281a7d9f20611f7e5ccd1bba542" title="perform an async delete.">del</a>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) {
 <a name="l00330"></a>00330             iq-&gt;<a class="code" href="classkvtest_1_1_async_queue.html#aa48c4811df89128900718ee0b129a46a" title="Add an operation to an async queue.">addOperation</a>(<span class="keyword">new</span> <a class="code" href="classkvtest_1_1_delete_operation.html" title="Async delete operation.">DeleteOperation</a>(key, &amp;cb));
 <a name="l00331"></a>00331         }
 <a name="l00332"></a>00332 
-<a name="l00337"></a><a class="code" href="classkvtest_1_1_queued_thing_under_test.html#acaa97ba615241aa380a637a79714cd4a">00337</a>         <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_queued_thing_under_test.html#acaa97ba615241aa380a637a79714cd4a" title="Perform a noop on the async thread (useful for verifying everything is done).">noop</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) {
+<a name="l00337"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html#a32d45a2284370d2f08455afa862913d4">00337</a>         <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_queued_k_v_store.html#a32d45a2284370d2f08455afa862913d4" title="Perform a noop on the async thread (useful for verifying everything is done).">noop</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) {
 <a name="l00338"></a>00338             iq-&gt;<a class="code" href="classkvtest_1_1_async_queue.html#aa48c4811df89128900718ee0b129a46a" title="Add an operation to an async queue.">addOperation</a>(<span class="keyword">new</span> <a class="code" href="classkvtest_1_1_n_o_o_p_operation.html" title="A NOOP that ensures it runs on the async&amp;#39;s thread.">NOOPOperation</a>(&amp;cb));
 <a name="l00339"></a>00339         }
 <a name="l00340"></a>00340 
 <a name="l00341"></a>00341     <span class="keyword">private</span>:
-<a name="l00342"></a>00342         <a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *tut;
+<a name="l00342"></a>00342         <a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *tut;
 <a name="l00343"></a>00343         <a class="code" href="classkvtest_1_1_async_queue.html" title="Async operations queue.">AsyncQueue</a>     *iq;
 <a name="l00344"></a>00344         <a class="code" href="classkvtest_1_1_async_executor.html" title="Asynchronous executor.">AsyncExecutor</a>  *executor;
 <a name="l00345"></a>00345         pthread_t       thread;
@@ -261,7 +261,7 @@
 <a name="l00349"></a>00349 
 <a name="l00350"></a>00350 <span class="preprocessor">#endif </span><span class="comment">/* ASYNC_HH */</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:10:51 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:35:29 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

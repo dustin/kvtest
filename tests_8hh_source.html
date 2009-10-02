@@ -32,7 +32,7 @@
 <a name="l00007"></a>00007 
 <a name="l00011"></a><a class="code" href="classkvtest_1_1_test.html">00011</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_test.html" title="A test to run.">Test</a> : <span class="keyword">public</span> <a class="code" href="classkvtest_1_1_assertions.html" title="Assertion mixins.">Assertions</a> {
 <a name="l00012"></a>00012     <span class="keyword">public</span>:
-<a name="l00016"></a>00016         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_test.html#a6ccb6d6ddcf7040217fb83392efa535c" title="Run the test.">run</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> *tut) = 0;
+<a name="l00016"></a>00016         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_test.html#a121235f51dcbcdfc4164ade980991779" title="Run the test.">run</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">KVStore</a> *tut) = 0;
 <a name="l00017"></a>00017 
 <a name="l00021"></a>00021         <span class="keyword">virtual</span> std::string <a class="code" href="classkvtest_1_1_test.html#a21821a252b613d1d77b1bb76aeea869f" title="Name of the test.">name</a>() = 0;
 <a name="l00022"></a>00022 
@@ -46,19 +46,19 @@
 <a name="l00033"></a>00033 
 <a name="l00037"></a><a class="code" href="class_test_test.html">00037</a> <span class="keyword">class </span><a class="code" href="class_test_test.html" title="A really basic protocol compliance test.">TestTest</a> : <span class="keyword">public</span> kvtest::Test {
 <a name="l00038"></a>00038 <span class="keyword">public</span>:
-<a name="l00039"></a>00039     <span class="keywordtype">bool</span> <a class="code" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test.">run</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">kvtest::ThingUnderTest</a> *tut);
+<a name="l00039"></a>00039     <span class="keywordtype">bool</span> <a class="code" href="class_test_test.html#a6d3e860551a994aaf482278a1faa62c2" title="Run the test.">run</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">kvtest::KVStore</a> *tut);
 <a name="l00040"></a><a class="code" href="class_test_test.html#a518ec9d5b4a0254dcea501d20a651abf">00040</a>     std::string <a class="code" href="class_test_test.html#a518ec9d5b4a0254dcea501d20a651abf" title="Name of the test.">name</a>() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;test test&quot;</span>; }
 <a name="l00041"></a>00041 };
 <a name="l00042"></a>00042 
 <a name="l00046"></a><a class="code" href="class_write_test.html">00046</a> <span class="keyword">class </span><a class="code" href="class_write_test.html" title="A test of write efficiency.">WriteTest</a> : <span class="keyword">public</span> kvtest::Test {
 <a name="l00047"></a>00047 <span class="keyword">public</span>:
-<a name="l00048"></a>00048     <span class="keywordtype">bool</span> <a class="code" href="class_write_test.html#afc1700db746018194b3cf2d72800d37e" title="Run the test.">run</a>(<a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">kvtest::ThingUnderTest</a> *tut);
+<a name="l00048"></a>00048     <span class="keywordtype">bool</span> <a class="code" href="class_write_test.html#a42bb8dc52899cd83027c9237762ebec1" title="Run the test.">run</a>(<a class="code" href="classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage).">kvtest::KVStore</a> *tut);
 <a name="l00049"></a><a class="code" href="class_write_test.html#abb4ccac01dca108e966fd099f17be2a8">00049</a>     std::string <a class="code" href="class_write_test.html#abb4ccac01dca108e966fd099f17be2a8" title="Name of the test.">name</a>() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;write test&quot;</span>; }
 <a name="l00050"></a>00050 };
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052 <span class="preprocessor">#endif </span><span class="comment">/* TESTS_H */</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:10:51 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:35:29 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>
