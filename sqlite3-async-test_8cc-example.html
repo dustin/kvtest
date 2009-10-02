@@ -25,7 +25,6 @@
 <span class="preprocessor">#include &lt;string.h&gt;</span>
 <span class="preprocessor">#include &lt;pthread.h&gt;</span>
 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<span class="preprocessor">#include &lt;queue&gt;</span>
 
 <span class="preprocessor">#include &quot;base-test.hh&quot;</span>
 <span class="preprocessor">#include &quot;suite.hh&quot;</span>
@@ -42,9 +41,11 @@
     <span class="keywordtype">int</span> rv = suite.<a name="a3"></a><a class="code" href="classkvtest_1_1_test_suite.html#af20224e0e804b1d87b0a4411840e6c58" title="Run the test suite.">run</a>() ? 0 : 1;
     <span class="keyword">delete</span> thing;
     <span class="keyword">delete</span> sq;
+
+    <span class="keywordflow">return</span> rv;
 }
 </pre></div> </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:35:29 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 14:48:38 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

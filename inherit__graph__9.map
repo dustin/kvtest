@@ -1,5 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="5,30,120,58"/>
-<area shape="rect" id="node3" href="$classkvtest_1_1_queued_k_v_store.html" title="Asynchronous wrapper for a synchronous KVStore." alt="" coords="168,5,331,33"/>
-<area shape="rect" id="node5" href="$classkvtest_1_1_sqlite3.html" title="The sqlite driver." alt="" coords="196,55,303,83"/>
+<area shape="rect" id="node1" href="$classkvtest_1_1_k_v_store.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="5,55,120,83"/>
+<area shape="rect" id="node3" href="$classkvtest_1_1_b_d_b_store.html" title="A Berkley DB store." alt="" coords="188,5,311,33"/>
+<area shape="rect" id="node5" href="$classkvtest_1_1_queued_k_v_store.html" title="Asynchronous wrapper for a synchronous KVStore." alt="" coords="168,55,331,83"/>
+<area shape="rect" id="node7" href="$classkvtest_1_1_sqlite3.html" title="The sqlite driver." alt="" coords="196,106,303,134"/>
 </map>
