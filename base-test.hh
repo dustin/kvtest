@@ -21,6 +21,8 @@
  * \example example-test.cc
  * \example sqlite3-test.cc
  * \example sqlite3-async-test.cc
+ * \example bdb-test.cc
+ * \example bdb-async-test.cc
  */
 
 /**
