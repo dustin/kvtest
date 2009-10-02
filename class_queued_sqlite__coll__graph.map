@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage)." alt="" coords="5,6,168,34"/>
+<area shape="rect" id="node8" href="$classkvtest_1_1_sqlite3.html" title="The sqlite driver." alt="" coords="136,131,243,159"/>
+<area shape="rect" id="node4" href="$class_query_executor.html" title="QueryExecutor" alt="" coords="188,225,300,253"/>
+<area shape="rect" id="node6" href="$class_inbound_queue.html" title="InboundQueue" alt="" coords="283,131,392,159"/>
+<area shape="rect" id="node11" href="$classkvtest_1_1_prepared_statement.html" title="A sqlite prepared statement." alt="" coords="192,6,373,34"/>
+</map>
