@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_delete_operation.html" title="DeleteOperation" alt="" coords="5,83,125,111"/>
-<area shape="rect" id="node5" href="$class_get_operation.html" title="GetOperation" alt="" coords="149,83,251,111"/>
-<area shape="rect" id="node7" href="$class_n_o_o_p_operation.html" title="NOOPOperation" alt="" coords="275,83,395,111"/>
-<area shape="rect" id="node9" href="$class_reset_operation.html" title="ResetOperation" alt="" coords="419,83,533,111"/>
-<area shape="rect" id="node11" href="$class_set_operation.html" title="SetOperation" alt="" coords="557,83,659,111"/>
-</map>

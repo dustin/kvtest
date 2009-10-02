@@ -1,8 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$class_d_b_operation.html" title="DBOperation" alt="" coords="5,106,104,134"/>
-<area shape="rect" id="node3" href="$class_delete_operation.html" title="DeleteOperation" alt="" coords="152,5,272,33"/>
-<area shape="rect" id="node5" href="$class_get_operation.html" title="GetOperation" alt="" coords="161,55,263,83"/>
-<area shape="rect" id="node7" href="$class_n_o_o_p_operation.html" title="NOOPOperation" alt="" coords="152,106,272,134"/>
-<area shape="rect" id="node9" href="$class_reset_operation.html" title="ResetOperation" alt="" coords="155,157,269,185"/>
-<area shape="rect" id="node11" href="$class_set_operation.html" title="SetOperation" alt="" coords="161,207,263,235"/>
+<area shape="rect" id="node1" href="$classkvtest_1_1_assertion_error.html" title="Assertion errors." alt="" coords="7,5,156,33"/>
 </map>

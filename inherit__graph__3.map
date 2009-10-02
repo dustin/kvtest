@@ -1,6 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classkvtest_1_1_assertions.html" title="Assertion mixins." alt="" coords="5,30,133,58"/>
-<area shape="rect" id="node3" href="$classkvtest_1_1_test.html" title="A test to run." alt="" coords="181,30,272,58"/>
-<area shape="rect" id="node5" href="$class_test_test.html" title="A really basic protocol compliance test." alt="" coords="324,5,399,33"/>
-<area shape="rect" id="node7" href="$class_write_test.html" title="A test of write efficiency." alt="" coords="321,55,401,83"/>
+<area shape="rect" id="node1" href="$classkvtest_1_1_callback.html" title="Interface for callbacks from storage APIs." alt="" coords="7,5,164,33"/>
 </map>
