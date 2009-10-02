@@ -51,6 +51,12 @@ namespace kvtest {
         return (char*)sqlite3_column_text(st, x);
     }
 
+    void PreparedStatement::reset() {
+        if(sqlite3_reset(st) != SQLITE_OK) {
+            throw std::runtime_error("Error resetting statement.");
+        }
+    }
+
     Sqlite3::Sqlite3(const char *fn) {
         filename = fn;
         open();
@@ -68,12 +74,20 @@ namespace kvtest {
 
             intransaction = false;
             initTables();
+
+            ins_stmt = new PreparedStatement(db, "insert into kv(k,v) values(?, ?)");
+            sel_stmt = new PreparedStatement(db, "select v from kv where k = ?");
+            del_stmt = new PreparedStatement(db, "delete from kv where k = ?");
         }
     }
 
     void Sqlite3::close() {
         if(db) {
             intransaction = false;
+            delete ins_stmt;
+            delete sel_stmt;
+            delete del_stmt;
+            ins_stmt = sel_stmt = del_stmt = NULL;
             sqlite3_close(db);
             db = NULL;
         }
@@ -125,19 +139,18 @@ namespace kvtest {
 
     void Sqlite3::set(std::string &key, std::string &val,
                       kvtest::Callback<bool> &cb) {
-        PreparedStatement st(db, "insert into kv(k,v) values(?, ?)");
-        st.bind(1, key.c_str());
-        st.bind(2, val.c_str());
-        bool rv = st.execute() == 1;
+        ins_stmt->bind(1, key.c_str());
+        ins_stmt->bind(2, val.c_str());
+        bool rv = ins_stmt->execute() == 1;
         cb.callback(rv);
+        ins_stmt->reset();
     }
 
     void Sqlite3::get(std::string &key, kvtest::Callback<kvtest::GetValue> &cb) {
-        PreparedStatement st(db, "select v from kv where k = ?");
-        st.bind(1, key.c_str());
+        sel_stmt->bind(1, key.c_str());
 
-        if(st.fetch()) {
-            std::string str(st.column(0));
+        if(sel_stmt->fetch()) {
+            std::string str(sel_stmt->column(0));
             kvtest::GetValue rv(str, true);
             cb.callback(rv);
         } else {
@@ -145,13 +158,14 @@ namespace kvtest {
             kvtest::GetValue rv(str, false);
             cb.callback(rv);
         }
+        sel_stmt->reset();
     }
 
     void Sqlite3::del(std::string &key, kvtest::Callback<bool> &cb) {
-        PreparedStatement st(db, "delete from kv where k = ?");
-        st.bind(1, key.c_str());
-        bool rv = st.execute() == 1;
+        del_stmt->bind(1, key.c_str());
+        bool rv = del_stmt->execute() == 1;
         cb.callback(rv);
+        del_stmt->reset();
     }
 
 }

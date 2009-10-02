@@ -20,6 +20,8 @@ namespace kvtest {
 
         bool fetch();
 
+        void reset();
+
         const char *column(int x);
 
     private:
@@ -57,6 +59,10 @@ namespace kvtest {
         const char *filename;
         sqlite3 *db;
         bool intransaction;
+
+        PreparedStatement *ins_stmt;
+        PreparedStatement *sel_stmt;
+        PreparedStatement *del_stmt;
 
         void open();
         void close();
