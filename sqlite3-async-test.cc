@@ -34,6 +34,22 @@ private:
     Callback<bool> *cb;
 };
 
+class NOOPOperation : public DBOperation {
+public:
+
+    NOOPOperation(Callback<bool> *c) {
+        cb = c;
+    }
+
+    bool execute(Sqlite3 *db) {
+        bool rv = true;
+        cb->callback(rv);
+    }
+
+private:
+    Callback<bool> *cb;
+};
+
 class SetOperation : public DBOperation {
 public:
 

@@ -112,10 +112,8 @@ bool WriteTest::run(ThingUnderTest *tut) {
 
     // Last one to wait for a commit.
     RememberingCallback<bool> cbLast;
-    std::string aKey("nonexistent");
-    tut->del(aKey, cbLast);
+    tut->noop(cbLast);
     cbLast.waitForValue();
-    assertFalse(cbLast.val, string("Deleted something that wasn't there?"));
     time_t end = time(NULL);
 
     i++; // Did another transaction

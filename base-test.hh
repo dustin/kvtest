@@ -47,6 +47,14 @@ namespace kvtest {
         virtual void reset() {}
 
         /**
+         * Method that should not return until the driver has done its job.
+         */
+        virtual void noop(Callback<bool> &c) {
+            bool t = true;
+            c.callback(t);
+        }
+
+        /**
          * Set a given key and value.
          *
          * @param key the key to set
@@ -71,6 +79,7 @@ namespace kvtest {
          * @return true if the value was there and is now deleted
          */
         virtual void del(std::string &key, Callback<bool> &cb) = 0;
+
     };
 
     /**
