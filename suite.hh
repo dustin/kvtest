@@ -15,7 +15,7 @@ namespace kvtest {
         /**
          * Construct a test suite with the given thing under test.
          */
-        TestSuite(ThingUnderTest *t);
+        TestSuite(KVStore *t);
 
         /**
          * Run the test suite.
@@ -29,7 +29,7 @@ namespace kvtest {
         void addTest(Test *test);
 
     private:
-        ThingUnderTest   *tut;
+        KVStore   *tut;
         std::list<Test*>  tests;
     };
 

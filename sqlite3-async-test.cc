@@ -14,7 +14,7 @@ using namespace kvtest;
 
 int main(int argc, char **args) {
     Sqlite3 *sq = new Sqlite3("/tmp/test.db");
-    QueuedThingUnderTest *thing = new QueuedThingUnderTest(sq);
+    QueuedKVStore *thing = new QueuedKVStore(sq);
 
     TestSuite suite(thing);
     int rv = suite.run() ? 0 : 1;

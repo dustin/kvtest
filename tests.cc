@@ -35,7 +35,7 @@ static void setup_alarm(int duration) {
 // ----------------------------------------------------------------------
 //
 
-bool TestTest::run(ThingUnderTest *tut) {
+bool TestTest::run(KVStore *tut) {
     string testKey("some key");
     string testValue("some value");
 
@@ -109,7 +109,7 @@ private:
     pthread_mutex_t mutex;
 };
 
-bool WriteTest::run(ThingUnderTest *tut) {
+bool WriteTest::run(KVStore *tut) {
     int i = 0;
     setup_alarm(5);
     CountingCallback cb;

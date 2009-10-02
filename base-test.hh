@@ -58,7 +58,7 @@ namespace kvtest {
     /**
      * An individual kv storage (or way to access a kv storage).
      */
-    class ThingUnderTest {
+    class KVStore {
     public:
         /**
          * Called after each test to reinitialize the test.

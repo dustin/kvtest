@@ -75,7 +75,7 @@ namespace kvtest {
     /**
      * The sqlite driver.
      */
-    class Sqlite3 : public ThingUnderTest {
+    class Sqlite3 : public KVStore {
     public:
 
         /**

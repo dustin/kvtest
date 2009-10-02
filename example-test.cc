@@ -5,7 +5,7 @@
 #include "base-test.hh"
 #include "suite.hh"
 
-class SimpleThing : public kvtest::ThingUnderTest {
+class SimpleThing : public kvtest::KVStore {
 public:
     void set(std::string &key, std::string &val,
              kvtest::Callback<bool> &cb) {

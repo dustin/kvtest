@@ -9,7 +9,7 @@
 
 using namespace kvtest;
 
-TestSuite::TestSuite(ThingUnderTest *t) {
+TestSuite::TestSuite(KVStore *t) {
     tut = t;
 
     addTest(new TestTest());

@@ -13,7 +13,7 @@ namespace kvtest {
         /**
          * Run the test.
          */
-        virtual bool run(ThingUnderTest *tut) = 0;
+        virtual bool run(KVStore *tut) = 0;
 
         /**
          * Name of the test.
@@ -36,7 +36,7 @@ namespace kvtest {
  */
 class TestTest : public kvtest::Test {
 public:
-    bool run(kvtest::ThingUnderTest *tut);
+    bool run(kvtest::KVStore *tut);
     std::string name() { return "test test"; }
 };
 
@@ -45,7 +45,7 @@ public:
  */
 class WriteTest : public kvtest::Test {
 public:
-    bool run(kvtest::ThingUnderTest *tut);
+    bool run(kvtest::KVStore *tut);
     std::string name() { return "write test"; }
 };
 

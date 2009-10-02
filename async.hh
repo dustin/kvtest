@@ -14,7 +14,7 @@ namespace kvtest {
         /**
          * Perform this operation.
          */
-        virtual bool execute(ThingUnderTest *tut) {
+        virtual bool execute(KVStore *tut) {
             throw std::runtime_error("not implemented");
         }
 
@@ -51,7 +51,7 @@ namespace kvtest {
         /**
          * Call reset, callback(true).
          */
-        bool execute(ThingUnderTest *tut) {
+        bool execute(KVStore *tut) {
             tut->reset();
             bool t = true;
             cb->callback(t);
@@ -69,7 +69,7 @@ namespace kvtest {
         /**
          * callback(true).
          */
-        bool execute(ThingUnderTest *tut) {
+        bool execute(KVStore *tut) {
             bool rv = true;
             cb->callback(rv);
             return true;
@@ -94,7 +94,7 @@ namespace kvtest {
         /**
          * Call the underlying set method.
          */
-        bool execute(ThingUnderTest *tut) {
+        bool execute(KVStore *tut) {
             tut->set(key, value, *cb);
             return true;
         }
@@ -119,7 +119,7 @@ namespace kvtest {
         /**
          * Execute the underlying delete.
          */
-        bool execute(ThingUnderTest *db) {
+        bool execute(KVStore *db) {
             db->del(key, *cb);
             return true;
         }
@@ -144,7 +144,7 @@ namespace kvtest {
         /**
          * Execute the underlying get and fire the result to the callback.
          */
-        bool execute(ThingUnderTest *db) {
+        bool execute(KVStore *db) {
             db->get(key, *cb);
             return true;
         }
@@ -225,9 +225,9 @@ namespace kvtest {
 
         /**
          * Construct an AsyncExecutor over the given underlying
-         * ThingUnderTest with the given input queue.
+         * KVStore with the given input queue.
          */
-        AsyncExecutor(ThingUnderTest *d, AsyncQueue *q) {
+        AsyncExecutor(KVStore *d, AsyncQueue *q) {
             tut     = d;
             iq      = q;
             running = true;
@@ -257,7 +257,7 @@ namespace kvtest {
 
     private:
         bool            running;
-        ThingUnderTest *tut;
+        KVStore *tut;
         AsyncQueue     *iq;
     };
 
@@ -271,15 +271,15 @@ namespace kvtest {
     }
 
     /**
-     * Asynchronous wrapper for a synchronous ThingUnderTest.
+     * Asynchronous wrapper for a synchronous KVStore.
      */
-    class QueuedThingUnderTest : public ThingUnderTest {
+    class QueuedKVStore : public KVStore {
     public:
 
         /**
-         * Construct a QueuedThingUnderTest wrapping the given thing.
+         * Construct a QueuedKVStore wrapping the given thing.
          */
-        QueuedThingUnderTest(ThingUnderTest *t) {
+        QueuedKVStore(KVStore *t) {
             tut = t;
             iq = new AsyncQueue();
             executor = new AsyncExecutor(tut, iq);
@@ -293,7 +293,7 @@ namespace kvtest {
         /**
          * Clean up.
          */
-        ~QueuedThingUnderTest() {
+        ~QueuedKVStore() {
             delete iq;
             delete executor;
         }
@@ -339,7 +339,7 @@ namespace kvtest {
         }
 
     private:
-        ThingUnderTest *tut;
+        KVStore *tut;
         AsyncQueue     *iq;
         AsyncExecutor  *executor;
         pthread_t       thread;
