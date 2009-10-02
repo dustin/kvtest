@@ -17,9 +17,16 @@ namespace kvtest {
         }
     };
 
+    /**
+     * Threadsafe callback implementation that just captures the value.
+     */
     template <typename T>
     class RememberingCallback : public Callback<T> {
     public:
+
+        /**
+         * Construct a remembering callback.
+         */
         RememberingCallback() {
             if(pthread_mutex_init(&mutex, NULL) != 0) {
                 throw std::runtime_error("Failed to initialize mutex.");
@@ -30,15 +37,24 @@ namespace kvtest {
             fired = false;
         }
 
+        /**
+         * Copy constructor is not implemented.
+         */
         RememberingCallback(RememberingCallback &copy) {
             throw std::runtime_error("Copying!");
         }
 
+        /**
+         * Clean up (including lock resources).
+         */
         ~RememberingCallback() {
             pthread_mutex_destroy(&mutex);
             pthread_cond_destroy(&cond);
         }
 
+        /**
+         * The callback implementation -- just store a value.
+         */
         void callback(T &value) {
             LockHolder lh(&mutex);
             val = value;
@@ -48,6 +64,13 @@ namespace kvtest {
             }
         }
 
+        /**
+         * Wait for a value to be available.
+         *
+         * This method will return immediately if a value is currently
+         * available, otherwise it will wait indefinitely for a value
+         * to arrive.
+         */
         void waitForValue() {
             LockHolder lh(&mutex);
             if (!fired) {
@@ -58,8 +81,14 @@ namespace kvtest {
             assert(fired);
         }
 
-        T               val;
-        bool            fired;
+        /**
+         * The value that was captured from the callback.
+         */
+        T    val;
+        /**
+         * True if the callback has fired.
+         */
+        bool fired;
 
     private:
         pthread_mutex_t mutex;

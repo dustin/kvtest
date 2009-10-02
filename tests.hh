@@ -31,12 +31,18 @@ namespace kvtest {
 
 }
 
+/**
+ * A really basic protocol compliance test.
+ */
 class TestTest : public kvtest::Test {
 public:
     bool run(kvtest::ThingUnderTest *tut);
     std::string name() { return "test test"; }
 };
 
+/**
+ * A test of write efficiency.
+ */
 class WriteTest : public kvtest::Test {
 public:
     bool run(kvtest::ThingUnderTest *tut);

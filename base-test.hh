@@ -33,7 +33,13 @@ namespace kvtest {
                      << ", value=\"" << gv.value << "\"}";
         }
 
+        /**
+         * The value retrieved for the key.
+         */
         std::string value;
+        /**
+         * True if a value was successfully retrieved.
+         */
         bool success;
     };
 
@@ -49,6 +55,8 @@ namespace kvtest {
 
         /**
          * Method that should not return until the driver has done its job.
+         *
+         * @param c the callback that will fire when the noop is evalutated
          */
         virtual void noop(Callback<bool> &c) {
             bool t = true;
@@ -60,7 +68,7 @@ namespace kvtest {
          *
          * @param key the key to set
          * @param val the value to set
-         * @return true if the set succeeded.
+         * @param cb callback that will fire with true if the set succeeded
          */
         virtual void set(std::string &key, std::string &val,
                          Callback<bool> &cb) = 0;
@@ -69,7 +77,7 @@ namespace kvtest {
          * Get the value for the given key.
          *
          * @param key the key
-         * @return the value or NULL if there's no value under this key
+         * @param cb callback that will fire with the retrieved value
          */
         virtual void get(std::string &key, Callback<GetValue> &cb) = 0;
 
@@ -77,7 +85,8 @@ namespace kvtest {
          * Delete a value for a key.
          *
          * @param key the key
-         * @return true if the value was there and is now deleted
+         * @param cb callback that will fire with true if the value
+         *           existed and then was deleted
          */
         virtual void del(std::string &key, Callback<bool> &cb) = 0;
 
