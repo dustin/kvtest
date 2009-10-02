@@ -169,7 +169,6 @@ public:
             }
 
             db->commit();
-            std::cout << "Executed " << count << " operations" << std::endl;
         }
     }
 
