@@ -239,22 +239,28 @@ namespace kvtest {
          * Run forever.
          */
         void run() {
-            while(running) {
-                std::queue<AsyncOperation*> ops;
-                iq->drainTo(ops);
-                tut->begin();
-                int count = 0;
+            try {
+                while(running) {
+                    std::queue<AsyncOperation*> ops;
+                    iq->drainTo(ops);
+                    tut->begin();
+                    int count = 0;
 
-                while(!ops.empty()) {
-                    AsyncOperation *op = ops.front();
-                    ops.pop();
+                    while(!ops.empty()) {
+                        AsyncOperation *op = ops.front();
+                        ops.pop();
 
-                    op->execute(tut);
-                    count++;
-                    delete op;
+                        op->execute(tut);
+                        count++;
+                        delete op;
+                    }
+
+                    tut->commit();
                 }
-
-                tut->commit();
+            } catch(std::runtime_error &e) {
+                std::cerr << "Exception in executor loop: "
+                          << e.what() << std::endl;
+                abort();
             }
         }
 
