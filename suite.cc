@@ -20,17 +20,20 @@ bool TestSuite::run() {
     std::list<Test*>::iterator it;
     bool success = true;
     for (it=tests.begin() ; it != tests.end(); it++ ) {
+        success = false;
         Test *t = *it;
         std::cout << "Running test ``" << *t << "'' ";
         try {
             tut->reset();
             t->run(tut);
             std::cout << "PASS" << std::endl;
+            success = true;
         } catch(AssertionError &e) {
-            success = false;
             std::cout << "FAIL: " << e.what() << std::endl;
+        } catch(std::runtime_error &e) {
+            std::cout << "EXCEPTION: " << e.what() << std::endl;
         } catch(...) {
-            std::cout << "EXCEPTION";
+            std::cout << "EXCEPTION (unknown)" << std::endl;
         }
     }
     return success;
