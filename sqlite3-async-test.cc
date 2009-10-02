@@ -226,6 +226,10 @@ public:
         iq->addOperation(new DeleteOperation(key, &cb));
     }
 
+    void noop(Callback<bool> &cb) {
+        iq->addOperation(new NOOPOperation(&cb));
+    }
+
 private:
     Sqlite3       *db;
     InboundQueue  *iq;
