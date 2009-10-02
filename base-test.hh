@@ -102,6 +102,24 @@ namespace kvtest {
          */
         virtual void del(std::string &key, Callback<bool> &cb) = 0;
 
+        /**
+         * For things that support transactions, this signals the
+         * beginning of one.
+         */
+        virtual void begin() {}
+
+        /**
+         * For things that support transactions, this signals the
+         * successful completion of one.
+         */
+        virtual void commit() {}
+
+        /**
+         * For things that support transactions, this signals the
+         * unsuccessful completion of one.
+         */
+        virtual void rollback() {}
+
     };
 
     /**

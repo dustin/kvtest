@@ -29,6 +29,8 @@ bool TestSuite::run() {
         } catch(AssertionError &e) {
             success = false;
             std::cout << "FAIL: " << e.what() << std::endl;
+        } catch(...) {
+            std::cout << "EXCEPTION";
         }
     }
     return success;

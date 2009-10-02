@@ -106,6 +106,7 @@ namespace kvtest {
     }
 
     void Sqlite3::reset() {
+        rollback();
         close();
         open();
         destroyTables();

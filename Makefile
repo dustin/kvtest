@@ -32,4 +32,4 @@ $(OBJS): $(COMMON)
 $(PROG_OBJS): $(COMMON)
 
 $(SQLITE_OBJS): $(SQLITE_COMMON) $(COMMON)
-
+sqlite3-async-test.o: async.hh
