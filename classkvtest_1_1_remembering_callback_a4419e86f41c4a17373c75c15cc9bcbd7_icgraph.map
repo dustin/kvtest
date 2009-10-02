@@ -1,4 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_write_test.html#afc1700db746018194b3cf2d72800d37e" title="Run the test." alt="" coords="343,5,449,33"/>
-<area shape="rect" id="node5" href="$class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="345,55,447,83"/>
+<area shape="rect" id="node3" href="$classkvtest_1_1_queued_thing_under_test.html#a20aa1921d4c470ab5655aa4d3e53bd95" title="Perform an async reset." alt="" coords="343,5,588,33"/>
+<area shape="rect" id="node5" href="$class_write_test.html#afc1700db746018194b3cf2d72800d37e" title="Run the test." alt="" coords="412,55,519,83"/>
+<area shape="rect" id="node7" href="$class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="415,106,516,134"/>
 </map>

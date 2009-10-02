@@ -1,6 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$classkvtest_1_1_sqlite3.html#a09b9ca2cd99d9bfb0725cc9f72382ef4" title="Begin a transaction (if not already in one)." alt="" coords="223,5,369,33"/>
 <area shape="rect" id="node5" href="$classkvtest_1_1_sqlite3.html#ab9c8148eafd157cefe228d35f72d89db" title="Commit a transaction (unless not currently in one)." alt="" coords="217,55,375,83"/>
-<area shape="rect" id="node7" href="$classkvtest_1_1_sqlite3.html#ad3787e4ee7f6bc0e0af610d43455054f" title="Reset database to a clean state." alt="" coords="224,106,368,134"/>
+<area shape="rect" id="node7" href="$classkvtest_1_1_sqlite3.html#ad3787e4ee7f6bc0e0af610d43455054f" title="Reset database to a clean state." alt="" coords="424,131,568,159"/>
 <area shape="rect" id="node9" href="$classkvtest_1_1_sqlite3.html#aa0a653a09e101b0caaafe82af62bc037" title="Rollback a transaction (unless not currently in one)." alt="" coords="216,157,376,185"/>
 </map>

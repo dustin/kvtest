@@ -46,6 +46,7 @@
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
+      <li><a href="#index_q"><span>q</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
       <li><a href="#index_t"><span>t</span></a></li>
@@ -59,18 +60,31 @@
 Here is a list of all documented class members with links to the class documentation for each member:
 
 <h3><a class="anchor" id="index_a">- a -</a></h3><ul>
+<li>addOperation()
+: <a class="el" href="classkvtest_1_1_async_queue.html#aa48c4811df89128900718ee0b129a46a">kvtest::AsyncQueue</a>
+</li>
 <li>addTest()
 : <a class="el" href="classkvtest_1_1_test_suite.html#a8cd9628eee382a9670076765ec25cfa8">kvtest::TestSuite</a>
+</li>
+<li>AsyncExecutor()
+: <a class="el" href="classkvtest_1_1_async_executor.html#a51665d125cfbe15814d66f80f82b00c0">kvtest::AsyncExecutor</a>
+</li>
+<li>AsyncQueue()
+: <a class="el" href="classkvtest_1_1_async_queue.html#a6da6a37adf319ba2570f6e0eaafbae2f">kvtest::AsyncQueue</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_b">- b -</a></h3><ul>
 <li>begin()
-: <a class="el" href="classkvtest_1_1_sqlite3.html#a09b9ca2cd99d9bfb0725cc9f72382ef4">kvtest::Sqlite3</a>
+: <a class="el" href="classkvtest_1_1_thing_under_test.html#a3d64e5e926c43a1ff1ac73ee003981b1">kvtest::ThingUnderTest</a>
+, <a class="el" href="classkvtest_1_1_sqlite3.html#a09b9ca2cd99d9bfb0725cc9f72382ef4">kvtest::Sqlite3</a>
 </li>
 <li>bind()
 : <a class="el" href="classkvtest_1_1_prepared_statement.html#a943d2585a3e6f90329279a423f224cd2">kvtest::PreparedStatement</a>
+</li>
+<li>BoolOperation()
+: <a class="el" href="classkvtest_1_1_bool_operation.html#a8895f8f05f9852b2b9169303c6984e2d">kvtest::BoolOperation</a>
 </li>
 </ul>
 
@@ -81,27 +95,44 @@ Here is a list of all documented class members with links to the class documenta
 , <a class="el" href="classkvtest_1_1_remembering_callback.html#a2cc04609150f7ac7813866e16e85757f">kvtest::RememberingCallback&lt; T &gt;</a>
 , <a class="el" href="class_counting_callback.html#a15c803b9dd356465fdb54b6908893d0e">CountingCallback</a>
 </li>
+<li>cb
+: <a class="el" href="classkvtest_1_1_bool_operation.html#a7492df1075088586ca4beb788d8b51b9">kvtest::BoolOperation</a>
+</li>
 <li>column()
 : <a class="el" href="classkvtest_1_1_prepared_statement.html#a7b738c9549a7fb33c97f389200b72876">kvtest::PreparedStatement</a>
 </li>
 <li>commit()
-: <a class="el" href="classkvtest_1_1_sqlite3.html#ab9c8148eafd157cefe228d35f72d89db">kvtest::Sqlite3</a>
+: <a class="el" href="classkvtest_1_1_thing_under_test.html#a53bd8f4a4f65f459a7f49adf9d88f0f3">kvtest::ThingUnderTest</a>
+, <a class="el" href="classkvtest_1_1_sqlite3.html#ab9c8148eafd157cefe228d35f72d89db">kvtest::Sqlite3</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_d">- d -</a></h3><ul>
 <li>del()
-: <a class="el" href="classkvtest_1_1_thing_under_test.html#a90b1b2a9a45cd232900a00c7d343258c">kvtest::ThingUnderTest</a>
+: <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a7c8e3f4e50ddc2abcd6bbcc09c61ce2e">kvtest::QueuedThingUnderTest</a>
+, <a class="el" href="classkvtest_1_1_thing_under_test.html#a90b1b2a9a45cd232900a00c7d343258c">kvtest::ThingUnderTest</a>
 , <a class="el" href="classkvtest_1_1_sqlite3.html#a160561b2734fbea8e66f1de984c631e5">kvtest::Sqlite3</a>
+</li>
+<li>DeleteOperation()
+: <a class="el" href="classkvtest_1_1_delete_operation.html#a036096f7fab283a0cc2e81e9b767eafe">kvtest::DeleteOperation</a>
+</li>
+<li>drainTo()
+: <a class="el" href="classkvtest_1_1_async_queue.html#a77269e09d5e3f5759ab168f5a403eac1">kvtest::AsyncQueue</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_e">- e -</a></h3><ul>
 <li>execute()
-: <a class="el" href="classkvtest_1_1_prepared_statement.html#afce5243e6697c3ad41de1c0472915613">kvtest::PreparedStatement</a>
+: <a class="el" href="classkvtest_1_1_async_operation.html#a81846256a94c053000b5e89a973a01fb">kvtest::AsyncOperation</a>
 , <a class="el" href="classkvtest_1_1_sqlite3.html#afdaa730a559b4853825147c2f8b90a9a">kvtest::Sqlite3</a>
+, <a class="el" href="classkvtest_1_1_prepared_statement.html#afce5243e6697c3ad41de1c0472915613">kvtest::PreparedStatement</a>
+, <a class="el" href="classkvtest_1_1_get_operation.html#a61858a789f5699086d598dd3fe8f2446">kvtest::GetOperation</a>
+, <a class="el" href="classkvtest_1_1_delete_operation.html#a6c1218ed2b13649481069f5ff9efa58a">kvtest::DeleteOperation</a>
+, <a class="el" href="classkvtest_1_1_set_operation.html#aab968e0d53bacb81de011bc56b82894f">kvtest::SetOperation</a>
+, <a class="el" href="classkvtest_1_1_n_o_o_p_operation.html#a90597d5c628295a38217de9df2f2a128">kvtest::NOOPOperation</a>
+, <a class="el" href="classkvtest_1_1_reset_operation.html#ad95a3959ef89a1c817830ed552472afa">kvtest::ResetOperation</a>
 </li>
 </ul>
 
@@ -118,8 +149,12 @@ Here is a list of all documented class members with links to the class documenta
 
 <h3><a class="anchor" id="index_g">- g -</a></h3><ul>
 <li>get()
-: <a class="el" href="classkvtest_1_1_thing_under_test.html#afaea3d4f87e92a9f0e0fd1419f03b6f2">kvtest::ThingUnderTest</a>
+: <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a69a9276ad2ea76480dfe15c4433c3575">kvtest::QueuedThingUnderTest</a>
+, <a class="el" href="classkvtest_1_1_thing_under_test.html#afaea3d4f87e92a9f0e0fd1419f03b6f2">kvtest::ThingUnderTest</a>
 , <a class="el" href="classkvtest_1_1_sqlite3.html#a55a0ce264a506ea484025eb49dcd692c">kvtest::Sqlite3</a>
+</li>
+<li>GetOperation()
+: <a class="el" href="classkvtest_1_1_get_operation.html#addc742a56f97d0fbaa1ca6a14b4f0c41">kvtest::GetOperation</a>
 </li>
 </ul>
 
@@ -138,7 +173,8 @@ Here is a list of all documented class members with links to the class documenta
 , <a class="el" href="class_write_test.html#abb4ccac01dca108e966fd099f17be2a8">WriteTest</a>
 </li>
 <li>noop()
-: <a class="el" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3">kvtest::ThingUnderTest</a>
+: <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#acaa97ba615241aa380a637a79714cd4a">kvtest::QueuedThingUnderTest</a>
+, <a class="el" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3">kvtest::ThingUnderTest</a>
 </li>
 <li>num_calls()
 : <a class="el" href="class_counting_callback.html#a83a0fabed0bccd49c84dcda45e697171">CountingCallback</a>
@@ -160,31 +196,45 @@ Here is a list of all documented class members with links to the class documenta
 </ul>
 
 
+<h3><a class="anchor" id="index_q">- q -</a></h3><ul>
+<li>QueuedThingUnderTest()
+: <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a4be32991b0ddd0e60bae5ea959552bba">kvtest::QueuedThingUnderTest</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_r">- r -</a></h3><ul>
 <li>RememberingCallback()
 : <a class="el" href="classkvtest_1_1_remembering_callback.html#a820e66cd7f9a8531bac4d714c645cf73">kvtest::RememberingCallback&lt; T &gt;</a>
 </li>
 <li>reset()
-: <a class="el" href="classkvtest_1_1_prepared_statement.html#a670d1f7398e3575c2e8eeaff617593d2">kvtest::PreparedStatement</a>
+: <a class="el" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9">kvtest::ThingUnderTest</a>
+, <a class="el" href="classkvtest_1_1_prepared_statement.html#a670d1f7398e3575c2e8eeaff617593d2">kvtest::PreparedStatement</a>
+, <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a20aa1921d4c470ab5655aa4d3e53bd95">kvtest::QueuedThingUnderTest</a>
 , <a class="el" href="classkvtest_1_1_sqlite3.html#ad3787e4ee7f6bc0e0af610d43455054f">kvtest::Sqlite3</a>
-, <a class="el" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9">kvtest::ThingUnderTest</a>
 </li>
 <li>rollback()
 : <a class="el" href="classkvtest_1_1_sqlite3.html#aa0a653a09e101b0caaafe82af62bc037">kvtest::Sqlite3</a>
+, <a class="el" href="classkvtest_1_1_thing_under_test.html#a038e6af55b32c6b02704da89c736c1ec">kvtest::ThingUnderTest</a>
 </li>
 <li>run()
-: <a class="el" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797">TestTest</a>
-, <a class="el" href="class_write_test.html#afc1700db746018194b3cf2d72800d37e">WriteTest</a>
-, <a class="el" href="classkvtest_1_1_test_suite.html#af20224e0e804b1d87b0a4411840e6c58">kvtest::TestSuite</a>
+: <a class="el" href="classkvtest_1_1_test_suite.html#af20224e0e804b1d87b0a4411840e6c58">kvtest::TestSuite</a>
+, <a class="el" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797">TestTest</a>
 , <a class="el" href="classkvtest_1_1_test.html#a6ccb6d6ddcf7040217fb83392efa535c">kvtest::Test</a>
+, <a class="el" href="classkvtest_1_1_async_executor.html#a79beaa9c3153ff628dbc79a81b5015c1">kvtest::AsyncExecutor</a>
+, <a class="el" href="class_write_test.html#afc1700db746018194b3cf2d72800d37e">WriteTest</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_s">- s -</a></h3><ul>
 <li>set()
-: <a class="el" href="classkvtest_1_1_thing_under_test.html#a46b443ce10a36a3669409bc050d73e92">kvtest::ThingUnderTest</a>
+: <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a1499efa69b4935355f3225ea99dfc4f4">kvtest::QueuedThingUnderTest</a>
+, <a class="el" href="classkvtest_1_1_thing_under_test.html#a46b443ce10a36a3669409bc050d73e92">kvtest::ThingUnderTest</a>
 , <a class="el" href="classkvtest_1_1_sqlite3.html#a3c4122dd29d8bd6f9039654f95504864">kvtest::Sqlite3</a>
+</li>
+<li>SetOperation()
+: <a class="el" href="classkvtest_1_1_set_operation.html#aa6995664123906a5c246de45ab9533c4">kvtest::SetOperation</a>
 </li>
 <li>Sqlite3()
 : <a class="el" href="classkvtest_1_1_sqlite3.html#a7850276fd88fa9d0998de077f1ce787d">kvtest::Sqlite3</a>
@@ -220,11 +270,17 @@ Here is a list of all documented class members with links to the class documenta
 
 
 <h3><a class="anchor" id="index_0x7e">- ~ -</a></h3><ul>
+<li>~AsyncQueue()
+: <a class="el" href="classkvtest_1_1_async_queue.html#aead60018f1f8e91805fd385a7bec9b44">kvtest::AsyncQueue</a>
+</li>
 <li>~LockHolder()
 : <a class="el" href="classkvtest_1_1_lock_holder.html#a8a394b33eb3a665ba4646f42676276d9">kvtest::LockHolder</a>
 </li>
 <li>~PreparedStatement()
 : <a class="el" href="classkvtest_1_1_prepared_statement.html#a5446d9b63e5b696d0668dc277663c2da">kvtest::PreparedStatement</a>
+</li>
+<li>~QueuedThingUnderTest()
+: <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a0c35008f8a15a9f004b26ac1d2bbd829">kvtest::QueuedThingUnderTest</a>
 </li>
 <li>~RememberingCallback()
 : <a class="el" href="classkvtest_1_1_remembering_callback.html#ac7e9c537408bd9ae36a7b9a0d47951d3">kvtest::RememberingCallback&lt; T &gt;</a>
@@ -234,7 +290,7 @@ Here is a list of all documented class members with links to the class documenta
 </li>
 </ul>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Thu Oct 1 23:18:09 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:10:51 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

@@ -1,3 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classkvtest_1_1_prepared_statement.html" title="A sqlite prepared statement." alt="" coords="5,5,187,33"/>
+<area shape="rect" id="node1" href="$classkvtest_1_1_callback.html" title="kvtest::Callback\&lt; T \&gt;" alt="" coords="7,5,153,33"/>
+<area shape="rect" id="node3" href="$classkvtest_1_1_remembering_callback.html" title="Threadsafe callback implementation that just captures the value." alt="" coords="203,5,435,33"/>
 </map>

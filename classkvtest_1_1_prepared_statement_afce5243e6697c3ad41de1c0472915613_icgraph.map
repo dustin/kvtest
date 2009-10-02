@@ -1,9 +1,9 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$classkvtest_1_1_sqlite3.html#a160561b2734fbea8e66f1de984c631e5" title="Overrides del()." alt="" coords="307,30,437,58"/>
 <area shape="rect" id="node5" href="$classkvtest_1_1_sqlite3.html#afdaa730a559b4853825147c2f8b90a9a" title="Shortcut to execute a simple query." alt="" coords="292,81,452,109"/>
-<area shape="rect" id="node15" href="$classkvtest_1_1_sqlite3.html#a3c4122dd29d8bd6f9039654f95504864" title="Overrides set()." alt="" coords="307,131,437,159"/>
+<area shape="rect" id="node16" href="$classkvtest_1_1_sqlite3.html#a3c4122dd29d8bd6f9039654f95504864" title="Overrides set()." alt="" coords="307,131,437,159"/>
 <area shape="rect" id="node7" href="$classkvtest_1_1_sqlite3.html#a09b9ca2cd99d9bfb0725cc9f72382ef4" title="Begin a transaction (if not already in one)." alt="" coords="508,5,655,33"/>
 <area shape="rect" id="node9" href="$classkvtest_1_1_sqlite3.html#ab9c8148eafd157cefe228d35f72d89db" title="Commit a transaction (unless not currently in one)." alt="" coords="503,55,660,83"/>
-<area shape="rect" id="node11" href="$classkvtest_1_1_sqlite3.html#ad3787e4ee7f6bc0e0af610d43455054f" title="Reset database to a clean state." alt="" coords="509,106,653,134"/>
+<area shape="rect" id="node11" href="$classkvtest_1_1_sqlite3.html#ad3787e4ee7f6bc0e0af610d43455054f" title="Reset database to a clean state." alt="" coords="709,131,853,159"/>
 <area shape="rect" id="node13" href="$classkvtest_1_1_sqlite3.html#aa0a653a09e101b0caaafe82af62bc037" title="Rollback a transaction (unless not currently in one)." alt="" coords="501,157,661,185"/>
 </map>

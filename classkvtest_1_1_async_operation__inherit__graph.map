@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classkvtest_1_1_bool_operation.html" title="Abstract base class for asynchronous operations with boolean callbacks." alt="" coords="217,81,367,109"/>
+<area shape="rect" id="node13" href="$classkvtest_1_1_get_operation.html" title="Asynchronous get operation." alt="" coords="220,131,364,159"/>
+<area shape="rect" id="node5" href="$classkvtest_1_1_delete_operation.html" title="Async delete operation." alt="" coords="416,5,579,33"/>
+<area shape="rect" id="node7" href="$classkvtest_1_1_n_o_o_p_operation.html" title="A NOOP that ensures it runs on the async&#39;s thread." alt="" coords="416,55,579,83"/>
+<area shape="rect" id="node9" href="$classkvtest_1_1_reset_operation.html" title="Async interface to reset." alt="" coords="419,106,576,134"/>
+<area shape="rect" id="node11" href="$classkvtest_1_1_set_operation.html" title="Async set operation." alt="" coords="425,157,569,185"/>
+</map>

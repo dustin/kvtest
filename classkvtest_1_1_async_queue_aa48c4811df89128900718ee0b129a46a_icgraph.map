@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classkvtest_1_1_queued_thing_under_test.html#a7c8e3f4e50ddc2abcd6bbcc09c61ce2e" title="perform an async delete." alt="" coords="292,5,527,33"/>
+<area shape="rect" id="node5" href="$classkvtest_1_1_queued_thing_under_test.html#a69a9276ad2ea76480dfe15c4433c3575" title="Perform an async get." alt="" coords="292,55,527,83"/>
+<area shape="rect" id="node7" href="$classkvtest_1_1_queued_thing_under_test.html#acaa97ba615241aa380a637a79714cd4a" title="Perform a noop on the async thread (useful for verifying everything is done)." alt="" coords="287,106,532,134"/>
+<area shape="rect" id="node9" href="$classkvtest_1_1_queued_thing_under_test.html#a20aa1921d4c470ab5655aa4d3e53bd95" title="Perform an async reset." alt="" coords="287,157,532,185"/>
+<area shape="rect" id="node11" href="$classkvtest_1_1_queued_thing_under_test.html#a1499efa69b4935355f3225ea99dfc4f4" title="Perform an async set." alt="" coords="292,207,527,235"/>
+</map>

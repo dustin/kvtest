@@ -39,7 +39,7 @@ Inheritance diagram for kvtest::ThingUnderTest:</div>
 <div class="dynsection">
 <div class="center"><img src="classkvtest_1_1_thing_under_test__inherit__graph.png" border="0" usemap="#kvtest_1_1_thing_under_test_inherit__map" alt="Inheritance graph"/></div>
 <map name="kvtest_1_1_thing_under_test_inherit__map" id="kvtest_1_1_thing_under_test_inherit__map">
-<area shape="rect" id="node3" href="classkvtest_1_1_sqlite3.html" title="The sqlite driver." alt="" coords="33,83,140,111"/></map>
+<area shape="rect" id="node3" href="classkvtest_1_1_queued_thing_under_test.html" title="Asynchronous wrapper for a synchronous ThingUnderTest." alt="" coords="5,83,213,111"/><area shape="rect" id="node5" href="classkvtest_1_1_sqlite3.html" title="The sqlite driver." alt="" coords="237,83,344,111"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classkvtest_1_1_thing_under_test-members.html">List of all members.</a></p>
@@ -56,13 +56,19 @@ virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the value for the given key.  <a href="#afaea3d4f87e92a9f0e0fd1419f03b6f2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkvtest_1_1_thing_under_test.html#a90b1b2a9a45cd232900a00c7d343258c">del</a> (std::string &amp;key, <a class="el" href="classkvtest_1_1_callback.html">Callback</a>&lt; bool &gt; &amp;cb)=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Delete a value for a key.  <a href="#a90b1b2a9a45cd232900a00c7d343258c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d64e5e926c43a1ff1ac73ee003981b1"></a><!-- doxytag: member="kvtest::ThingUnderTest::begin" ref="a3d64e5e926c43a1ff1ac73ee003981b1" args="()" -->
+virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkvtest_1_1_thing_under_test.html#a3d64e5e926c43a1ff1ac73ee003981b1">begin</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">For things that support transactions, this signals the beginning of one. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53bd8f4a4f65f459a7f49adf9d88f0f3"></a><!-- doxytag: member="kvtest::ThingUnderTest::commit" ref="a53bd8f4a4f65f459a7f49adf9d88f0f3" args="()" -->
+virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkvtest_1_1_thing_under_test.html#a53bd8f4a4f65f459a7f49adf9d88f0f3">commit</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">For things that support transactions, this signals the successful completion of one. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a038e6af55b32c6b02704da89c736c1ec"></a><!-- doxytag: member="kvtest::ThingUnderTest::rollback" ref="a038e6af55b32c6b02704da89c736c1ec" args="()" -->
+virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkvtest_1_1_thing_under_test.html#a038e6af55b32c6b02704da89c736c1ec">rollback</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">For things that support transactions, this signals the unsuccessful completion of one. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>An individual kv storage (or way to access a kv storage). </p>
-<dl><dt><b>Examples: </b></dt><dd>
-<p><a class="el" href="sqlite3-async-test_8cc-example.html#_a12">sqlite3-async-test.cc</a>.</p>
-</dd>
-</dl><hr/><h2>Member Function Documentation</h2>
+<hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a90b1b2a9a45cd232900a00c7d343258c"></a><!-- doxytag: member="kvtest::ThingUnderTest::del" ref="a90b1b2a9a45cd232900a00c7d343258c" args="(std::string &amp;key, Callback&lt; bool &gt; &amp;cb)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -97,15 +103,14 @@ virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hr
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classkvtest_1_1_sqlite3.html#a160561b2734fbea8e66f1de984c631e5">kvtest::Sqlite3</a>.</p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sqlite3-async-test_8cc-example.html#a16">sqlite3-async-test.cc</a>.</dd>
-</dl>
+<p>Implemented in <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a7c8e3f4e50ddc2abcd6bbcc09c61ce2e">kvtest::QueuedThingUnderTest</a>, and <a class="el" href="classkvtest_1_1_sqlite3.html#a160561b2734fbea8e66f1de984c631e5">kvtest::Sqlite3</a>.</p>
+
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dynsection">
 <div class="center"><img src="classkvtest_1_1_thing_under_test_a90b1b2a9a45cd232900a00c7d343258c_icgraph.png" border="0" usemap="#classkvtest_1_1_thing_under_test_a90b1b2a9a45cd232900a00c7d343258c_icgraph_map" alt=""></div>
 <map name="classkvtest_1_1_thing_under_test_a90b1b2a9a45cd232900a00c7d343258c_icgraph_map" id="classkvtest_1_1_thing_under_test_a90b1b2a9a45cd232900a00c7d343258c_icgraph">
-<area shape="rect" id="node3" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="244,5,345,33"/></map>
+<area shape="rect" id="node3" href="classkvtest_1_1_delete_operation.html#a6c1218ed2b13649481069f5ff9efa58a" title="Execute the underlying delete." alt="" coords="244,5,460,33"/><area shape="rect" id="node5" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="301,55,403,83"/></map>
 </div>
 </p>
 
@@ -145,14 +150,14 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classkvtest_1_1_sqlite3.html#a55a0ce264a506ea484025eb49dcd692c">kvtest::Sqlite3</a>.</p>
+<p>Implemented in <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a69a9276ad2ea76480dfe15c4433c3575">kvtest::QueuedThingUnderTest</a>, and <a class="el" href="classkvtest_1_1_sqlite3.html#a55a0ce264a506ea484025eb49dcd692c">kvtest::Sqlite3</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dynsection">
 <div class="center"><img src="classkvtest_1_1_thing_under_test_afaea3d4f87e92a9f0e0fd1419f03b6f2_icgraph.png" border="0" usemap="#classkvtest_1_1_thing_under_test_afaea3d4f87e92a9f0e0fd1419f03b6f2_icgraph_map" alt=""></div>
 <map name="classkvtest_1_1_thing_under_test_afaea3d4f87e92a9f0e0fd1419f03b6f2_icgraph_map" id="classkvtest_1_1_thing_under_test_afaea3d4f87e92a9f0e0fd1419f03b6f2_icgraph">
-<area shape="rect" id="node3" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="244,5,345,33"/></map>
+<area shape="rect" id="node3" href="classkvtest_1_1_get_operation.html#a61858a789f5699086d598dd3fe8f2446" title="Execute the underlying get and fire the result to the callback." alt="" coords="243,5,443,33"/><area shape="rect" id="node5" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="292,55,393,83"/></map>
 </div>
 </p>
 
@@ -181,8 +186,9 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sqlite3-async-test_8cc-example.html#a17">sqlite3-async-test.cc</a>.</dd>
-</dl>
+
+<p>Reimplemented in <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#acaa97ba615241aa380a637a79714cd4a">kvtest::QueuedThingUnderTest</a>.</p>
+
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dynsection">
@@ -244,14 +250,14 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classkvtest_1_1_sqlite3.html#a3c4122dd29d8bd6f9039654f95504864">kvtest::Sqlite3</a>.</p>
+<p>Implemented in <a class="el" href="classkvtest_1_1_queued_thing_under_test.html#a1499efa69b4935355f3225ea99dfc4f4">kvtest::QueuedThingUnderTest</a>, and <a class="el" href="classkvtest_1_1_sqlite3.html#a3c4122dd29d8bd6f9039654f95504864">kvtest::Sqlite3</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dynsection">
 <div class="center"><img src="classkvtest_1_1_thing_under_test_a46b443ce10a36a3669409bc050d73e92_icgraph.png" border="0" usemap="#classkvtest_1_1_thing_under_test_a46b443ce10a36a3669409bc050d73e92_icgraph_map" alt=""></div>
 <map name="classkvtest_1_1_thing_under_test_a46b443ce10a36a3669409bc050d73e92_icgraph_map" id="classkvtest_1_1_thing_under_test_a46b443ce10a36a3669409bc050d73e92_icgraph">
-<area shape="rect" id="node3" href="class_write_test.html#afc1700db746018194b3cf2d72800d37e" title="Run the test." alt="" coords="244,5,351,33"/><area shape="rect" id="node5" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="247,55,348,83"/></map>
+<area shape="rect" id="node3" href="classkvtest_1_1_set_operation.html#aab968e0d53bacb81de011bc56b82894f" title="Call the underlying set method." alt="" coords="244,5,441,33"/><area shape="rect" id="node5" href="class_write_test.html#afc1700db746018194b3cf2d72800d37e" title="Run the test." alt="" coords="289,55,396,83"/><area shape="rect" id="node7" href="class_test_test.html#a1fc8e9deae4de30efb0f4afebc938797" title="Run the test." alt="" coords="292,106,393,134"/></map>
 </div>
 </p>
 
@@ -261,7 +267,7 @@ Here is the caller graph for this function:</div>
 <li><a class="el" href="base-test_8hh_source.html">base-test.hh</a></li>
 </ul>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Thu Oct 1 23:18:10 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 11:10:54 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>
