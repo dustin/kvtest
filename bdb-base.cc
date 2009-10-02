@@ -12,6 +12,7 @@ using namespace kvtest;
 BDBStore::BDBStore(const char *p, bool should_autocommit) {
     path = p;
     autocommit = should_autocommit;
+    db = NULL;
     open();
 }
 
