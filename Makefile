@@ -3,16 +3,19 @@ LDFLAGS=-g
 
 COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh
 OBJS=tests.o suite.o
-PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o
+PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o bdb-test.o
 SQLITE_OBJS=sqlite-base.o
 SQLITE_COMMON=sqlite-base.hh
 
 BDB_VER=4.8
 BDB_CFLAGS=-I/usr/local/BerkeleyDB.$(BDB_VER)/include
 BDB_LDFLAGS=-L/usr/local/BerkeleyDB.$(BDB_VER)/lib -ldb-$(BDB_VER)
+BDB_OBJS=bdb-base.o
+BDB_COMMON=bdb-base.hh
 
-ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS)
+ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS)
 ALL_PROGS=example-test sqlite3-test sqlite3-async-test
+BDB_PROGS=bdb-store
 
 .PHONY: clean
 
@@ -27,11 +30,11 @@ sqlite3-test: sqlite3-test.o $(SQLITE_OBJS) $(OBJS) $(COMMON)
 sqlite3-async-test: sqlite3-async-test.o $(SQLITE_OBJS) $(OBJS) $(COMMON)
 	$(CXX) -o $@ sqlite3-async-test.o $(SQLITE_OBJS) $(OBJS) $(LDFLAGS) -lsqlite3
 
-bdb-test: bdb-test.o $(OBJS) $(COMMON)
-	$(CXX) -o $@ bdb-test.o $(OBJS) $(LDFLAGS) $(BDB_LDFLAGS)
+bdb-test: bdb-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
+	$(CXX) -o $@ bdb-test.o $(BDB_OBJS) $(OBJS) $(LDFLAGS) $(BDB_LDFLAGS)
 
 clean:
-	-rm $(ALL_OBJS) $(ALL_PROGS)
+	-rm $(ALL_OBJS) $(ALL_PROGS) $(BDB_PROGS) $(BDB_OBJS)
 
 .cc.o: $< $(COMMON)
 	$(CXX) $(CFLAGS) -c -o $@ $<
@@ -42,5 +45,9 @@ $(PROG_OBJS): $(COMMON)
 $(SQLITE_OBJS): $(SQLITE_COMMON) $(COMMON)
 sqlite3-async-test.o: async.hh
 
-bdb-test.o: bdb-test.cc
-	$(CXX) $(CFLAGS) $(BDB_CFLAGS) -c -o $@ $<
+bdb-base.o: bdb-base.cc $(BDB_COMMON)
+	$(CXX) $(CFLAGS) $(BDB_CFLAGS) -c -o $@ bdb-base.cc
+
+bdb-test.o: bdb-test.cc $(BDB_COMMON)
+	$(CXX) $(CFLAGS) $(BDB_CFLAGS) -c -o $@ bdb-test.cc
+
