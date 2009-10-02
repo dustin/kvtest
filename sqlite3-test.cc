@@ -5,179 +5,11 @@
 #include <iostream>
 #include <queue>
 
-#include <sqlite3.h>
-
 #include "base-test.hh"
 #include "suite.hh"
+#include "sqlite-base.hh"
 
-#define MAX_STEPS 10000
-
-class PreparedStatement {
-public:
-    PreparedStatement(sqlite3 *d, const char *query) {
-        db = d;
-        if(sqlite3_prepare_v2(db, query, strlen(query), &st, NULL)
-           != SQLITE_OK) {
-            throw std::runtime_error(sqlite3_errmsg(db));
-        }
-    }
-
-    ~PreparedStatement() {
-        sqlite3_finalize(st);
-    }
-
-    void bind(int pos, const char *s) {
-        sqlite3_bind_text(st, pos, s, strlen(s), SQLITE_TRANSIENT);
-    }
-
-    int execute() {
-        int steps_run = 0, rc = 0;
-        while ((rc = sqlite3_step(st)) != SQLITE_DONE) {
-            steps_run++;
-            assert(steps_run < MAX_STEPS);
-        }
-        return sqlite3_changes(db);
-    }
-
-    bool fetch() {
-        bool rv = true;
-        assert(st);
-        switch(sqlite3_step(st)) {
-        case SQLITE_BUSY:
-            throw std::runtime_error("DB was busy.");
-            break;
-        case SQLITE_ROW:
-            break;
-        case SQLITE_DONE:
-            rv = false;
-            break;
-        default:
-            throw std::runtime_error("Unhandled case.");
-        }
-        return rv;
-    }
-
-    const char *column(int x) {
-        return (char*)sqlite3_column_text(st, x);
-    }
-
-private:
-    sqlite3      *db;
-    sqlite3_stmt *st;
-};
-
-class Sqlite3 : public kvtest::ThingUnderTest {
-public:
-
-    Sqlite3(const char *fn) {
-        filename = fn;
-        open();
-    }
-
-    ~Sqlite3() {
-        close();
-    }
-
-    void open() {
-        if(!db) {
-            if(sqlite3_open(filename, &db) !=  SQLITE_OK) {
-                throw std::runtime_error("Error initializing sqlite3");
-            }
-
-            intransaction = false;
-            initTables();
-        }
-    }
-
-    void close() {
-        if(db) {
-            intransaction = false;
-            sqlite3_close(db);
-            db = NULL;
-        }
-    }
-
-    void initTables() {
-        execute("create table if not exists kv"
-                " (k varchar(250) primary key on conflict replace,"
-                "  v text)");
-    }
-
-    void destroyTables() {
-        execute("drop table if exists kv");
-    }
-
-    void reset() {
-        close();
-        open();
-        destroyTables();
-        initTables();
-        execute("vacuum");
-    }
-
-    void begin() {
-        if(!intransaction) {
-            execute("begin");
-            intransaction = true;
-        }
-    }
-
-    void commit() {
-        if(intransaction) {
-            intransaction = false;
-            execute("commit");
-        }
-    }
-
-    void rollback() {
-        if(intransaction) {
-            intransaction = false;
-            execute("rollback");
-        }
-    }
-
-    void set(std::string &key, std::string &val,
-             kvtest::Callback<bool> &cb) {
-        PreparedStatement st(db, "insert into kv(k,v) values(?, ?)");
-        st.bind(1, key.c_str());
-        st.bind(2, val.c_str());
-        bool rv = st.execute() == 1;
-        cb.callback(rv);
-    }
-
-    void get(std::string &key, kvtest::Callback<kvtest::GetValue> &cb) {
-        PreparedStatement st(db, "select v from kv where k = ?");
-        st.bind(1, key.c_str());
-
-        if(st.fetch()) {
-            std::string str(st.column(0));
-            kvtest::GetValue rv(str, true);
-            cb.callback(rv);
-        } else {
-            std::string str(":(");
-            kvtest::GetValue rv(str, false);
-            cb.callback(rv);
-        }
-    }
-
-    void del(std::string &key, kvtest::Callback<bool> &cb) {
-        PreparedStatement st(db, "delete from kv where k = ?");
-        st.bind(1, key.c_str());
-        bool rv = st.execute() == 1;
-        cb.callback(rv);
-    }
-
-protected:
-    void execute(const char *query) {
-        PreparedStatement st(db, query);
-        st.execute();
-    }
-
-private:
-    const char *filename;
-    sqlite3    *db;
-    bool        intransaction;
-};
+using namespace kvtest;
 
 class DBOperation {
 public:
@@ -187,7 +19,7 @@ public:
 class ResetOperation : public DBOperation {
 public:
 
-    ResetOperation(kvtest::Callback<bool> *c) {
+    ResetOperation(Callback<bool> *c) {
         cb = c;
     }
 
@@ -199,7 +31,7 @@ public:
     }
 
 private:
-    kvtest::Callback<bool> *cb;
+    Callback<bool> *cb;
 };
 
 
@@ -207,7 +39,7 @@ class SetOperation : public DBOperation {
 public:
 
     SetOperation(std::string &k, std::string &v,
-                 kvtest::Callback<bool> *c) {
+                 Callback<bool> *c) {
         key = k;
         value = v;
         cb = c;
@@ -218,15 +50,15 @@ public:
     }
 
 private:
-    std::string             key;
-    std::string             value;
-    kvtest::Callback<bool> *cb;
+    std::string     key;
+    std::string     value;
+    Callback<bool> *cb;
 };
 
 class GetOperation : public DBOperation {
 public:
 
-    GetOperation(std::string &k, kvtest::Callback<kvtest::GetValue> *c) {
+    GetOperation(std::string &k, Callback<GetValue> *c) {
         key = k;
         cb = c;
     }
@@ -237,13 +69,13 @@ public:
 
 private:
     std::string                         key;
-    kvtest::Callback<kvtest::GetValue> *cb;
+    Callback<GetValue> *cb;
 };
 
 class DeleteOperation : public DBOperation {
 public:
 
-    DeleteOperation(std::string &k, kvtest::Callback<bool> *c) {
+    DeleteOperation(std::string &k, Callback<bool> *c) {
         key = k;
         cb = c;
     }
@@ -254,7 +86,7 @@ public:
 
 private:
     std::string             key;
-    kvtest::Callback<bool> *cb;
+    Callback<bool> *cb;
 };
 
 class InboundQueue {
@@ -270,7 +102,7 @@ public:
     }
 
     void addOperation(DBOperation *op) {
-        kvtest::LockHolder lh(&mutex);
+        LockHolder lh(&mutex);
         ops.push(op);
         if(pthread_cond_signal(&cond) != 0) {
             throw std::runtime_error("Error signaling change.");
@@ -278,7 +110,7 @@ public:
     }
 
     void drainTo(std::queue<DBOperation*> &out) {
-        kvtest::LockHolder lh(&mutex);
+        LockHolder lh(&mutex);
         if(ops.empty()) {
             if(pthread_cond_wait(&cond, &mutex) != 0) {
                 throw std::runtime_error("Error waiting for signal.");
@@ -339,7 +171,7 @@ static void* launch_executor_thread(void* arg) {
     }
 }
 
-class QueuedSqlite : public kvtest::ThingUnderTest {
+class QueuedSqlite : public ThingUnderTest {
 public:
 
     QueuedSqlite(const char *path) {
@@ -361,21 +193,21 @@ public:
 
     void reset() {
         std::queue<DBOperation*> opq;
-        kvtest::RememberingCallback<bool> cb;
+        RememberingCallback<bool> cb;
         iq->addOperation(new ResetOperation(&cb));
         cb.waitForValue();
     }
 
     void set(std::string &key, std::string &val,
-             kvtest::Callback<bool> &cb) {
+             Callback<bool> &cb) {
         iq->addOperation(new SetOperation(key, val, &cb));
     }
 
-    void get(std::string &key, kvtest::Callback<kvtest::GetValue> &cb) {
+    void get(std::string &key, Callback<GetValue> &cb) {
         iq->addOperation(new GetOperation(key, &cb));
     }
 
-    void del(std::string &key, kvtest::Callback<bool> &cb) {
+    void del(std::string &key, Callback<bool> &cb) {
         iq->addOperation(new DeleteOperation(key, &cb));
     }
 
@@ -389,6 +221,6 @@ private:
 int main(int argc, char **args) {
     QueuedSqlite *thing = new QueuedSqlite("/tmp/test.db");
 
-    kvtest::TestSuite suite(thing);
+    TestSuite suite(thing);
     return suite.run() ? 0 : 1;
 }

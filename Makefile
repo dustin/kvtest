@@ -14,8 +14,8 @@ all: $(ALL_PROGS)
 example-test: example-test.o $(OBJS) $(COMMON)
 	$(CXX) -o $@ example-test.o $(OBJS) $(LDFLAGS) -lsqlite3
 
-sqlite3-test: sqlite3-test.o $(OBJS) $(COMMON)
-	$(CXX) -o $@ sqlite3-test.o $(OBJS) $(LDFLAGS) -lsqlite3
+sqlite3-test: sqlite3-test.o sqlite-base.o $(OBJS) $(COMMON)
+	$(CXX) -o $@ sqlite3-test.o sqlite-base.o $(OBJS) $(LDFLAGS) -lsqlite3
 
 clean:
 	-rm $(ALL_OBJS) $(ALL_PROGS)
@@ -25,3 +25,5 @@ clean:
 
 $(OBJS): $(COMMON)
 $(PROG_OBJS): $(COMMON)
+
+sqlite3-test.o: sqlite-base.hh
