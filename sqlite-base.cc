@@ -107,11 +107,14 @@ namespace kvtest {
     }
 
     void Sqlite3::reset() {
-        close();
-        open();
-        destroyTables();
-        initTables();
-        execute("vacuum");
+        if(db) {
+            rollback();
+            close();
+            open();
+            destroyTables();
+            initTables();
+            execute("vacuum");
+        }
     }
 
     void Sqlite3::begin() {
