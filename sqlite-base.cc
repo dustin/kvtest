@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "sqlite-base.hh"
 
 #define MAX_STEPS 10000
