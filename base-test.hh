@@ -12,6 +12,12 @@
 #include "callbacks.hh"
 
 /**
+ * \example example-test.cc
+ * \example sqlite3-test.cc
+ * \example sqlite3-async-test.cc
+ */
+
+/**
  * General kvtest interfaces.
  */
 namespace kvtest {
