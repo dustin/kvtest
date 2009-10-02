@@ -40,11 +40,9 @@ namespace kvtest {
         }
 
         void callback(T &value) {
-            std::cout << "Callback called with " << value << std::endl;
             LockHolder lh(&mutex);
             val = value;
             fired = true;
-            std::cout << "Firing to " << &cond << std::endl;
             if(pthread_cond_broadcast(&cond) != 0) {
                 throw std::runtime_error("Failed to broadcast change.");
             }
@@ -53,12 +51,9 @@ namespace kvtest {
         void waitForValue() {
             LockHolder lh(&mutex);
             if (!fired) {
-                std::cout << "Waiting for value from " << &cond << std::endl;
                 if(pthread_cond_wait(&cond, &mutex) != 0) {
                     throw std::runtime_error("Failed to wait for condition.");
                 }
-            } else {
-                std::cout << "Callback already fired with " << val << std::endl;
             }
             assert(fired);
         }

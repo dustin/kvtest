@@ -50,7 +50,6 @@ bool TestTest::run(ThingUnderTest *tut) {
     assertFalse(getCb.fired, "Expected callback to not have fired");
     tut->get(testKey, getCb);
     getCb.waitForValue();
-    std::cout << "getValue value:  " << getCb.val.value << std::endl;
     assertTrue(getCb.val.success, "Expected success getting initial value");
     assertEquals(getCb.val.value, testValue);
 
