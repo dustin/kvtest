@@ -36,18 +36,14 @@
 <span class="keyword">using namespace </span>kvtest;
 
 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **args) {
-    <a name="_a0"></a><a class="code" href="classkvtest_1_1_b_d_b_store.html" title="A Berkley DB store.">BDBStore</a> *bdb = <span class="keyword">new</span> <a class="code" href="classkvtest_1_1_b_d_b_store.html" title="A Berkley DB store.">BDBStore</a>(<span class="stringliteral">&quot;/tmp/test.bdb&quot;</span>, <span class="keyword">false</span>);
-    <a name="_a1"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html" title="Asynchronous wrapper for a synchronous KVStore.">QueuedKVStore</a> *thing = <span class="keyword">new</span> <a class="code" href="classkvtest_1_1_queued_k_v_store.html" title="Asynchronous wrapper for a synchronous KVStore.">QueuedKVStore</a>(bdb);
+    <a name="_a0"></a><a class="code" href="classkvtest_1_1_b_d_b_store.html" title="A Berkley DB store.">BDBStore</a> bdb(<span class="stringliteral">&quot;/tmp/test.bdb&quot;</span>, <span class="keyword">false</span>);
+    <a name="_a1"></a><a class="code" href="classkvtest_1_1_queued_k_v_store.html" title="Asynchronous wrapper for a synchronous KVStore.">QueuedKVStore</a> thing(&amp;bdb);
 
-    <a name="_a2"></a><a class="code" href="classkvtest_1_1_test_suite.html" title="A series of tests to run.">TestSuite</a> suite(thing);
-    <span class="keywordtype">int</span> rv = suite.<a name="a3"></a><a class="code" href="classkvtest_1_1_test_suite.html#af20224e0e804b1d87b0a4411840e6c58" title="Run the test suite.">run</a>() ? 0 : 1;
-    <span class="keyword">delete</span> thing;
-    <span class="keyword">delete</span> bdb;
-
-    <span class="keywordflow">return</span> rv;
+    <a name="_a2"></a><a class="code" href="classkvtest_1_1_test_suite.html" title="A series of tests to run.">TestSuite</a> suite(&amp;thing);
+    <span class="keywordflow">return</span> suite.<a name="a3"></a><a class="code" href="classkvtest_1_1_test_suite.html#af20224e0e804b1d87b0a4411840e6c58" title="Run the test suite.">run</a>() ? 0 : 1;
 }
 </pre></div> </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 14:53:27 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 15:08:35 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

@@ -58,13 +58,12 @@
 };
 
 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **args) {
-    SimpleThing *thing = <span class="keyword">new</span> SimpleThing();
-
-    <a name="_a4"></a><a class="code" href="classkvtest_1_1_test_suite.html" title="A series of tests to run.">kvtest::TestSuite</a> suite(thing);
+    SimpleThing thing;
+    <a name="_a4"></a><a class="code" href="classkvtest_1_1_test_suite.html" title="A series of tests to run.">kvtest::TestSuite</a> suite(&amp;thing);
     <span class="keywordflow">return</span> suite.run() ? 0 : 1;
 }
 </pre></div> </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 14:53:27 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Oct 2 15:08:35 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>
