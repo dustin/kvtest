@@ -118,10 +118,8 @@ bool WriteTest::run(ThingUnderTest *tut) {
 
     assertEquals(i, cb.x);
 
-    i++; // Did another transaction
-
     int delta = end - start;
-    std::cout << "Ran " << i << "(" << cb.x << ") operations in "
+    std::cout << "Ran " << i << " operations in "
               << delta << "s ("
               << (i/delta) << " ops/s)"
               << std::endl;
