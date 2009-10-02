@@ -7,9 +7,18 @@
 
 namespace kvtest {
 
+    /**
+     * A Berkley DB store.
+     */
     class BDBStore : public KVStore {
     public:
 
+        /**
+         * Get a BDBStore.
+         *
+         * @param p the path to the file holding the db
+         * @param should_autocommit if true, sync after every set
+         */
         BDBStore(char const *p, bool should_autocommit=true);
 
         ~BDBStore() {
