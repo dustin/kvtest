@@ -61,6 +61,7 @@ namespace kvtest {
 
     Sqlite3::Sqlite3(const char *fn) {
         filename = fn;
+        db = NULL;
         open();
     }
 
