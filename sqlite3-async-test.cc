@@ -36,45 +36,59 @@ private:
     Callback<bool> *cb;
 };
 
-class NOOPOperation : public DBOperation {
+class BoolOperation : public DBOperation {
 public:
-
-    NOOPOperation(Callback<bool> *c) {
+    BoolOperation(Callback<bool> *c) {
         cb = c;
     }
+protected:
+    Callback<bool> *cb;
+};
+
+class NOOPOperation : public BoolOperation {
+public:
+    NOOPOperation(Callback<bool> *c) : BoolOperation(c) {}
 
     bool execute(Sqlite3 *db) {
         bool rv = true;
         cb->callback(rv);
     }
-
-private:
-    Callback<bool> *cb;
 };
 
-class SetOperation : public DBOperation {
+class SetOperation : public BoolOperation {
 public:
 
     SetOperation(std::string &k, std::string &v,
-                 Callback<bool> *c) {
+                 Callback<bool> *c) : BoolOperation(c) {
         key = k;
         value = v;
-        cb = c;
     }
 
     bool execute(Sqlite3 *db) {
         db->set(key, value, *cb);
     }
-
 private:
     std::string     key;
     std::string     value;
-    Callback<bool> *cb;
+};
+
+class DeleteOperation : public BoolOperation {
+public:
+
+    DeleteOperation(std::string &k, Callback<bool> *c) : BoolOperation(c) {
+        key = k;
+    }
+
+    bool execute(Sqlite3 *db) {
+        db->del(key, *cb);
+    }
+
+private:
+    std::string key;
 };
 
 class GetOperation : public DBOperation {
 public:
-
     GetOperation(std::string &k, Callback<GetValue> *c) {
         key = k;
         cb = c;
@@ -87,23 +101,6 @@ public:
 private:
     std::string                         key;
     Callback<GetValue> *cb;
-};
-
-class DeleteOperation : public DBOperation {
-public:
-
-    DeleteOperation(std::string &k, Callback<bool> *c) {
-        key = k;
-        cb = c;
-    }
-
-    bool execute(Sqlite3 *db) {
-        db->del(key, *cb);
-    }
-
-private:
-    std::string             key;
-    Callback<bool> *cb;
 };
 
 class InboundQueue {
