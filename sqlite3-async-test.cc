@@ -11,6 +11,8 @@
 
 using namespace kvtest;
 
+#define MAX_DRAIN 25000
+
 class DBOperation {
 public:
     virtual bool execute(Sqlite3 *db) {}
@@ -131,7 +133,7 @@ public:
                 throw std::runtime_error("Error waiting for signal.");
             }
         }
-        while(!ops.empty()) {
+        for(int i = 0; i < MAX_DRAIN && !ops.empty(); i++) {
             out.push(ops.front());
             ops.pop();
         }
