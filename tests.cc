@@ -69,10 +69,12 @@ bool TestTest::run(ThingUnderTest *tut) {
     assertFalse(getCb2.val.success, "Expected failure getting final value.");
 }
 
+/**
+ * Callback that simply counts the number of times it was called
+ * (threadsafe).
+ */
 class CountingCallback : public kvtest::Callback<bool> {
 public:
-    int x;
-
     CountingCallback() {
         x = 0;
         if(pthread_mutex_init(&mutex, NULL) != 0) {
@@ -84,11 +86,26 @@ public:
         pthread_mutex_destroy(&mutex);
     }
 
+    /**
+     * Increment the callback counter.
+     */
     void callback(bool &val) {
         LockHolder lh(&mutex);
         x++;
     }
+
+    /**
+     * Get the number of times callback() has been called.
+     *
+     * @return the number of times callback() was called.
+     */
+    int num_calls() {
+        LockHolder lh(&mutex);
+        return x;
+    }
+
 private:
+    int             x;
     pthread_mutex_t mutex;
 };
 
@@ -116,7 +133,7 @@ bool WriteTest::run(ThingUnderTest *tut) {
     cbLast.waitForValue();
     time_t end = time(NULL);
 
-    assertEquals(i, cb.x);
+    assertEquals(i, cb.num_calls());
 
     int delta = end - start;
     std::cout << "Ran " << i << " operations in "
