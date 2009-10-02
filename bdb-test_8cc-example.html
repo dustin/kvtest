@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>kvtest: sqlite3-test.cc</title>
+<title>kvtest: bdb-test.cc</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -20,21 +20,22 @@
   </div>
 </div>
 <div class="contents">
-<h1>sqlite3-test.cc</h1><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;assert.h&gt;</span>
-<span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<h1>bdb-test.cc</h1><div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;stdio.h&gt;</span>
 <span class="preprocessor">#include &lt;string.h&gt;</span>
-<span class="preprocessor">#include &lt;pthread.h&gt;</span>
 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<span class="preprocessor">#include &lt;queue&gt;</span>
+
+<span class="preprocessor">#define HAVE_CXX_STDHEADERS 1</span>
+<span class="preprocessor"></span><span class="preprocessor">#include &lt;db.h&gt;</span>
 
 <span class="preprocessor">#include &quot;base-test.hh&quot;</span>
 <span class="preprocessor">#include &quot;suite.hh&quot;</span>
-<span class="preprocessor">#include &quot;sqlite-base.hh&quot;</span>
+<span class="preprocessor">#include &quot;bdb-base.hh&quot;</span>
 
+<span class="keyword">using namespace </span>std;
 <span class="keyword">using namespace </span>kvtest;
 
 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **args) {
-    <a name="_a0"></a><a class="code" href="classkvtest_1_1_sqlite3.html" title="The sqlite driver.">Sqlite3</a> *thing = <span class="keyword">new</span> <a class="code" href="classkvtest_1_1_sqlite3.html" title="The sqlite driver.">Sqlite3</a>(<span class="stringliteral">&quot;/tmp/test.db&quot;</span>);
+    <a name="_a0"></a><a class="code" href="classkvtest_1_1_b_d_b_store.html" title="A Berkley DB store.">BDBStore</a> *thing = <span class="keyword">new</span> <a class="code" href="classkvtest_1_1_b_d_b_store.html" title="A Berkley DB store.">BDBStore</a>(<span class="stringliteral">&quot;/tmp/test.bdb&quot;</span>);
 
     <a name="_a1"></a><a class="code" href="classkvtest_1_1_test_suite.html" title="A series of tests to run.">TestSuite</a> suite(thing);
     <span class="keywordflow">return</span> suite.<a name="a2"></a><a class="code" href="classkvtest_1_1_test_suite.html#af20224e0e804b1d87b0a4411840e6c58" title="Run the test suite.">run</a>() ? 0 : 1;
