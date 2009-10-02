@@ -38,7 +38,9 @@ void BDBStore::set(std::string &key, std::string &val,
 
     int ret = db->put(db, NULL, &bdbkey, &bdbdata, 0);
     bool rv = ret == 0;
-    db->sync(db, 0);
+    if (autocommit) {
+        db->sync(db, 0);
+    }
     cb.callback(rv);
 }
 

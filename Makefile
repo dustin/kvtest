@@ -15,7 +15,7 @@ BDB_COMMON=bdb-base.hh
 
 ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS)
 ALL_PROGS=example-test sqlite3-test sqlite3-async-test
-BDB_PROGS=bdb-store
+BDB_PROGS=bdb-test bdb-async-test
 
 .PHONY: clean
 
@@ -32,6 +32,9 @@ sqlite3-async-test: sqlite3-async-test.o $(SQLITE_OBJS) $(OBJS) $(COMMON)
 
 bdb-test: bdb-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
 	$(CXX) -o $@ bdb-test.o $(BDB_OBJS) $(OBJS) $(LDFLAGS) $(BDB_LDFLAGS)
+
+bdb-async-test: bdb-async-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
+	$(CXX) -o $@ bdb-async-test.o $(BDB_OBJS) $(OBJS) $(LDFLAGS) $(BDB_LDFLAGS)
 
 clean:
 	-rm $(ALL_OBJS) $(ALL_PROGS) $(BDB_PROGS) $(BDB_OBJS)
@@ -50,4 +53,7 @@ bdb-base.o: bdb-base.cc $(BDB_COMMON)
 
 bdb-test.o: bdb-test.cc $(BDB_COMMON)
 	$(CXX) $(CFLAGS) $(BDB_CFLAGS) -c -o $@ bdb-test.cc
+
+bdb-async-test.o: bdb-test.cc $(BDB_COMMON)
+	$(CXX) $(CFLAGS) $(BDB_CFLAGS) -c -o $@ bdb-async-test.cc
 

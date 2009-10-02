@@ -1,6 +1,8 @@
 #ifndef ASYNC_HH
 #define ASYNC_HH 1
 
+#include <queue>
+
 #define MAX_DRAIN 25000
 
 namespace kvtest {
