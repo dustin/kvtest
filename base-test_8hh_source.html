@@ -36,88 +36,88 @@
 <a name="l00011"></a>00011 <span class="preprocessor">#include &quot;locks.hh&quot;</span>
 <a name="l00012"></a>00012 <span class="preprocessor">#include &quot;callbacks.hh&quot;</span>
 <a name="l00013"></a>00013 
-<a name="l00023"></a><a class="code" href="namespacekvtest.html">00023</a> <span class="keyword">namespace </span>kvtest {
-<a name="l00024"></a>00024 
-<a name="l00028"></a><a class="code" href="classkvtest_1_1_get_value.html">00028</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a> {
-<a name="l00029"></a>00029     <span class="keyword">public</span>:
-<a name="l00030"></a>00030         <a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a>() { }
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032         <a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a>(std::string v, <span class="keywordtype">bool</span> s) {
-<a name="l00033"></a>00033             <a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb" title="The value retrieved for the key.">value</a> = v;
-<a name="l00034"></a>00034             <a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44" title="True if a value was successfully retrieved.">success</a> = s;
-<a name="l00035"></a>00035         }
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037         <span class="keyword">friend</span> std::ostream&amp; operator&lt;&lt;(std::ostream &amp;o, <a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a> &amp;gv) {
-<a name="l00038"></a>00038             <span class="keywordflow">return</span> o &lt;&lt; <span class="stringliteral">&quot;{GetValue success=&quot;</span> &lt;&lt; gv.<a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44" title="True if a value was successfully retrieved.">success</a>
-<a name="l00039"></a>00039                      &lt;&lt; <span class="stringliteral">&quot;, value=\&quot;&quot;</span> &lt;&lt; gv.<a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb" title="The value retrieved for the key.">value</a> &lt;&lt; <span class="stringliteral">&quot;\&quot;}&quot;</span>;
-<a name="l00040"></a>00040         }
-<a name="l00041"></a>00041 
-<a name="l00045"></a><a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb">00045</a>         std::string <a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb" title="The value retrieved for the key.">value</a>;
-<a name="l00049"></a><a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44">00049</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44" title="True if a value was successfully retrieved.">success</a>;
-<a name="l00050"></a>00050     };
-<a name="l00051"></a>00051 
-<a name="l00055"></a><a class="code" href="classkvtest_1_1_thing_under_test.html">00055</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> {
-<a name="l00056"></a>00056     <span class="keyword">public</span>:
-<a name="l00060"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9">00060</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9" title="Called after each test to reinitialize the test.">reset</a>() {}
-<a name="l00061"></a>00061 
-<a name="l00067"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3">00067</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3" title="Method that should not return until the driver has done its job.">noop</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;c) {
-<a name="l00068"></a>00068             <span class="keywordtype">bool</span> t = <span class="keyword">true</span>;
-<a name="l00069"></a>00069             c.<a class="code" href="classkvtest_1_1_callback.html#a07c80f0c039c79725f7f701010d3455b" title="Method called on callback.">callback</a>(t);
-<a name="l00070"></a>00070         }
-<a name="l00071"></a>00071 
-<a name="l00079"></a>00079         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string &amp;key, std::string &amp;val,
-<a name="l00080"></a>00080                          <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) = 0;
-<a name="l00081"></a>00081 
-<a name="l00088"></a>00088         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <span class="keyword">get</span>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html" title="Interface for callbacks from storage APIs.">Callback&lt;GetValue&gt;</a> &amp;cb) = 0;
-<a name="l00089"></a>00089 
-<a name="l00097"></a>00097         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#a90b1b2a9a45cd232900a00c7d343258c" title="Delete a value for a key.">del</a>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) = 0;
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099     };
-<a name="l00100"></a>00100 
-<a name="l00104"></a><a class="code" href="classkvtest_1_1_assertion_error.html">00104</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a> : <span class="keyword">public</span> std::runtime_error {
-<a name="l00105"></a>00105     <span class="keyword">public</span>:
-<a name="l00106"></a>00106         <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *s) : std::runtime_error(s) { }
-<a name="l00107"></a>00107         <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(<span class="keyword">const</span> std::string s) : std::runtime_error(s) { }
-<a name="l00108"></a>00108     };
-<a name="l00109"></a>00109 
-<a name="l00113"></a><a class="code" href="classkvtest_1_1_assertions.html">00113</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_assertions.html" title="Assertion mixins.">Assertions</a> {
-<a name="l00114"></a>00114     <span class="keyword">public</span>:
-<a name="l00115"></a>00115         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertTrue(<span class="keywordtype">bool</span> v, std::string msg) {
-<a name="l00116"></a>00116             <span class="keywordflow">if</span>(!v) {
-<a name="l00117"></a>00117                 <span class="keywordflow">throw</span> <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(msg);
-<a name="l00118"></a>00118             }
-<a name="l00119"></a>00119         }
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertFalse(<span class="keywordtype">bool</span> v, std::string msg) {
-<a name="l00122"></a>00122             assertTrue(!v, msg);
-<a name="l00123"></a>00123         }
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertEquals(std::string s1, std::string s2) {
-<a name="l00126"></a>00126             assertTrue(s1.compare(s2) == 0, <span class="stringliteral">&quot;failed string compare&quot;</span>);
-<a name="l00127"></a>00127         }
-<a name="l00128"></a>00128 
-<a name="l00129"></a>00129         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertEquals(<span class="keywordtype">int</span> i1, <span class="keywordtype">int</span> i2) {
-<a name="l00130"></a>00130             std::stringstream ss;
-<a name="l00131"></a>00131             ss &lt;&lt; <span class="stringliteral">&quot;Expected &quot;</span> &lt;&lt; i1 &lt;&lt; <span class="stringliteral">&quot; got &quot;</span> &lt;&lt; i2;
-<a name="l00132"></a>00132             assertTrue(i1 == i2, ss.str());
+<a name="l00029"></a><a class="code" href="namespacekvtest.html">00029</a> <span class="keyword">namespace </span>kvtest {
+<a name="l00030"></a>00030 
+<a name="l00034"></a><a class="code" href="classkvtest_1_1_get_value.html">00034</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a> {
+<a name="l00035"></a>00035     <span class="keyword">public</span>:
+<a name="l00036"></a>00036         <a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a>() { }
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038         <a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a>(std::string v, <span class="keywordtype">bool</span> s) {
+<a name="l00039"></a>00039             <a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb" title="The value retrieved for the key.">value</a> = v;
+<a name="l00040"></a>00040             <a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44" title="True if a value was successfully retrieved.">success</a> = s;
+<a name="l00041"></a>00041         }
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043         <span class="keyword">friend</span> std::ostream&amp; operator&lt;&lt;(std::ostream &amp;o, <a class="code" href="classkvtest_1_1_get_value.html" title="Value for callback for GET operations.">GetValue</a> &amp;gv) {
+<a name="l00044"></a>00044             <span class="keywordflow">return</span> o &lt;&lt; <span class="stringliteral">&quot;{GetValue success=&quot;</span> &lt;&lt; gv.<a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44" title="True if a value was successfully retrieved.">success</a>
+<a name="l00045"></a>00045                      &lt;&lt; <span class="stringliteral">&quot;, value=\&quot;&quot;</span> &lt;&lt; gv.<a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb" title="The value retrieved for the key.">value</a> &lt;&lt; <span class="stringliteral">&quot;\&quot;}&quot;</span>;
+<a name="l00046"></a>00046         }
+<a name="l00047"></a>00047 
+<a name="l00051"></a><a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb">00051</a>         std::string <a class="code" href="classkvtest_1_1_get_value.html#adbf2ced0c3dfb9b51883c8ec4d2090eb" title="The value retrieved for the key.">value</a>;
+<a name="l00055"></a><a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44">00055</a>         <span class="keywordtype">bool</span> <a class="code" href="classkvtest_1_1_get_value.html#aa1fe8f0bdfdf2c25391c225ca3176c44" title="True if a value was successfully retrieved.">success</a>;
+<a name="l00056"></a>00056     };
+<a name="l00057"></a>00057 
+<a name="l00061"></a><a class="code" href="classkvtest_1_1_thing_under_test.html">00061</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_thing_under_test.html" title="An individual kv storage (or way to access a kv storage).">ThingUnderTest</a> {
+<a name="l00062"></a>00062     <span class="keyword">public</span>:
+<a name="l00066"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9">00066</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#ac74abe36b8ed287e2f89d6994cd748f9" title="Called after each test to reinitialize the test.">reset</a>() {}
+<a name="l00067"></a>00067 
+<a name="l00073"></a><a class="code" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3">00073</a>         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#ade63e2b26cce8b50d4b78ee6b3e348f3" title="Method that should not return until the driver has done its job.">noop</a>(<a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;c) {
+<a name="l00074"></a>00074             <span class="keywordtype">bool</span> t = <span class="keyword">true</span>;
+<a name="l00075"></a>00075             c.<a class="code" href="classkvtest_1_1_callback.html#a07c80f0c039c79725f7f701010d3455b" title="Method called on callback.">callback</a>(t);
+<a name="l00076"></a>00076         }
+<a name="l00077"></a>00077 
+<a name="l00085"></a>00085         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string &amp;key, std::string &amp;val,
+<a name="l00086"></a>00086                          <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) = 0;
+<a name="l00087"></a>00087 
+<a name="l00094"></a>00094         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <span class="keyword">get</span>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html" title="Interface for callbacks from storage APIs.">Callback&lt;GetValue&gt;</a> &amp;cb) = 0;
+<a name="l00095"></a>00095 
+<a name="l00103"></a>00103         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classkvtest_1_1_thing_under_test.html#a90b1b2a9a45cd232900a00c7d343258c" title="Delete a value for a key.">del</a>(std::string &amp;key, <a class="code" href="classkvtest_1_1_callback.html">Callback&lt;bool&gt;</a> &amp;cb) = 0;
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105     };
+<a name="l00106"></a>00106 
+<a name="l00110"></a><a class="code" href="classkvtest_1_1_assertion_error.html">00110</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a> : <span class="keyword">public</span> std::runtime_error {
+<a name="l00111"></a>00111     <span class="keyword">public</span>:
+<a name="l00112"></a>00112         <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *s) : std::runtime_error(s) { }
+<a name="l00113"></a>00113         <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(<span class="keyword">const</span> std::string s) : std::runtime_error(s) { }
+<a name="l00114"></a>00114     };
+<a name="l00115"></a>00115 
+<a name="l00119"></a><a class="code" href="classkvtest_1_1_assertions.html">00119</a>     <span class="keyword">class </span><a class="code" href="classkvtest_1_1_assertions.html" title="Assertion mixins.">Assertions</a> {
+<a name="l00120"></a>00120     <span class="keyword">public</span>:
+<a name="l00121"></a>00121         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertTrue(<span class="keywordtype">bool</span> v, std::string msg) {
+<a name="l00122"></a>00122             <span class="keywordflow">if</span>(!v) {
+<a name="l00123"></a>00123                 <span class="keywordflow">throw</span> <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(msg);
+<a name="l00124"></a>00124             }
+<a name="l00125"></a>00125         }
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertFalse(<span class="keywordtype">bool</span> v, std::string msg) {
+<a name="l00128"></a>00128             assertTrue(!v, msg);
+<a name="l00129"></a>00129         }
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertEquals(std::string s1, std::string s2) {
+<a name="l00132"></a>00132             assertTrue(s1.compare(s2) == 0, <span class="stringliteral">&quot;failed string compare&quot;</span>);
 <a name="l00133"></a>00133         }
 <a name="l00134"></a>00134 
-<a name="l00135"></a>00135         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertNull(std::string *s) {
-<a name="l00136"></a>00136             <span class="keywordflow">if</span> (s != NULL) {
-<a name="l00137"></a>00137                 std::string msg = <span class="stringliteral">&quot;expected null, got ``&quot;</span> + *s + <span class="stringliteral">&quot;&apos;&apos;&quot;</span>;
-<a name="l00138"></a>00138                 <span class="keywordflow">throw</span> <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(msg);
-<a name="l00139"></a>00139             }
-<a name="l00140"></a>00140         }
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertNotNull(std::string *s) {
-<a name="l00143"></a>00143             assertTrue(s != NULL, <span class="stringliteral">&quot;expected nonnull&quot;</span>);
-<a name="l00144"></a>00144         }
-<a name="l00145"></a>00145     };
-<a name="l00146"></a>00146 }
+<a name="l00135"></a>00135         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertEquals(<span class="keywordtype">int</span> i1, <span class="keywordtype">int</span> i2) {
+<a name="l00136"></a>00136             std::stringstream ss;
+<a name="l00137"></a>00137             ss &lt;&lt; <span class="stringliteral">&quot;Expected &quot;</span> &lt;&lt; i1 &lt;&lt; <span class="stringliteral">&quot; got &quot;</span> &lt;&lt; i2;
+<a name="l00138"></a>00138             assertTrue(i1 == i2, ss.str());
+<a name="l00139"></a>00139         }
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertNull(std::string *s) {
+<a name="l00142"></a>00142             <span class="keywordflow">if</span> (s != NULL) {
+<a name="l00143"></a>00143                 std::string msg = <span class="stringliteral">&quot;expected null, got ``&quot;</span> + *s + <span class="stringliteral">&quot;&apos;&apos;&quot;</span>;
+<a name="l00144"></a>00144                 <span class="keywordflow">throw</span> <a class="code" href="classkvtest_1_1_assertion_error.html" title="Assertion errors.">AssertionError</a>(msg);
+<a name="l00145"></a>00145             }
+<a name="l00146"></a>00146         }
 <a name="l00147"></a>00147 
-<a name="l00148"></a>00148 <span class="preprocessor">#endif </span><span class="comment">/* BASE_TEST_H */</span>
+<a name="l00148"></a>00148         <span class="keyword">inline</span> <span class="keywordtype">void</span> assertNotNull(std::string *s) {
+<a name="l00149"></a>00149             assertTrue(s != NULL, <span class="stringliteral">&quot;expected nonnull&quot;</span>);
+<a name="l00150"></a>00150         }
+<a name="l00151"></a>00151     };
+<a name="l00152"></a>00152 }
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154 <span class="preprocessor">#endif </span><span class="comment">/* BASE_TEST_H */</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Thu Oct 1 23:15:56 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Thu Oct 1 23:18:09 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>
