@@ -27,7 +27,10 @@
   </div>
 </div>
 <div class="contents">
-<h1>CountingCallback Class Reference</h1><!-- doxytag: class="CountingCallback" --><!-- doxytag: inherits="Callback&lt; bool &gt;" --><div class="dynheader">
+<h1>CountingCallback Class Reference</h1><!-- doxytag: class="CountingCallback" --><!-- doxytag: inherits="Callback&lt; bool &gt;" -->
+<p>Callback that simply counts the number of times it was called (threadsafe).  
+<a href="#_details">More...</a></p>
+<div class="dynheader">
 Inheritance diagram for CountingCallback:</div>
 <div class="dynsection">
 <div class="center"><img src="class_counting_callback__inherit__graph.png" border="0" usemap="#_counting_callback_inherit__map" alt="Inheritance graph"/></div>
@@ -47,16 +50,47 @@ Collaboration diagram for CountingCallback:</div>
 <tr><td colspan="2"><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15c803b9dd356465fdb54b6908893d0e"></a><!-- doxytag: member="CountingCallback::callback" ref="a15c803b9dd356465fdb54b6908893d0e" args="(bool &amp;val)" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_counting_callback.html#a15c803b9dd356465fdb54b6908893d0e">callback</a> (bool &amp;val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Method called on callback. <br/></td></tr>
-<tr><td colspan="2"><h2>Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2db898cb7852b4f2798a846dc7cd6e1"></a><!-- doxytag: member="CountingCallback::x" ref="ae2db898cb7852b4f2798a846dc7cd6e1" args="" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>x</b></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Increment the callback counter. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_counting_callback.html#a83a0fabed0bccd49c84dcda45e697171">num_calls</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the number of times <a class="el" href="class_counting_callback.html#a15c803b9dd356465fdb54b6908893d0e" title="Increment the callback counter.">callback()</a> has been called.  <a href="#a83a0fabed0bccd49c84dcda45e697171"></a><br/></td></tr>
 </table>
+<hr/><a name="_details"></a><h2>Detailed Description</h2>
+<p>Callback that simply counts the number of times it was called (threadsafe). </p>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a83a0fabed0bccd49c84dcda45e697171"></a><!-- doxytag: member="CountingCallback::num_calls" ref="a83a0fabed0bccd49c84dcda45e697171" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CountingCallback::num_calls </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the number of times <a class="el" href="class_counting_callback.html#a15c803b9dd356465fdb54b6908893d0e" title="Increment the callback counter.">callback()</a> has been called. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the number of times <a class="el" href="class_counting_callback.html#a15c803b9dd356465fdb54b6908893d0e" title="Increment the callback counter.">callback()</a> was called. </dd></dl>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dynsection">
+<div class="center"><img src="class_counting_callback_a83a0fabed0bccd49c84dcda45e697171_icgraph.png" border="0" usemap="#class_counting_callback_a83a0fabed0bccd49c84dcda45e697171_icgraph_map" alt=""></div>
+<map name="class_counting_callback_a83a0fabed0bccd49c84dcda45e697171_icgraph_map" id="class_counting_callback_a83a0fabed0bccd49c84dcda45e697171_icgraph">
+<area shape="rect" id="node3" href="class_write_test.html#afc1700db746018194b3cf2d72800d37e" title="Run the test." alt="" coords="252,5,359,33"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>tests.cc</li>
 </ul>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Thu Oct 1 23:08:33 2009 for kvtest by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Thu Oct 1 23:15:56 2009 for kvtest by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>
