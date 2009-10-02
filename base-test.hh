@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdexcept>
 #include <iostream>
+#include <sstream>
 #include <list>
 
 #include "locks.hh"
@@ -108,6 +109,12 @@ namespace kvtest {
 
         inline void assertEquals(std::string s1, std::string s2) {
             assertTrue(s1.compare(s2) == 0, "failed string compare");
+        }
+
+        inline void assertEquals(int i1, int i2) {
+            std::stringstream ss;
+            ss << "Expected " << i1 << " got " << i2;
+            assertTrue(i1 == i2, ss.str());
         }
 
         inline void assertNull(std::string *s) {

@@ -116,6 +116,8 @@ bool WriteTest::run(ThingUnderTest *tut) {
     cbLast.waitForValue();
     time_t end = time(NULL);
 
+    assertEquals(i, cb.x);
+
     i++; // Did another transaction
 
     int delta = end - start;
