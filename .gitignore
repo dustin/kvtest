@@ -3,4 +3,5 @@
 example-test
 sqlite3-test
 sqlite3-async-test
+bdb-test
 /docs/
