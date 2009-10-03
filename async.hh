@@ -277,6 +277,7 @@ namespace kvtest {
         } catch(...) {
             std::cerr << "Caught a fatal exception in the thread" << std::endl;
         }
+        return NULL;
     }
 
     /**

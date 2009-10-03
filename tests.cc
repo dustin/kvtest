@@ -67,6 +67,8 @@ bool TestTest::run(KVStore *tut) {
     tut->get(testKey, getCb2);
     getCb2.waitForValue();
     assertFalse(getCb2.val.success, "Expected failure getting final value.");
+
+    return true;
 }
 
 /**

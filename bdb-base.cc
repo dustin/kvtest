@@ -47,7 +47,6 @@ void BDBStore::set(std::string &key, std::string &val,
 
 void BDBStore::get(std::string &key, Callback<GetValue> &cb) {
     DBT bdbkey, bdbdata;
-    char charval[8192];
 
     /* Zero out the DBTs before using them. */
     memset(&bdbkey, 0, sizeof(DBT));
