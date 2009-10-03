@@ -27,9 +27,13 @@ ALL_PROGS=example-test sqlite3-test sqlite3-async-test
 BDB_PROGS=bdb-test bdb-async-test
 TOKYO_PROGS=tokyo-test tokyo-async-test
 
-.PHONY: clean
+.PHONY: clean bdb tokyo
 
 all: $(ALL_PROGS)
+
+bdb: bdb-test bdb-async-test
+
+tokyo: tokyo-test tokyo-async-test
 
 example-test: example-test.o $(OBJS) $(COMMON)
 	$(CXX) -o $@ example-test.o $(OBJS) $(LDFLAGS) -lsqlite3
