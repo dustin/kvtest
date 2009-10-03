@@ -1,5 +1,5 @@
-#ifndef Tokyo_BASE_H
-#define Tokyo_BASE_H 1
+#ifndef BDB_BASE_H
+#define BDB_BASE_H 1
 
 #include "base-test.hh"
 
@@ -10,18 +10,18 @@ namespace kvtest {
     /**
      * A Berkley DB store.
      */
-    class TokyoStore : public KVStore {
+    class BDBStore : public KVStore {
     public:
 
         /**
-         * Get a TokyoStore.
+         * Get a BDBStore.
          *
          * @param p the path to the file holding the db
          * @param should_autocommit if true, sync after every set
          */
-        TokyoStore(char const *p, bool should_autocommit=true);
+        BDBStore(char const *p, bool should_autocommit=true);
 
-        ~TokyoStore() {
+        ~BDBStore() {
             close();
         }
 
@@ -62,4 +62,4 @@ namespace kvtest {
 
 }
 
-#endif /* Tokyo_BASE_H */
+#endif /* BDB_BASE_H */
