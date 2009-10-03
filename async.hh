@@ -24,6 +24,16 @@ namespace kvtest {
     };
 
     /**
+     * Operation sent to an async queue to tell it to shut down.
+     */
+    class AsyncShutdownOperation : public AsyncOperation {
+    public:
+        bool execute(KVStore *tut) {
+            throw this;
+        }
+    };
+
+    /**
      * Abstract base class for asynchronous operations with boolean
      * callbacks.
      */
@@ -233,7 +243,6 @@ namespace kvtest {
         AsyncExecutor(KVStore *d, AsyncQueue *q) {
             tut     = d;
             iq      = q;
-            running = true;
         }
 
         /**
@@ -241,7 +250,7 @@ namespace kvtest {
          */
         void run() {
             try {
-                while(running) {
+                while(true) {
                     std::queue<AsyncOperation*> ops;
                     iq->drainTo(ops);
                     tut->begin();
@@ -258,6 +267,8 @@ namespace kvtest {
 
                     tut->commit();
                 }
+            } catch(AsyncShutdownOperation *op) {
+                std::cerr << "Shutting down..." << std::endl;
             } catch(std::runtime_error &e) {
                 std::cerr << "Exception in executor loop: "
                           << e.what() << std::endl;
@@ -265,10 +276,16 @@ namespace kvtest {
             }
         }
 
+        /**
+         * Shut down this thread.
+         */
+        void stop() {
+            iq->addOperation(new AsyncShutdownOperation());
+        }
+
     private:
-        bool            running;
-        KVStore *tut;
-        AsyncQueue     *iq;
+        KVStore       *tut;
+        AsyncQueue    *iq;
     };
 
     static void* launch_executor_thread(void* arg) {
@@ -305,8 +322,10 @@ namespace kvtest {
          * Clean up.
          */
         ~QueuedKVStore() {
-            delete iq;
+            executor->stop();
+            pthread_join(thread, NULL);
             delete executor;
+            delete iq;
         }
 
         /**
