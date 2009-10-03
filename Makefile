@@ -4,7 +4,7 @@ LDFLAGS=-g
 COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh
 OBJS=tests.o suite.o
 PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o \
-	bdb-test.o bdb-async-test.o
+	bdb-test.o bdb-async-test.o tokyo-test.o tokyo-async-test.o
 SQLITE_OBJS=sqlite-base.o
 SQLITE_COMMON=sqlite-base.hh
 
@@ -19,7 +19,7 @@ TOKYO_VER=8.24.0
 TOKYO_PATH=/usr/local/
 TOKYO_CFLAGS=-I$(TOKYO_PATH)/include
 TOKYO_LDFLAGS=-L$(TOKYO_PATH)/lib -ltokyocabinet
-TOKYO_OBJS=tokyo-base.o tokyo-test.o tokyo-async-test.o
+TOKYO_OBJS=tokyo-base.o
 TOKYO_COMMON=tokyo-base.hh
 
 ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS) $(TOKYO_OBJS)
