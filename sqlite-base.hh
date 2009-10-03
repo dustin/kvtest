@@ -157,7 +157,9 @@ namespace kvtest {
     class Sqlite3 : public BaseSqlite3 {
     public:
 
-        Sqlite3(const char *path) : BaseSqlite3(path) {}
+        Sqlite3(const char *path) : BaseSqlite3(path) {
+            ins_stmt = sel_stmt = del_stmt = NULL;
+        }
 
         /**
          * Overrides set().
