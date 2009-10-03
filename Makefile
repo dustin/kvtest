@@ -23,9 +23,9 @@ TOKYO_OBJS=tokyo-base.o
 TOKYO_COMMON=tokyo-base.hh
 
 ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS) $(TOKYO_OBJS)
-ALL_PROGS=example-test sqlite3-test sqlite3-async-test tokyo-test
+ALL_PROGS=example-test sqlite3-test sqlite3-async-test
 BDB_PROGS=bdb-test bdb-async-test
-TOKYO_PROGS=tokyo-test
+TOKYO_PROGS=tokyo-test tokyo-async-test
 
 .PHONY: clean
 
@@ -48,6 +48,9 @@ bdb-async-test: bdb-async-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
 
 tokyo-test: tokyo-test.o $(TOKYO_OBJS) $(OBJS) $(COMMON)
 	$(CXX) -o $@ tokyo-test.o $(TOKYO_OBJS) $(OBJS) $(LDFLAGS) $(TOKYO_LDFLAGS)
+
+tokyo-async-test: tokyo-async-test.o $(TOKYO_OBJS) $(OBJS) $(COMMON)
+	$(CXX) -o $@ tokyo-async-test.o $(TOKYO_OBJS) $(OBJS) $(LDFLAGS) $(TOKYO_LDFLAGS)
 
 clean:
 	-rm $(ALL_OBJS) $(ALL_PROGS) $(BDB_PROGS) $(TOKYO_PROGS)
