@@ -1,6 +1,7 @@
 #ifndef ASYNC_HH
 #define ASYNC_HH 1
 
+#include <stdlib.h>
 #include <queue>
 
 #define MAX_DRAIN 25000
