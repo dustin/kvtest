@@ -11,6 +11,9 @@ using namespace kvtest;
 
 TokyoStore::TokyoStore(const char *p, bool should_autocommit) {
     path = p;
+    hdb = NULL;
+    ecode = 0;
+    autocommit = should_autocommit;
     open();
 }
 
@@ -104,6 +107,7 @@ void TokyoStore::close() {
     */
   }
   tchdbdel(hdb);
+  hdb = NULL;
 }
 
 void TokyoStore::commit() {
