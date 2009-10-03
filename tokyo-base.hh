@@ -1,14 +1,18 @@
-#ifndef Tokyo_BASE_H
-#define Tokyo_BASE_H 1
+#ifndef TOKYO_BASE_H
+#define TOKYO_BASE_H 1
 
 #include "base-test.hh"
 
-#include <db.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <tcutil.h>
+#include <tchdb.h>
+#define ERRSTR_SIZE 64
 
 namespace kvtest {
 
     /**
-     * A Berkley DB store.
+     * A Tokyo Cabinet DB store.
      */
     class TokyoStore : public KVStore {
     public:
@@ -52,7 +56,8 @@ namespace kvtest {
 
 
     private:
-        DB *db;
+        TCHDB *hdb;
+        int ecode;
         const char *path;
         bool autocommit;
 
@@ -62,4 +67,4 @@ namespace kvtest {
 
 }
 
-#endif /* Tokyo_BASE_H */
+#endif /* TOKYO_BASE_H */

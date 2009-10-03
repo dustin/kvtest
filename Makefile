@@ -15,9 +15,17 @@ BDB_LDFLAGS=-L$(BDB_PATH)/lib -ldb
 BDB_OBJS=bdb-base.o
 BDB_COMMON=bdb-base.hh
 
-ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS)
-ALL_PROGS=example-test sqlite3-test sqlite3-async-test
+TOKYO_VER=8.24.0
+TOKYO_PATH=/usr/local/
+TOKYO_CFLAGS=-I$(TOKYO_PATH)/include
+TOKYO_LDFLAGS=-L$(TOKYO_PATH)/lib -ltokyocabinet
+TOKYO_OBJS=tokyo-base.o
+TOKYO_COMMON=tokyo-base.hh
+
+ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS) $(TOKYO_OBJS)
+ALL_PROGS=example-test sqlite3-test sqlite3-async-test tokyo-test
 BDB_PROGS=bdb-test bdb-async-test
+TOKYO_PROGS=tokyo-test
 
 .PHONY: clean
 
@@ -38,8 +46,11 @@ bdb-test: bdb-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
 bdb-async-test: bdb-async-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
 	$(CXX) -o $@ bdb-async-test.o $(BDB_OBJS) $(OBJS) $(LDFLAGS) $(BDB_LDFLAGS)
 
+tokyo-test: tokyo-test.o $(TOKYO_OBJS) $(OBJS) $(COMMON)
+	$(CXX) -o $@ tokyo-test.o $(TOKYO_OBJS) $(OBJS) $(LDFLAGS) $(TOKYO_LDFLAGS)
+
 clean:
-	-rm $(ALL_OBJS) $(ALL_PROGS) $(BDB_PROGS)
+	-rm $(ALL_OBJS) $(ALL_PROGS) $(BDB_PROGS) $(TOKYO_PROGS)
 
 .cc.o: $< $(COMMON)
 	$(CXX) $(CFLAGS) -c -o $@ $<
@@ -59,3 +70,5 @@ bdb-test.o: bdb-test.cc $(BDB_COMMON)
 bdb-async-test.o: bdb-test.cc $(BDB_COMMON)
 	$(CXX) $(CFLAGS) $(BDB_CFLAGS) -c -o $@ bdb-async-test.cc
 
+tokyo-test.o: tokyo-test.cc $(TOKYO_COMMON)
+	$(CXX) $(CFLAGS) $(TOKYO_CFLAGS) -c -o $@ tokyo-test.cc
