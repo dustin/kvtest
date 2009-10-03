@@ -3,7 +3,8 @@ LDFLAGS=-g
 
 COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh
 OBJS=tests.o suite.o
-PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o bdb-test.o
+PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o \
+	bdb-test.o bdb-async-test.o
 SQLITE_OBJS=sqlite-base.o
 SQLITE_COMMON=sqlite-base.hh
 
