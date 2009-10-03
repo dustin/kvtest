@@ -19,7 +19,7 @@ TOKYO_VER=8.24.0
 TOKYO_PATH=/usr/local/
 TOKYO_CFLAGS=-I$(TOKYO_PATH)/include
 TOKYO_LDFLAGS=-L$(TOKYO_PATH)/lib -ltokyocabinet
-TOKYO_OBJS=tokyo-base.o
+TOKYO_OBJS=tokyo-base.o tokyo-test.o tokyo-async-test.o
 TOKYO_COMMON=tokyo-base.hh
 
 ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS) $(TOKYO_OBJS)
