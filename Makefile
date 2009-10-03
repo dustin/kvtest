@@ -37,7 +37,7 @@ bdb-async-test: bdb-async-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
 	$(CXX) -o $@ bdb-async-test.o $(BDB_OBJS) $(OBJS) $(LDFLAGS) $(BDB_LDFLAGS)
 
 clean:
-	-rm $(ALL_OBJS) $(ALL_PROGS) $(BDB_PROGS) $(BDB_OBJS)
+	-rm $(ALL_OBJS) $(ALL_PROGS) $(BDB_PROGS)
 
 .cc.o: $< $(COMMON)
 	$(CXX) $(CFLAGS) -c -o $@ $<
