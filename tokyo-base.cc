@@ -78,7 +78,7 @@ void TokyoStore::del(std::string &key, Callback<bool> &cb) {
 
 void TokyoStore::open() {
     int ecode;
-    int flags = HDBOWRITER | HDBOCREAT;
+    int flags = HDBOWRITER | HDBOCREAT | HDBOTSYNC;
 
     if (!hdb) {
         hdb = tchdbnew();
