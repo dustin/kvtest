@@ -3,6 +3,8 @@
 
 #include <pthread.h>
 
+#include "base-test.hh"
+
 namespace kvtest {
 
     /**
@@ -29,6 +31,8 @@ namespace kvtest {
 
     private:
         pthread_mutex_t *mutex;
+
+        DISALLOW_COPY_AND_ASSIGN(LockHolder);
     };
 
 }

@@ -7,6 +7,8 @@
 
 class SimpleThing : public kvtest::KVStore {
 public:
+    SimpleThing() {}
+
     void set(std::string &key, std::string &val,
              kvtest::Callback<bool> &cb) {
         storage[key] = val;

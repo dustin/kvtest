@@ -228,6 +228,8 @@ namespace kvtest {
         pthread_mutex_t             mutex;
         pthread_cond_t              cond;
         std::queue<AsyncOperation*> ops;
+
+        DISALLOW_COPY_AND_ASSIGN(AsyncQueue);
     };
 
     /**
@@ -286,6 +288,8 @@ namespace kvtest {
     private:
         KVStore       *tut;
         AsyncQueue    *iq;
+
+        DISALLOW_COPY_AND_ASSIGN(AsyncExecutor);
     };
 
     static void* launch_executor_thread(void* arg) {
@@ -373,6 +377,8 @@ namespace kvtest {
         AsyncQueue     *iq;
         AsyncExecutor  *executor;
         pthread_t       thread;
+
+        DISALLOW_COPY_AND_ASSIGN(QueuedKVStore);
     };
 
 }

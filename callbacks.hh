@@ -38,13 +38,6 @@ namespace kvtest {
         }
 
         /**
-         * Copy constructor is not implemented.
-         */
-        RememberingCallback(RememberingCallback &copy) {
-            throw std::runtime_error("Copying!");
-        }
-
-        /**
          * Clean up (including lock resources).
          */
         ~RememberingCallback() {
@@ -93,6 +86,8 @@ namespace kvtest {
     private:
         pthread_mutex_t mutex;
         pthread_cond_t  cond;
+
+        DISALLOW_COPY_AND_ASSIGN(RememberingCallback);
     };
 
 }
