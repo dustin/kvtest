@@ -75,18 +75,18 @@ namespace kvtest {
     /**
      * The sqlite driver.
      */
-    class Sqlite3 : public KVStore {
+    class BaseSqlite3 : public KVStore {
     public:
 
         /**
          * Construct an instance of sqlite with the given database name.
          */
-        Sqlite3(const char *fn);
+        BaseSqlite3(const char *fn);
 
         /**
          * Cleanup.
          */
-        ~Sqlite3();
+        ~BaseSqlite3();
 
         /**
          * Reset database to a clean state.
@@ -108,6 +108,57 @@ namespace kvtest {
          */
         void rollback();
 
+    protected:
+
+        /**
+         * Shortcut to execute a simple query.
+         *
+         * @param query a simple query with no bindings to execute directly
+         */
+        void execute(const char *query);
+
+        /**
+         * After setting up the DB, this is called to initialize our
+         * prepared statements.
+         */
+        virtual void initStatements() {}
+
+        /**
+         * When tearing down, tear down the statements set up by
+         * initStatements.
+         */
+        virtual void destroyStatements() {}
+
+        /**
+         * Set up the tables.
+         */
+        virtual void initTables() {}
+
+        /**
+         * Clean up the tables.
+         */
+        virtual void destroyTables() {}
+
+    protected:
+        /**
+         * Direct access to the DB.
+         */
+        sqlite3 *db;
+
+    private:
+
+        const char *filename;
+        bool intransaction;
+
+        void open();
+        void close();
+    };
+
+    class Sqlite3 : public BaseSqlite3 {
+    public:
+
+        Sqlite3(const char *path) : BaseSqlite3(path) {}
+
         /**
          * Overrides set().
          */
@@ -125,27 +176,18 @@ namespace kvtest {
 
     protected:
 
-        /**
-         * Shortcut to execute a simple query.
-         *
-         * @param query a simple query with no bindings to execute directly
-         */
-        void execute(const char *query);
+        void initStatements();
+
+        void destroyStatements();
+
+        void initTables();
+
+        void destroyTables();
 
     private:
-
-        const char *filename;
-        sqlite3 *db;
-        bool intransaction;
-
         PreparedStatement *ins_stmt;
         PreparedStatement *sel_stmt;
         PreparedStatement *del_stmt;
-
-        void open();
-        void close();
-        void initTables();
-        void destroyTables();
     };
 
 }
