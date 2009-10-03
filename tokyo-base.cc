@@ -38,7 +38,9 @@ void TokyoStore::set(std::string &key, std::string &val,
     */
     rv= false;
   }
-
+  if (autocommit) {
+      tchdbsync(hdb);
+  }
   cb.callback(rv);
 }
 
