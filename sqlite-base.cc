@@ -148,10 +148,30 @@ namespace kvtest {
         execute("create table if not exists kv"
                 " (k varchar(250) primary key on conflict replace,"
                 "  v text)");
+        if(auditable) {
+            execute("create table if not exists history ("
+                    " id integer primary key autoincrement,"
+                    " op char(1) not null,"
+                    " key varchar(250) not null,"
+                    " value text null)");
+            execute("create trigger if not exists on_audit_insert"
+                    " before insert on kv for each row begin"
+                    "  insert into history (op,key,value)"
+                    "         values ('s', new.k, new.v);"
+                    " end");
+            execute("create trigger if not exists on_audit_delete"
+                    " before delete on kv for each row begin"
+                    "  insert into history (op,key)"
+                    "         values ('d', old.k);"
+                    " end");
+        }
     }
 
     void Sqlite3::destroyTables() {
         execute("drop table if exists kv");
+        execute("drop table if exists history");
+        execute("drop trigger if exists on_audit_insert");
+        execute("drop trigger if exists on_audit_delete");
     }
 
     void Sqlite3::set(std::string &key, std::string &val,

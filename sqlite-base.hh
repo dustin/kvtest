@@ -157,8 +157,9 @@ namespace kvtest {
     class Sqlite3 : public BaseSqlite3 {
     public:
 
-        Sqlite3(const char *path) : BaseSqlite3(path) {
+        Sqlite3(const char *path, bool is_auditable=false) : BaseSqlite3(path) {
             ins_stmt = sel_stmt = del_stmt = NULL;
+            auditable = is_auditable;
         }
 
         /**
@@ -187,6 +188,7 @@ namespace kvtest {
         void destroyTables();
 
     private:
+        bool               auditable;
         PreparedStatement *ins_stmt;
         PreparedStatement *sel_stmt;
         PreparedStatement *del_stmt;
