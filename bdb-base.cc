@@ -61,7 +61,7 @@ void BDBStore::get(std::string &key, Callback<GetValue> &cb) {
     int ret = db->get(db, NULL, &bdbkey, &bdbdata, 0);
 
     if (ret == 0) {
-        std::string str((char *)bdbdata.data);
+        std::string str(static_cast<char*>(bdbdata.data));
         kvtest::GetValue rv(str, true);
         cb.callback(rv);
         free(bdbdata.data);
