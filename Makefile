@@ -8,8 +8,9 @@ SQLITE_OBJS=sqlite-base.o
 SQLITE_COMMON=sqlite-base.hh
 
 BDB_VER=4.8
-BDB_CFLAGS=-I/usr/local/BerkeleyDB.$(BDB_VER)/include
-BDB_LDFLAGS=-L/usr/local/BerkeleyDB.$(BDB_VER)/lib -ldb-$(BDB_VER)
+BDB_PATH=/usr/local/BerkeleyDB.$(BDB_VER)
+BDB_CFLAGS=-I$(BDB_PATH)/include
+BDB_LDFLAGS=-L$(BDB_PATH)/lib -ldb-$(BDB_VER)
 BDB_OBJS=bdb-base.o
 BDB_COMMON=bdb-base.hh
 
