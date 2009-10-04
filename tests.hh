@@ -10,6 +10,9 @@ namespace kvtest {
      */
     class Test : public Assertions {
     public:
+
+        virtual ~Test() {}
+
         /**
          * Run the test.
          */
@@ -36,6 +39,7 @@ namespace kvtest {
  */
 class TestTest : public kvtest::Test {
 public:
+    virtual ~TestTest() {}
     bool run(kvtest::KVStore *tut);
     std::string name() { return "test test"; }
 };
@@ -45,6 +49,7 @@ public:
  */
 class WriteTest : public kvtest::Test {
 public:
+    virtual ~WriteTest() {}
     bool run(kvtest::KVStore *tut);
     std::string name() { return "write test"; }
 };

@@ -16,6 +16,8 @@ namespace kvtest {
 
         AsyncOperation() {}
 
+        virtual ~AsyncOperation() {}
+
         /**
          * Perform this operation.
          */

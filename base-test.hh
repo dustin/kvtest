@@ -72,6 +72,8 @@ namespace kvtest {
 
         KVStore() {}
 
+        virtual ~KVStore() {}
+
         /**
          * Called after each test to reinitialize the test.
          */

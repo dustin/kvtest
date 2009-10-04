@@ -9,6 +9,9 @@ namespace kvtest {
     template <typename RV>
     class Callback {
     public:
+
+        virtual ~Callback() {}
+
         /**
          * Method called on callback.
          */
