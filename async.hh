@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <queue>
 
-#define MAX_DRAIN 25000
+#define DEFAULT_MAX_DRAIN 25000
 
 namespace kvtest {
 
@@ -176,10 +176,13 @@ namespace kvtest {
 
         /**
          * Create an async queue.
+         *
+         * @param max_drain maximum number of operations to grab for one batch
          */
-        AsyncQueue() {
+        AsyncQueue(int max_drain) {
             pthread_mutex_init(&mutex, NULL);
             pthread_cond_init(&cond, NULL);
+            max_drain_ = max_drain;
         }
 
         /**
@@ -219,13 +222,14 @@ namespace kvtest {
                     throw std::runtime_error("Error waiting for signal.");
                 }
             }
-            for(int i = 0; i < MAX_DRAIN && !ops.empty(); i++) {
+            for(int i = 0; i < max_drain_ && !ops.empty(); i++) {
                 out.push(ops.front());
                 ops.pop();
             }
         }
 
     private:
+        int                         max_drain_;
         pthread_mutex_t             mutex;
         pthread_cond_t              cond;
         std::queue<AsyncOperation*> ops;
@@ -312,9 +316,9 @@ namespace kvtest {
         /**
          * Construct a QueuedKVStore wrapping the given thing.
          */
-        QueuedKVStore(KVStore *t) {
+        QueuedKVStore(KVStore *t, int max_drain=DEFAULT_MAX_DRAIN) {
             tut = t;
-            iq = new AsyncQueue();
+            iq = new AsyncQueue(max_drain);
             executor = new AsyncExecutor(tut, iq);
 
             if(pthread_create(&thread, NULL, launch_executor_thread, executor)
