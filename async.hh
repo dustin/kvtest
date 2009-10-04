@@ -14,13 +14,17 @@ namespace kvtest {
     class AsyncOperation {
     public:
 
+        AsyncOperation() {}
+
         /**
          * Perform this operation.
          */
-        virtual bool execute(KVStore *tut) {
+        virtual void execute(KVStore *tut) {
             throw std::runtime_error("not implemented");
         }
 
+    private:
+        DISALLOW_COPY_AND_ASSIGN(AsyncOperation);
     };
 
     /**
@@ -28,7 +32,7 @@ namespace kvtest {
      */
     class AsyncShutdownOperation : public AsyncOperation {
     public:
-        bool execute(KVStore *tut) {
+        void execute(KVStore *tut) {
             throw this;
         }
     };
@@ -64,11 +68,10 @@ namespace kvtest {
         /**
          * Call reset, callback(true).
          */
-        bool execute(KVStore *tut) {
+        void execute(KVStore *tut) {
             tut->reset();
             bool t = true;
             cb->callback(t);
-            return true;
         }
     };
 
@@ -82,10 +85,9 @@ namespace kvtest {
         /**
          * callback(true).
          */
-        bool execute(KVStore *tut) {
+        void execute(KVStore *tut) {
             bool rv = true;
             cb->callback(rv);
-            return true;
         }
     };
 
@@ -107,9 +109,8 @@ namespace kvtest {
         /**
          * Call the underlying set method.
          */
-        bool execute(KVStore *tut) {
+        void execute(KVStore *tut) {
             tut->set(key, value, *cb);
-            return true;
         }
     private:
         std::string     key;
@@ -132,9 +133,8 @@ namespace kvtest {
         /**
          * Execute the underlying delete.
          */
-        bool execute(KVStore *db) {
+        void execute(KVStore *db) {
             db->del(key, *cb);
-            return true;
         }
 
     private:
@@ -157,9 +157,8 @@ namespace kvtest {
         /**
          * Execute the underlying get and fire the result to the callback.
          */
-        bool execute(KVStore *db) {
+        void execute(KVStore *db) {
             db->get(key, *cb);
-            return true;
         }
 
     private:
