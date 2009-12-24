@@ -144,3 +144,54 @@ bool WriteTest::run(KVStore *tut) {
               << std::endl;
     return true;
 }
+
+bool EnduranceTest::run(KVStore *tut) {
+    long i = 0;
+    CountingCallback cb;
+    time_t start = time(NULL);
+    time_t step = time(NULL);
+    const int n = 1000000;
+
+    std::cout << "# start time:  " << start << std::endl;
+    std::cout << "# cmds\tbacklog\ttime\tabstime\trate" << std::endl;
+
+    for(i = 0 ; ; i++) {
+        std::stringstream kStream;
+        std::stringstream vStream;
+        kStream << "testKey" << i;
+        vStream << "testValue" << i;
+
+        std::string key = kStream.str();
+        std::string value = vStream.str();
+
+        tut->set(key, value, cb);
+        if (i % n == 0 && i != 0) {
+            // Wait for a commit...
+            RememberingCallback<bool> cbLast;
+            tut->noop(cbLast);
+            cbLast.waitForValue();
+
+            time_t now = time(NULL);
+            int delta = now - step;
+            step = now;
+            std::cout << i << "\t" << (i - cb.num_calls() + 1)
+                      << "\t" << delta << "\t" << now << "\t"
+                      << ((double)n / (double)delta) << std::endl;
+        }
+    }
+
+    // Last one to wait for a commit.
+    RememberingCallback<bool> cbLast;
+    tut->noop(cbLast);
+    cbLast.waitForValue();
+    time_t end = time(NULL);
+
+    assertEquals(i, cb.num_calls());
+
+    int delta = end - start;
+    std::cout << "Ran " << i << " operations in "
+              << delta << "s ("
+              << (i/delta) << " ops/s)"
+              << std::endl;
+    return true;
+}

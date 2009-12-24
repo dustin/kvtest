@@ -54,4 +54,14 @@ public:
     std::string name() { return "write test"; }
 };
 
+/**
+ * A long-running endurance test.
+ */
+class EnduranceTest : public kvtest::Test {
+public:
+    virtual ~EnduranceTest() {}
+    bool run(kvtest::KVStore *tut);
+    std::string name() { return "endurance test"; }
+};
+
 #endif /* TESTS_H */
