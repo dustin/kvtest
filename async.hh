@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <queue>
 
-#define DEFAULT_MAX_DRAIN 25000
+#define DEFAULT_MAX_DRAIN 1000000
 
 namespace kvtest {
 
