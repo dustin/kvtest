@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -13,7 +14,9 @@
 using namespace kvtest;
 
 int main(int argc, char **args) {
-    Sqlite3 sq("/tmp/test.db", getenv("KVSTORE_AUDITABLE"));
+    const char *env_path = getenv("SQLITE_TEST_DB");
+    Sqlite3 sq(env_path ? env_path : "/tmp/test.db",
+               getenv("KVSTORE_AUDITABLE"));
     QueuedKVStore thing(&sq);
 
     TestSuite suite(&thing);
