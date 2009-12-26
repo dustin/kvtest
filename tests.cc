@@ -146,11 +146,10 @@ bool WriteTest::run(KVStore *tut) {
 }
 
 bool EnduranceTest::run(KVStore *tut) {
-    long i = 0;
+    long i = 0, prev_calls = 0;
     CountingCallback cb;
     time_t start = time(NULL);
     time_t step = time(NULL);
-    const int n = 1000000;
     const int alarm_freq = 5;
 
     setup_alarm(alarm_freq);
@@ -176,10 +175,12 @@ bool EnduranceTest::run(KVStore *tut) {
 
             time_t now = time(NULL);
             int delta = now - step;
+            long new_calls = i - prev_calls;
             step = now;
             std::cout << i << "\t" << (i - cb.num_calls() + 1)
                       << "\t" << delta << "\t" << now << "\t"
-                      << ((double)n / (double)delta) << std::endl;
+                      << ((double)new_calls / (double)delta) << std::endl;
+            prev_calls = i;
             setup_alarm(alarm_freq);
         }
     }
