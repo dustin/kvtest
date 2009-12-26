@@ -6,6 +6,7 @@
 
 #include "base-test.hh"
 #include "tests.hh"
+#include "keys.hh"
 
 using namespace kvtest;
 using namespace std;
@@ -151,6 +152,7 @@ bool EnduranceTest::run(KVStore *tut) {
     time_t start = time(NULL);
     time_t step = time(NULL);
     const int alarm_freq = 5;
+    Keys k(5000000);
 
     setup_alarm(alarm_freq);
 
@@ -158,12 +160,10 @@ bool EnduranceTest::run(KVStore *tut) {
     std::cout << "# cmds\tbacklog\ttime\tabstime\trate" << std::endl;
 
     for(i = 0 ; ; i++) {
-        std::stringstream kStream;
         std::stringstream vStream;
-        kStream << "testKey" << i;
         vStream << "testValue" << i;
 
-        std::string key = kStream.str();
+        std::string key = *k.nextKey();
         std::string value = vStream.str();
 
         tut->set(key, value, cb);
