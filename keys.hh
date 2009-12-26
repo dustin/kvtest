@@ -20,17 +20,22 @@ namespace kvtest {
         Keys(size_t numKeys);
 
         /**
+         * Clean up the allocated keys.
+         */
+        ~Keys();
+
+        /**
          * Grab a key.
          */
-        const std::string* nextKey();
+        const char* nextKey();
 
         /**
          * Get the number of keys in this Keys object.
          */
         size_t length();
     private:
-        std::vector<const std::string *> keys;
-        std::vector<const std::string *>::iterator it;
+        std::vector<const char *> keys;
+        std::vector<const char *>::iterator it;
     };
 
 }

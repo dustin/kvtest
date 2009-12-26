@@ -5,13 +5,16 @@
 #include <algorithm>
 #include <assert.h>
 
+#include <string.h>
+
 #include "keys.hh"
 
 #define KEY_LEN 16
 
 namespace kvtest {
 
-    std::string* generateKey();
+    static const char* generateKey();
+    static void free_str(const char* p);
 
     Keys::Keys(size_t n) : keys(n) {
 
@@ -21,8 +24,12 @@ namespace kvtest {
         it = keys.begin();
     }
 
-    const std::string* Keys::nextKey() {
-        const std::string *rv = *it;
+    Keys::~Keys() {
+        std::for_each(keys.begin(), keys.end(), free_str);
+    }
+
+    const char* Keys::nextKey() {
+        const char *rv = *it;
         ++it;
         if (it == keys.end()) {
             it = keys.begin();
@@ -34,16 +41,23 @@ namespace kvtest {
         return keys.size();
     }
 
-    char nextChar() {
+    static void free_str(const char* p) {
+        free((void*)p);
+    }
+
+    static char nextChar() {
         static const char *keyvals = "abcdefghijklmnopqrstuvwyz"
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             "0123456789";
         return keyvals[random() % strlen(keyvals)];
     }
 
-    std::string* generateKey() {
-        std::string *rv = new std::string(KEY_LEN, char());
-        std::generate_n(rv->begin(), KEY_LEN, nextChar);
+    static const char* generateKey() {
+        char *rv = (char *)calloc(1, KEY_LEN + 1);
+        assert(rv);
+        for (int i = 0; i < KEY_LEN; i++) {
+            rv[i] = nextChar();
+        }
         return rv;
     }
 

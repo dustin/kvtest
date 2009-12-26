@@ -163,7 +163,7 @@ bool EnduranceTest::run(KVStore *tut) {
         std::stringstream vStream;
         vStream << "testValue" << i;
 
-        std::string key = *k.nextKey();
+        std::string key(k.nextKey());
         std::string value = vStream.str();
 
         tut->set(key, value, cb);
