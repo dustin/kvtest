@@ -179,7 +179,8 @@ bool EnduranceTest::run(KVStore *tut) {
             step = now;
             std::cout << i << "\t" << (i - cb.num_calls() + 1)
                       << "\t" << delta << "\t" << now << "\t"
-                      << ((double)new_calls / (double)delta) << std::endl;
+                      << ((double)new_calls / (double)delta) << std::endl
+                      << std::flush;
             prev_calls = i;
             setup_alarm(alarm_freq);
         }
