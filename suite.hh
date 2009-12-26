@@ -31,6 +31,8 @@ namespace kvtest {
     private:
         KVStore   *tut;
         std::list<Test*>  tests;
+
+        void initTests();
     };
 
 }

@@ -1,4 +1,6 @@
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include <iostream>
 #include <list>
@@ -12,8 +14,19 @@ using namespace kvtest;
 TestSuite::TestSuite(KVStore *t) {
     tut = t;
 
-    addTest(new TestTest());
-    addTest(new WriteTest());
+    initTests();
+}
+
+void TestSuite::initTests() {
+    const char *req = getenv("KVTEST_SUITE");
+    if (req == NULL || (strcmp(req, "full") == 0)) {
+        addTest(new TestTest());
+        addTest(new WriteTest());
+    } else if (strcmp(req, "test") == 0) {
+        addTest(new TestTest());
+    } else if (strcmp(req, "endurance") == 0) {
+        addTest(new EnduranceTest());
+    }
 }
 
 bool TestSuite::run() {
