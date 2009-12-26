@@ -1,7 +1,7 @@
 #ifndef KEYS_HH
 #define KEYS_HH 1
 
-#include <set>
+#include <vector>
 
 #include <iostream>
 
@@ -29,9 +29,8 @@ namespace kvtest {
          */
         size_t length();
     private:
-        std::set<const std::string *> keys;
-        std::set<const std::string *>::iterator it;
-        size_t len;
+        std::vector<const std::string *> keys;
+        std::vector<const std::string *>::iterator it;
     };
 
 }

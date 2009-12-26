@@ -1,6 +1,9 @@
 #include <iostream>
 #include <iterator>
+#include <set>
+#include <vector>
 #include <algorithm>
+#include <assert.h>
 
 #include "keys.hh"
 
@@ -10,12 +13,10 @@ namespace kvtest {
 
     std::string* generateKey();
 
-    Keys::Keys(size_t n) {
-        len = n;
+    Keys::Keys(size_t n) : keys(n) {
 
-        while (keys.size() < n) {
-            keys.insert(generateKey());
-        }
+        std::generate_n(keys.begin(), n, generateKey);
+        assert(keys.size() == n);
 
         it = keys.begin();
     }
@@ -30,17 +31,19 @@ namespace kvtest {
     }
 
     size_t Keys::length() {
-        return len;
+        return keys.size();
+    }
+
+    char nextChar() {
+        static const char *keyvals = "abcdefghijklmnopqrstuvwyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "0123456789";
+        return keyvals[random() % strlen(keyvals)];
     }
 
     std::string* generateKey() {
-        const char *keyvals = "abcdefghijklmnopqrstuvwyz"
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            "0123456789";
-        std::string *rv = new std::string();
-        while (rv->length() < KEY_LEN) {
-            rv->append(1, (char)keyvals[random() % strlen(keyvals)]);
-        }
+        std::string *rv = new std::string(KEY_LEN, char());
+        std::generate_n(rv->begin(), KEY_LEN, nextChar);
         return rv;
     }
 
