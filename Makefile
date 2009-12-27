@@ -1,8 +1,8 @@
 CFLAGS=-Wall -Wextra -ansi -pedantic -Wno-unused-parameter -Werror -g
 LDFLAGS=-g
 
-COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh keys.hh
-OBJS=tests.o suite.o keys.o
+COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh keys.hh values.hh
+OBJS=tests.o suite.o keys.o values.o
 PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o \
 	bdb-test.o bdb-async-test.o tokyo-test.o tokyo-async-test.o
 SQLITE_OBJS=sqlite-base.o
