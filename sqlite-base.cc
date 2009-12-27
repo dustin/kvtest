@@ -27,6 +27,15 @@ namespace kvtest {
         while ((rc = sqlite3_step(st)) != SQLITE_DONE) {
             steps_run++;
             assert(steps_run < MAX_STEPS);
+            if (rc == SQLITE_ROW) {
+                // This is rather normal
+            } else if (rc == SQLITE_ROW) {
+                std::cerr << "SQLITE_BUSY (retrying)" << std::endl;
+            } else {
+                const char *msg = sqlite3_errmsg(db);
+                std::cerr << "sqlite error:  " << msg << std::endl;
+                assert(false);
+            }
         }
         return sqlite3_changes(db);
     }
@@ -73,6 +82,10 @@ namespace kvtest {
         if(!db) {
             if(sqlite3_open(filename, &db) !=  SQLITE_OK) {
                 throw std::runtime_error("Error initializing sqlite3");
+            }
+
+            if(sqlite3_extended_result_codes(db, 1) != SQLITE_OK) {
+                throw std::runtime_error("Error enabling extended RCs");
             }
 
             intransaction = false;
