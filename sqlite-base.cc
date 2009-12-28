@@ -19,7 +19,7 @@ namespace kvtest {
     }
 
     void PreparedStatement::bind(int pos, const char *s) {
-        sqlite3_bind_text(st, pos, s, strlen(s), SQLITE_TRANSIENT);
+        sqlite3_bind_text(st, pos, s, strlen(s), SQLITE_STATIC);
     }
 
     int PreparedStatement::execute() {
