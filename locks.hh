@@ -20,17 +20,26 @@ namespace kvtest {
             if(pthread_mutex_lock(mutex) != 0) {
                 throw std::runtime_error("Failed to acquire lock.");
             }
+            unlocked = false;
         }
 
         /**
          * Release the lock.
          */
         ~LockHolder() {
-            pthread_mutex_unlock(mutex);
+            unlock();
+        }
+
+        void unlock() {
+            if (!unlocked) {
+                pthread_mutex_unlock(mutex);
+                unlocked = true;
+            }
         }
 
     private:
         pthread_mutex_t *mutex;
+        bool unlocked;
 
         DISALLOW_COPY_AND_ASSIGN(LockHolder);
     };
