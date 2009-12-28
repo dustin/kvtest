@@ -1,10 +1,12 @@
 CFLAGS=-Wall -Wextra -ansi -pedantic -Wno-unused-parameter -Werror -g
 LDFLAGS=-g
 
-COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh keys.hh values.hh
-OBJS=tests.o suite.o keys.o values.o
+COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh \
+	keys.hh values.hh ep.hh
+OBJS=tests.o suite.o keys.o values.o ep.o
 PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o \
-	bdb-test.o bdb-async-test.o tokyo-test.o tokyo-async-test.o
+	bdb-test.o bdb-async-test.o tokyo-test.o tokyo-async-test.o \
+	sqlite3-ep-test.o
 SQLITE_OBJS=sqlite-base.o
 SQLITE_COMMON=sqlite-base.hh
 
@@ -23,7 +25,7 @@ TOKYO_OBJS=tokyo-base.o
 TOKYO_COMMON=tokyo-base.hh
 
 ALL_OBJS=$(OBJS) $(SQLITE_OBJS) $(PROG_OBJS) $(BDB_OBJS) $(TOKYO_OBJS)
-ALL_PROGS=example-test sqlite3-test sqlite3-async-test
+ALL_PROGS=example-test sqlite3-test sqlite3-async-test sqlite3-ep-test
 BDB_PROGS=bdb-test bdb-async-test
 TOKYO_PROGS=tokyo-test tokyo-async-test
 
@@ -43,6 +45,9 @@ sqlite3-test: sqlite3-test.o $(SQLITE_OBJS) $(OBJS) $(COMMON)
 
 sqlite3-async-test: sqlite3-async-test.o $(SQLITE_OBJS) $(OBJS) $(COMMON)
 	$(CXX) -o $@ sqlite3-async-test.o $(SQLITE_OBJS) $(OBJS) $(LDFLAGS) -lsqlite3
+
+sqlite3-ep-test: sqlite3-ep-test.o $(SQLITE_OBJS) $(OBJS) $(COMMON)
+	$(CXX) -o $@ sqlite3-ep-test.o $(SQLITE_OBJS) $(OBJS) $(LDFLAGS) -lsqlite3
 
 bdb-test: bdb-test.o $(BDB_OBJS) $(OBJS) $(COMMON)
 	$(CXX) -o $@ bdb-test.o $(BDB_OBJS) $(OBJS) $(LDFLAGS) $(BDB_LDFLAGS)
