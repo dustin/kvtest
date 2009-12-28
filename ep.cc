@@ -139,7 +139,7 @@ namespace kvtest {
         bool found = it != storage.end();
         bool isDirty = (found && it->second->isDirty());
         std::string val;
-        if (found && it->second->isDirty()) {
+        if (isDirty) {
             it->second->markClean();
             val = it->second->getValue();
         }
