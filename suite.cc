@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <list>
+#include <algorithm>
 
 #include "base-test.hh"
 #include "tests.hh"
@@ -15,6 +16,14 @@ TestSuite::TestSuite(KVStore *t) {
     tut = t;
 
     initTests();
+}
+
+static void killTest(Test *t) {
+    delete t;
+}
+
+TestSuite::~TestSuite() {
+    std::for_each(tests.begin(), tests.end(), killTest);
 }
 
 void TestSuite::initTests() {

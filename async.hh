@@ -275,6 +275,7 @@ namespace kvtest {
                     tut->commit();
                 }
             } catch(AsyncShutdownOperation *op) {
+                delete op;
                 std::cerr << "Shutting down..." << std::endl;
             } catch(std::runtime_error &e) {
                 std::cerr << "Exception in executor loop: "

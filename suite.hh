@@ -18,6 +18,11 @@ namespace kvtest {
         TestSuite(KVStore *t);
 
         /**
+         * Destroy the tests.
+         */
+        ~TestSuite();
+
+        /**
          * Run the test suite.
          */
         bool run();
