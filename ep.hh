@@ -8,13 +8,36 @@
 #include <iostream>
 #include <queue>
 
-#include "google/config.h"
-#include <google/sparse_hash_map>
-#include <google/sparse_hash_set>
+#include <map>
+#include <set>
+#include <queue>
 
 #include "base-test.hh"
 
 namespace kvtest {
+
+    class StoredValue {
+    public:
+        StoredValue(std::string &v) {
+            value = v;
+            markClean();
+        }
+        void markDirty() {
+            dirty = true;
+        }
+        void markClean() {
+            dirty = false;
+        }
+        bool isDirty() {
+            return dirty;
+        }
+        std::string getValue() {
+            return value;
+        }
+    private:
+        bool dirty;
+        std::string value;
+    };
 
     // Forward declaration
     class Flusher;
@@ -44,15 +67,14 @@ namespace kvtest {
 
         friend class Flusher;
 
-        KVStore                                           *underlying;
-        size_t                                             est_size;
-        Flusher                                           *flusher;
-        google::sparse_hash_map<std::string, std::string>  storage;
-        pthread_mutex_t                                    mutex;
-        pthread_cond_t                                     cond;
-        google::sparse_hash_set<std::string>              *towrite;
-        std::queue<std::string>                           *towrite_q;
-        pthread_t                                          thread;
+        KVStore                             *underlying;
+        size_t                               est_size;
+        Flusher                             *flusher;
+        std::map<std::string, StoredValue*>  storage;
+        pthread_mutex_t                      mutex;
+        pthread_cond_t                       cond;
+        std::queue<std::string>             *towrite;
+        pthread_t                            thread;
         DISALLOW_COPY_AND_ASSIGN(EventuallyPersistentStore);
     };
 

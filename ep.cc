@@ -14,7 +14,7 @@ namespace kvtest {
     }
 
     EventuallyPersistentStore::EventuallyPersistentStore(KVStore *t,
-                                                         size_t est) : storage(est) {
+                                                         size_t est) {
 
         pthread_mutex_init(&mutex, NULL);
         pthread_cond_init(&cond, NULL);
@@ -42,20 +42,27 @@ namespace kvtest {
         pthread_join(thread, NULL);
         delete flusher;
         delete towrite;
-        delete towrite_q;
+        for (std::map<std::string, StoredValue*>::iterator it=storage.begin();
+             it != storage.end(); it++ ) {
+            delete (*it).second;
+        }
+        pthread_cond_destroy(&cond);
         pthread_mutex_destroy(&mutex);
     }
 
     void EventuallyPersistentStore::initQueue() {
-        towrite = new google::sparse_hash_set<std::string>(est_size);
-        towrite_q = new std::queue<std::string>;
+        towrite = new std::queue<std::string>;
     }
 
     void EventuallyPersistentStore::set(std::string &key, std::string &val,
                                         Callback<bool> &cb) {
         LockHolder lh(&mutex);
+        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
+        if (it != storage.end()) {
+            delete it->second;
+        }
 
-        storage[key] = val;
+        storage[key] = new StoredValue(val);
         bool rv = true;
         markDirty(key);
         lh.unlock();
@@ -67,7 +74,6 @@ namespace kvtest {
         LockHolder lh(&mutex);
         underlying->reset();
         delete towrite;
-        delete towrite_q;
         initQueue();
         storage.clear();
     }
@@ -75,9 +81,9 @@ namespace kvtest {
     void EventuallyPersistentStore::get(std::string &key,
                                         Callback<kvtest::GetValue> &cb) {
         LockHolder lh(&mutex);
-        google::sparse_hash_map<std::string, std::string>::iterator it = storage.find(key);
+        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
         bool success = it != storage.end();
-        kvtest::GetValue rv(success ? it->second : std::string(":("),
+        kvtest::GetValue rv(success ? it->second->getValue() : std::string(":("),
                             success);
         lh.unlock();
         cb.callback(rv);
@@ -97,14 +103,13 @@ namespace kvtest {
     }
 
     void EventuallyPersistentStore::markDirty(std::string &key) {
-        // Assumed locked
-        if (towrite->find(key) == towrite->end()) {
-            // This is only called for missing keys.
-            towrite->insert(key);
-            towrite_q->push(key);
-            if(pthread_cond_signal(&cond) != 0) {
-                throw std::runtime_error("Error signaling change.");
-            }
+        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
+        if (it != storage.end()) {
+            it->second->markDirty();
+        }
+        towrite->push(key);
+        if(pthread_cond_signal(&cond) != 0) {
+            throw std::runtime_error("Error signaling change.");
         }
     }
 
@@ -118,27 +123,23 @@ namespace kvtest {
                 }
             }
         } else {
-            std::queue<std::string> *q = towrite_q;
-            google::sparse_hash_set<std::string> *s = towrite;
+            std::queue<std::string> *q = towrite;
             initQueue();
             lh.unlock();
 
             RememberingCallback<bool> cb;
             assert(underlying);
-            underlying->begin();
             while (!q->empty()) {
                 flushSome(q, cb);
             }
-            underlying->commit();
 
             delete q;
-            delete s;
         }
     }
 
     void EventuallyPersistentStore::flushSome(std::queue<std::string> *q,
                                              Callback<bool> &cb) {
-        google::sparse_hash_map<std::string, std::string> toSet;
+        std::map<std::string, std::string> toSet;
         std::queue<std::string> toDelete;
 
         LockHolder lh(&mutex);
@@ -146,14 +147,18 @@ namespace kvtest {
             std::string key = q->front();
             q->pop();
 
-            google::sparse_hash_map<std::string, std::string>::iterator it
-                = storage.find(key);
+            std::map<std::string, StoredValue*>::iterator it = storage.find(key);
             bool found = it != storage.end();
-            std::string val = it->second;
+            bool isDirty = (found && it->second->isDirty());
+            std::string val;
+            if (isDirty) {
+                it->second->markClean();
+                val = it->second->getValue();
+            }
 
-            if (found) {
+            if (found && isDirty) {
                 toSet[key] = val;
-            } else {
+            } else if (!found) {
                 toDelete.push(key);
             }
         }
@@ -167,7 +172,7 @@ namespace kvtest {
         }
 
         // Then handle sets.
-        google::sparse_hash_map<std::string, std::string>::iterator it = toSet.begin();
+        std::map<std::string, std::string>::iterator it = toSet.begin();
         for (; it != toSet.end(); it++) {
             std::string key = it->first;
             std::string val = it->second;
