@@ -103,13 +103,15 @@ namespace kvtest {
     }
 
     void EventuallyPersistentStore::markDirty(std::string &key) {
+        // Lock is assumed to be held here.
         std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        if (it != storage.end()) {
+        if (it != storage.end() && !it->second->isDirty()) {
             it->second->markDirty();
-        }
-        towrite->push(key);
-        if(pthread_cond_signal(&cond) != 0) {
-            throw std::runtime_error("Error signaling change.");
+
+            towrite->push(key);
+            if(pthread_cond_signal(&cond) != 0) {
+                throw std::runtime_error("Error signaling change.");
+            }
         }
     }
 
