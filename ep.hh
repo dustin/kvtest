@@ -21,7 +21,7 @@ namespace kvtest {
     class EventuallyPersistentStore : public KVStore {
     public:
 
-        EventuallyPersistentStore(KVStore *t);
+        EventuallyPersistentStore(KVStore *t, size_t est=32768);
 
         ~EventuallyPersistentStore();
 
@@ -43,6 +43,7 @@ namespace kvtest {
         friend class Flusher;
 
         KVStore                                           *underlying;
+        size_t                                             est_size;
         Flusher                                           *flusher;
         google::sparse_hash_map<std::string, std::string>  storage;
         pthread_mutex_t                                    mutex;
