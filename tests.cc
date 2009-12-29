@@ -153,7 +153,7 @@ bool EnduranceTest::run(KVStore *tut) {
     time_t start = time(NULL);
     time_t step = time(NULL);
     const int alarm_freq = 5;
-    Keys k(5000000);
+    Keys k(30000);
     Values v(20, 40000, 60000);
 
     setup_alarm(alarm_freq);
