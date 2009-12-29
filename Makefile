@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wextra -ansi -pedantic -Wno-unused-parameter -Werror -g
+CFLAGS=-I. -Wall -Wextra -ansi  -Wno-unused-parameter -Werror -g
 LDFLAGS=-g
 
 COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh \

@@ -6,8 +6,10 @@
 #include <stdbool.h>
 #include <stdexcept>
 #include <iostream>
-#include <map>
-#include <set>
+
+#include "google/config.h"
+#include <google/sparse_hash_map>
+#include <google/sparse_hash_set>
 
 #include "base-test.hh"
 
@@ -40,13 +42,13 @@ namespace kvtest {
 
         friend class Flusher;
 
-        KVStore                            *underlying;
-        Flusher                            *flusher;
-        std::map<std::string, std::string>  storage;
-        pthread_mutex_t                     mutex;
-        pthread_cond_t                      cond;
-        std::set<std::string>              *towrite;
-        pthread_t                           thread;
+        KVStore                                           *underlying;
+        Flusher                                           *flusher;
+        google::sparse_hash_map<std::string, std::string>  storage;
+        pthread_mutex_t                                    mutex;
+        pthread_cond_t                                     cond;
+        google::sparse_hash_set<std::string>              *towrite;
+        pthread_t                                          thread;
         DISALLOW_COPY_AND_ASSIGN(EventuallyPersistentStore);
     };
 

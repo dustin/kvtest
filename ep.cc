@@ -16,7 +16,7 @@ namespace kvtest {
     EventuallyPersistentStore::EventuallyPersistentStore(KVStore *t) {
         pthread_mutex_init(&mutex, NULL);
         pthread_cond_init(&cond, NULL);
-        towrite = new std::set<std::string>;
+        towrite = new google::sparse_hash_set<std::string>;
         flusher = new Flusher(this);
 
         // Run in a thread...
@@ -58,14 +58,14 @@ namespace kvtest {
         LockHolder lh(&mutex);
         underlying->reset();
         delete towrite;
-        towrite = new std::set<std::string>;
+        towrite = new google::sparse_hash_set<std::string>;
         storage.clear();
     }
 
     void EventuallyPersistentStore::get(std::string &key,
                                         Callback<kvtest::GetValue> &cb) {
         LockHolder lh(&mutex);
-        std::map<std::string, std::string>::iterator it = storage.find(key);
+        google::sparse_hash_map<std::string, std::string>::iterator it = storage.find(key);
         bool success = it != storage.end();
         kvtest::GetValue rv(success ? it->second : std::string(":("),
                             success);
@@ -104,14 +104,14 @@ namespace kvtest {
                 }
             }
         } else {
-            std::set<std::string> *q = towrite;
-            towrite = new std::set<std::string>;
+            google::sparse_hash_set<std::string> *q = towrite;
+            towrite = new google::sparse_hash_set<std::string>;
             lh.unlock();
 
             RememberingCallback<bool> cb;
             assert(underlying);
             underlying->begin();
-            for (std::set<std::string>::iterator it = q->begin();
+            for (google::sparse_hash_set<std::string>::iterator it = q->begin();
                  it != q->end(); it++) {
                 std::string key = *it;
                 flushOne(key, cb);
@@ -123,7 +123,7 @@ namespace kvtest {
     void EventuallyPersistentStore::flushOne(std::string &key,
                                              Callback<bool> &cb) {
         LockHolder lh(&mutex);
-        std::map<std::string, std::string>::iterator it = storage.find(key);
+        google::sparse_hash_map<std::string, std::string>::iterator it = storage.find(key);
         bool found = it != storage.end();
         std::string val = it->second;
         lh.unlock();
