@@ -7,34 +7,11 @@
 #include <stdexcept>
 #include <iostream>
 #include <map>
-#include <queue>
+#include <set>
 
 #include "base-test.hh"
 
 namespace kvtest {
-
-    class StoredValue {
-    public:
-        StoredValue(std::string &v) {
-            value = v;
-            markClean();
-        }
-        void markDirty() {
-            dirty = true;
-        }
-        void markClean() {
-            dirty = false;
-        }
-        bool isDirty() {
-            return dirty;
-        }
-        std::string getValue() {
-            return value;
-        }
-    private:
-        bool dirty;
-        std::string value;
-    };
 
     // Forward declaration
     class Flusher;
@@ -63,13 +40,13 @@ namespace kvtest {
 
         friend class Flusher;
 
-        KVStore                             *underlying;
-        Flusher                             *flusher;
-        std::map<std::string, StoredValue*>  storage;
-        pthread_mutex_t                      mutex;
-        pthread_cond_t                       cond;
-        std::queue<std::string>             *towrite;
-        pthread_t                            thread;
+        KVStore                            *underlying;
+        Flusher                            *flusher;
+        std::map<std::string, std::string>  storage;
+        pthread_mutex_t                     mutex;
+        pthread_cond_t                      cond;
+        std::set<std::string>              *towrite;
+        pthread_t                           thread;
         DISALLOW_COPY_AND_ASSIGN(EventuallyPersistentStore);
     };
 

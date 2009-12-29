@@ -16,7 +16,7 @@ namespace kvtest {
     EventuallyPersistentStore::EventuallyPersistentStore(KVStore *t) {
         pthread_mutex_init(&mutex, NULL);
         pthread_cond_init(&cond, NULL);
-        towrite = new std::queue<std::string>;
+        towrite = new std::set<std::string>;
         flusher = new Flusher(this);
 
         // Run in a thread...
@@ -39,23 +39,14 @@ namespace kvtest {
         pthread_join(thread, NULL);
         delete flusher;
         delete towrite;
-        for (std::map<std::string, StoredValue*>::iterator it=storage.begin();
-             it != storage.end(); it++ ) {
-            delete (*it).second;
-        }
-        pthread_cond_destroy(&cond);
         pthread_mutex_destroy(&mutex);
     }
 
     void EventuallyPersistentStore::set(std::string &key, std::string &val,
                                         Callback<bool> &cb) {
         LockHolder lh(&mutex);
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        if (it != storage.end()) {
-            delete it->second;
-        }
 
-        storage[key] = new StoredValue(val);
+        storage[key] = val;
         bool rv = true;
         markDirty(key);
         lh.unlock();
@@ -67,16 +58,16 @@ namespace kvtest {
         LockHolder lh(&mutex);
         underlying->reset();
         delete towrite;
-        towrite = new std::queue<std::string>;
+        towrite = new std::set<std::string>;
         storage.clear();
     }
 
     void EventuallyPersistentStore::get(std::string &key,
                                         Callback<kvtest::GetValue> &cb) {
         LockHolder lh(&mutex);
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
+        std::map<std::string, std::string>::iterator it = storage.find(key);
         bool success = it != storage.end();
-        kvtest::GetValue rv(success ? it->second->getValue() : std::string(":("),
+        kvtest::GetValue rv(success ? it->second : std::string(":("),
                             success);
         lh.unlock();
         cb.callback(rv);
@@ -96,11 +87,8 @@ namespace kvtest {
     }
 
     void EventuallyPersistentStore::markDirty(std::string &key) {
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        if (it != storage.end()) {
-            it->second->markDirty();
-        }
-        towrite->push(key);
+        // Assumed locked
+        towrite->insert(key);
         if(pthread_cond_signal(&cond) != 0) {
             throw std::runtime_error("Error signaling change.");
         }
@@ -116,17 +104,17 @@ namespace kvtest {
                 }
             }
         } else {
-            std::queue<std::string> *q = towrite;
-            towrite = new std::queue<std::string>;
+            std::set<std::string> *q = towrite;
+            towrite = new std::set<std::string>;
             lh.unlock();
 
             RememberingCallback<bool> cb;
             assert(underlying);
             underlying->begin();
-            while (!q->empty()) {
-                std::string key = q->front();
+            for (std::set<std::string>::iterator it = q->begin();
+                 it != q->end(); it++) {
+                std::string key = *it;
                 flushOne(key, cb);
-                q->pop();
             }
             underlying->commit();
         }
@@ -135,24 +123,17 @@ namespace kvtest {
     void EventuallyPersistentStore::flushOne(std::string &key,
                                              Callback<bool> &cb) {
         LockHolder lh(&mutex);
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
+        std::map<std::string, std::string>::iterator it = storage.find(key);
         bool found = it != storage.end();
-        bool isDirty = (found && it->second->isDirty());
-        std::string val;
-        if (isDirty) {
-            it->second->markClean();
-            val = it->second->getValue();
-        }
+        std::string val = it->second;
         lh.unlock();
 
-        if (isDirty) {
+        if (found) {
             // should set
             underlying->set(key, val, cb);
-        } else if (!found) {
+        } else {
             // Should delete
             underlying->del(key, cb);
-        } else {
-            std::cout << "skipping write of ``" << key << "''" << std::endl;
         }
     }
 
