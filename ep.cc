@@ -127,9 +127,7 @@ namespace kvtest {
             assert(underlying);
             underlying->begin();
             while (!q->empty()) {
-                std::string key = q->front();
-                flushOne(key, cb);
-                q->pop();
+                flushSome(q, cb);
             }
             underlying->commit();
 
@@ -138,20 +136,42 @@ namespace kvtest {
         }
     }
 
-    void EventuallyPersistentStore::flushOne(std::string &key,
+    void EventuallyPersistentStore::flushSome(std::queue<std::string> *q,
                                              Callback<bool> &cb) {
+        google::sparse_hash_map<std::string, std::string> toSet;
+        std::queue<std::string> toDelete;
+
         LockHolder lh(&mutex);
-        google::sparse_hash_map<std::string, std::string>::iterator it = storage.find(key);
-        bool found = it != storage.end();
-        std::string val = it->second;
+        for (int i = 0; i < 1000 && !q->empty(); i++) {
+            std::string key = q->front();
+            q->pop();
+
+            google::sparse_hash_map<std::string, std::string>::iterator it
+                = storage.find(key);
+            bool found = it != storage.end();
+            std::string val = it->second;
+
+            if (found) {
+                toSet[key] = val;
+            } else {
+                toDelete.push(key);
+            }
+        }
         lh.unlock();
 
-        if (found) {
-            // should set
-            underlying->set(key, val, cb);
-        } else {
-            // Should delete
+        // Handle deletes first.
+        while (!toDelete.empty()) {
+            std::string key = toDelete.front();
             underlying->del(key, cb);
+            toDelete.pop();
+        }
+
+        // Then handle sets.
+        google::sparse_hash_map<std::string, std::string>::iterator it = toSet.begin();
+        for (; it != toSet.end(); it++) {
+            std::string key = it->first;
+            std::string val = it->second;
+            underlying->set(key, val, cb);
         }
     }
 
