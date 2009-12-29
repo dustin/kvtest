@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdexcept>
 #include <iostream>
+#include <queue>
 
 #include "google/config.h"
 #include <google/sparse_hash_map>
@@ -50,6 +51,7 @@ namespace kvtest {
         pthread_mutex_t                                    mutex;
         pthread_cond_t                                     cond;
         google::sparse_hash_set<std::string>              *towrite;
+        std::queue<std::string>                           *towrite_q;
         pthread_t                                          thread;
         DISALLOW_COPY_AND_ASSIGN(EventuallyPersistentStore);
     };

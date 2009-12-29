@@ -42,11 +42,13 @@ namespace kvtest {
         pthread_join(thread, NULL);
         delete flusher;
         delete towrite;
+        delete towrite_q;
         pthread_mutex_destroy(&mutex);
     }
 
     void EventuallyPersistentStore::initQueue() {
         towrite = new google::sparse_hash_set<std::string>(est_size);
+        towrite_q = new std::queue<std::string>;
     }
 
     void EventuallyPersistentStore::set(std::string &key, std::string &val,
@@ -65,6 +67,7 @@ namespace kvtest {
         LockHolder lh(&mutex);
         underlying->reset();
         delete towrite;
+        delete towrite_q;
         initQueue();
         storage.clear();
     }
@@ -95,9 +98,13 @@ namespace kvtest {
 
     void EventuallyPersistentStore::markDirty(std::string &key) {
         // Assumed locked
-        towrite->insert(key);
-        if(pthread_cond_signal(&cond) != 0) {
-            throw std::runtime_error("Error signaling change.");
+        if (towrite->find(key) == towrite->end()) {
+            // This is only called for missing keys.
+            towrite->insert(key);
+            towrite_q->push(key);
+            if(pthread_cond_signal(&cond) != 0) {
+                throw std::runtime_error("Error signaling change.");
+            }
         }
     }
 
@@ -111,19 +118,23 @@ namespace kvtest {
                 }
             }
         } else {
-            google::sparse_hash_set<std::string> *q = towrite;
+            std::queue<std::string> *q = towrite_q;
+            google::sparse_hash_set<std::string> *s = towrite;
             initQueue();
             lh.unlock();
 
             RememberingCallback<bool> cb;
             assert(underlying);
             underlying->begin();
-            for (google::sparse_hash_set<std::string>::iterator it = q->begin();
-                 it != q->end(); it++) {
-                std::string key = *it;
+            while (!q->empty()) {
+                std::string key = q->front();
                 flushOne(key, cb);
+                q->pop();
             }
             underlying->commit();
+
+            delete q;
+            delete s;
         }
     }
 
