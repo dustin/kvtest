@@ -152,7 +152,7 @@ bool EnduranceTest::run(KVStore *tut) {
     CountingCallback cb;
     time_t start = time(NULL);
     time_t step = time(NULL);
-    const int alarm_freq = 5;
+    const int alarm_freq = 10;
     Keys k(30000);
     Values v(20, 40000, 60000);
 
@@ -167,11 +167,6 @@ bool EnduranceTest::run(KVStore *tut) {
 
         tut->set(key, *value, cb);
         if (alarmed) {
-            // Wait for a commit...
-            RememberingCallback<bool> cbLast;
-            tut->noop(cbLast);
-            cbLast.waitForValue();
-
             time_t now = time(NULL);
             int delta = now - step;
             long new_calls = i - prev_calls;
