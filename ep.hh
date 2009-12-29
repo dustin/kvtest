@@ -39,6 +39,7 @@ namespace kvtest {
         void markDirty(std::string &key);
         void flush(bool shouldWait);
         void flushOne(std::string &key, Callback<bool> &cb);
+        void initQueue();
 
         friend class Flusher;
 

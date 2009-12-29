@@ -19,7 +19,7 @@ namespace kvtest {
         pthread_mutex_init(&mutex, NULL);
         pthread_cond_init(&cond, NULL);
         est_size = est;
-        towrite = new google::sparse_hash_set<std::string>(est);
+        initQueue();
         flusher = new Flusher(this);
 
         // Run in a thread...
@@ -45,6 +45,10 @@ namespace kvtest {
         pthread_mutex_destroy(&mutex);
     }
 
+    void EventuallyPersistentStore::initQueue() {
+        towrite = new google::sparse_hash_set<std::string>(est_size);
+    }
+
     void EventuallyPersistentStore::set(std::string &key, std::string &val,
                                         Callback<bool> &cb) {
         LockHolder lh(&mutex);
@@ -61,7 +65,7 @@ namespace kvtest {
         LockHolder lh(&mutex);
         underlying->reset();
         delete towrite;
-        towrite = new google::sparse_hash_set<std::string>(est_size);
+        initQueue();
         storage.clear();
     }
 
@@ -108,7 +112,7 @@ namespace kvtest {
             }
         } else {
             google::sparse_hash_set<std::string> *q = towrite;
-            towrite = new google::sparse_hash_set<std::string>(est_size);
+            initQueue();
             lh.unlock();
 
             RememberingCallback<bool> cb;
