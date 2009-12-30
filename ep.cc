@@ -149,44 +149,25 @@ namespace kvtest {
 
     void EventuallyPersistentStore::flushSome(std::queue<std::string> *q,
                                              Callback<bool> &cb) {
-        std::map<std::string, std::string> toSet;
-        std::queue<std::string> toDelete;
+
+        std::string key = q->front();
+        q->pop();
 
         LockHolder lh(&mutex);
-        for (int i = 0; i < 1000 && !q->empty(); i++) {
-            std::string key = q->front();
-            q->pop();
-
-            std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-            bool found = it != storage.end();
-            bool isDirty = (found && it->second->isDirty());
-            std::string val;
-            if (isDirty) {
-                it->second->markClean();
-                val = it->second->getValue();
-            }
-
-            if (found && isDirty) {
-                toSet[key] = val;
-            } else if (!found) {
-                toDelete.push(key);
-            }
+        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
+        bool found = it != storage.end();
+        bool isDirty = (found && it->second->isDirty());
+        std::string val;
+        if (isDirty) {
+            it->second->markClean();
+            val = it->second->getValue();
         }
         lh.unlock();
 
-        // Handle deletes first.
-        while (!toDelete.empty()) {
-            std::string key = toDelete.front();
-            underlying->del(key, cb);
-            toDelete.pop();
-        }
-
-        // Then handle sets.
-        std::map<std::string, std::string>::iterator it = toSet.begin();
-        for (; it != toSet.end(); it++) {
-            std::string key = it->first;
-            std::string val = it->second;
+        if (found && isDirty) {
             underlying->set(key, val, cb);
+        } else if (!found) {
+            underlying->del(key, cb);
         }
     }
 
