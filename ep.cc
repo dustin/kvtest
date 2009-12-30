@@ -80,10 +80,11 @@ namespace kvtest {
         LockHolder lh(storage.getMutex(bucket_num));
         StoredValue *v = storage.unlocked_find(key, bucket_num);
         bool success = v != NULL;
-        kvtest::GetValue rv(success ? v->getValue() : std::string(":("),
+        std::string *sval = v ? v->getValue() : NULL;
+        kvtest::GetValue rv(success ? *sval : std::string(":("),
                             success);
-        lh.unlock();
         cb.callback(rv);
+        lh.unlock();
     }
 
     void EventuallyPersistentStore::del(std::string &key, Callback<bool> &cb) {
@@ -142,18 +143,19 @@ namespace kvtest {
 
         bool found = v != NULL;
         bool isDirty = (found && v->isDirty());
-        std::string val;
+        std::string *val;
         if (isDirty) {
             v->markClean();
-            val = v->getValue();
+            val = new std::string(*v->getValue());
         }
         lh.unlock();
 
         if (found && isDirty) {
-            underlying->set(key, val, cb);
+            underlying->set(key, *val, cb);
         } else if (!found) {
             underlying->del(key, cb);
         }
+        delete val;
     }
 
 }

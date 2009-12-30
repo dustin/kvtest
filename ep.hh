@@ -28,7 +28,7 @@ namespace kvtest {
         }
         StoredValue(std::string &k, std::string &v, StoredValue *n) {
             key = k;
-            value = v;
+            setValue(v);
             dirty = true;
             next = n;
         }
@@ -44,11 +44,11 @@ namespace kvtest {
         bool isClean() {
             return !dirty;
         }
-        std::string getValue() {
+        std::string* getValue() {
             return value;
         }
         void setValue(std::string &v) {
-            value = v;
+            value = new std::string(v);
             markDirty();
         }
     private:
@@ -57,7 +57,7 @@ namespace kvtest {
 
         bool dirty;
         std::string key;
-        std::string value;
+        std::string *value;
         StoredValue *next;
         DISALLOW_COPY_AND_ASSIGN(StoredValue);
     };
