@@ -43,10 +43,6 @@ namespace kvtest {
         pthread_join(thread, NULL);
         delete flusher;
         delete towrite;
-        for (std::map<std::string, StoredValue*>::iterator it=storage.begin();
-             it != storage.end(); it++ ) {
-            delete it->second;
-        }
         pthread_cond_destroy(&cond);
         pthread_mutex_destroy(&mutex);
     }
@@ -58,19 +54,12 @@ namespace kvtest {
 
     void EventuallyPersistentStore::set(std::string &key, std::string &val,
                                         Callback<bool> &cb) {
-        LockHolder lh(&mutex);
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        if (it != storage.end()) {
-            if (it->second->isClean()) {
-                it->second->markDirty();
-                queueDirty(key);
-            }
-            it->second->setValue(val);
-        } else {
-            storage[key] = new StoredValue(val);
+        mutation_type_t mtype = storage.set(key, val);
+
+        if (mtype == WAS_CLEAN || mtype == NOT_FOUND) {
+            LockHolder lh(&mutex);
             queueDirty(key);
         }
-        lh.unlock();
         bool rv = true;
         cb.callback(rv);
     }
@@ -87,28 +76,22 @@ namespace kvtest {
 
     void EventuallyPersistentStore::get(std::string &key,
                                         Callback<kvtest::GetValue> &cb) {
-        LockHolder lh(&mutex);
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        bool success = it != storage.end();
-        kvtest::GetValue rv(success ? it->second->getValue() : std::string(":("),
+        int bucket_num = storage.bucket(key);
+        LockHolder lh(storage.getMutex(bucket_num));
+        StoredValue *v = storage.unlocked_find(key, bucket_num);
+        bool success = v != NULL;
+        kvtest::GetValue rv(success ? v->getValue() : std::string(":("),
                             success);
         lh.unlock();
         cb.callback(rv);
     }
 
     void EventuallyPersistentStore::del(std::string &key, Callback<bool> &cb) {
-        bool rv = true;
-        LockHolder lh(&mutex);
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        if(it == storage.end()) {
-            rv = false;
-        } else {
+        bool existed = storage.del(key);
+        if (existed) {
             queueDirty(key);
-            delete it->second;
-            storage.erase(key);
         }
-        lh.unlock();
-        cb.callback(rv);
+        cb.callback(existed);
     }
 
     void EventuallyPersistentStore::queueDirty(std::string &key) {
@@ -153,14 +136,16 @@ namespace kvtest {
         std::string key = q->front();
         q->pop();
 
-        LockHolder lh(&mutex);
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        bool found = it != storage.end();
-        bool isDirty = (found && it->second->isDirty());
+        int bucket_num = storage.bucket(key);
+        LockHolder lh(storage.getMutex(bucket_num));
+        StoredValue *v = storage.unlocked_find(key, bucket_num);
+
+        bool found = v != NULL;
+        bool isDirty = (found && v->isDirty());
         std::string val;
         if (isDirty) {
-            it->second->markClean();
-            val = it->second->getValue();
+            v->markClean();
+            val = v->getValue();
         }
         lh.unlock();
 
