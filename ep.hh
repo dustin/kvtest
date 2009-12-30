@@ -37,6 +37,7 @@ namespace kvtest {
     private:
         bool dirty;
         std::string value;
+        DISALLOW_COPY_AND_ASSIGN(StoredValue);
     };
 
     // Forward declaration
