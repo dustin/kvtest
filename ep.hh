@@ -77,19 +77,21 @@ namespace kvtest {
     class HashTable {
     public:
 
-        HashTable(size_t s = 196613) {
+        // Construct with number of buckets and locks.
+        HashTable(size_t s = 196613, size_t l = 193) {
             size = s;
+            n_locks = l;
             active = true;
             values = (StoredValue**)calloc(s, sizeof(StoredValue**));
-            mutexes = (pthread_mutex_t*)calloc(s, sizeof(pthread_mutex_t));
-            for (int i = 0; i < (int)size; i++) {
+            mutexes = (pthread_mutex_t*)calloc(l, sizeof(pthread_mutex_t));
+            for (int i = 0; i < (int)n_locks; i++) {
                 pthread_mutex_init(&mutexes[i], NULL);
             }
         }
 
         ~HashTable() {
             clear();
-            for (int i = 0; i < (int)size; i++) {
+            for (int i = 0; i < (int)n_locks; i++) {
                 pthread_mutex_destroy(&mutexes[i]);
             }
             free(mutexes);
@@ -168,7 +170,7 @@ namespace kvtest {
             assert(active);
             assert(bucket_num < (int)size);
             assert(bucket_num >= 0);
-            int lock_num = bucket_num % n_locks;
+            int lock_num = bucket_num % (int)n_locks;
             assert(lock_num < (int)n_locks);
             assert(lock_num >= 0);
             return &mutexes[lock_num];
@@ -208,6 +210,7 @@ namespace kvtest {
 
     private:
         size_t            size;
+        size_t            n_locks;
         bool              active;
         StoredValue     **values;
         pthread_mutex_t  *mutexes;
