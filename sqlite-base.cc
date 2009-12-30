@@ -8,7 +8,7 @@ namespace kvtest {
 
     PreparedStatement::PreparedStatement(sqlite3 *d, const char *query) {
         db = d;
-        if(sqlite3_prepare_v2(db, query, strlen(query), &st, NULL)
+        if(sqlite3_prepare_v2(db, query, (int)strlen(query), &st, NULL)
            != SQLITE_OK) {
             throw std::runtime_error(sqlite3_errmsg(db));
         }
@@ -19,7 +19,7 @@ namespace kvtest {
     }
 
     void PreparedStatement::bind(int pos, const char *s) {
-        sqlite3_bind_text(st, pos, s, strlen(s), SQLITE_STATIC);
+        sqlite3_bind_text(st, pos, s, (int)strlen(s), SQLITE_STATIC);
     }
 
     int PreparedStatement::execute() {

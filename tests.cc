@@ -139,7 +139,7 @@ bool WriteTest::run(KVStore *tut) {
 
     assertEquals(i, cb.num_calls());
 
-    int delta = end - start;
+    int delta = (int)(end - start);
     std::cout << "Ran " << i << " operations in "
               << delta << "s ("
               << (i/delta) << " ops/s)"
@@ -168,7 +168,7 @@ bool EnduranceTest::run(KVStore *tut) {
         tut->set(key, *value, cb);
         if (alarmed) {
             time_t now = time(NULL);
-            int delta = now - step;
+            int delta = (int)(now - step);
             long new_calls = i - prev_calls;
             step = now;
             std::cout << i << "\t" << (i - cb.num_calls() + 1)
@@ -186,9 +186,9 @@ bool EnduranceTest::run(KVStore *tut) {
     cbLast.waitForValue();
     time_t end = time(NULL);
 
-    assertEquals(i, cb.num_calls());
+    assertEquals((int)i, cb.num_calls());
 
-    int delta = end - start;
+    int delta = (int)(end - start);
     std::cout << "Ran " << i << " operations in "
               << delta << "s ("
               << (i/delta) << " ops/s)"
