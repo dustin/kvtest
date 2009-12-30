@@ -3,7 +3,7 @@ CFLAGS=-I. -Wall -Wextra -ansi -pedantic -Wno-unused-parameter \
 LDFLAGS=-g
 
 COMMON=base-test.hh locks.hh callbacks.hh suite.hh tests.hh \
-	keys.hh values.hh ep.hh
+	keys.hh values.hh
 OBJS=tests.o suite.o keys.o values.o ep.o
 PROG_OBJS=example-test.o sqlite3-test.o sqlite3-async-test.o \
 	bdb-test.o bdb-async-test.o tokyo-test.o tokyo-async-test.o \
@@ -85,3 +85,5 @@ bdb-async-test.o: bdb-test.cc $(BDB_COMMON)
 
 tokyo-test.o: tokyo-test.cc $(TOKYO_COMMON)
 	$(CXX) $(CFLAGS) $(TOKYO_CFLAGS) -c -o $@ tokyo-test.cc
+
+ep.o: ep.cc ep.hh
