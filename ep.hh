@@ -102,7 +102,7 @@ namespace kvtest {
         void clear() {
             assert(active);
             for (int i = 0; i < (int)size; i++) {
-                LockHolder lh(&mutexes[i]);
+                LockHolder lh(getMutex(i));
                 while (values[i]) {
                     StoredValue *v = values[i];
                     values[i] = v->next;
@@ -114,7 +114,7 @@ namespace kvtest {
         StoredValue *find(std::string &key) {
             assert(active);
             int bucket_num = bucket(key);
-            LockHolder(getMutex(bucket_num));
+            LockHolder lh(getMutex(bucket_num));
             return unlocked_find(key, bucket_num);
         }
 
@@ -127,7 +127,7 @@ namespace kvtest {
             assert(active);
             mutation_type_t rv = NOT_FOUND;
             int bucket_num = bucket(key);
-            LockHolder(getMutex(bucket_num));
+            LockHolder lh(getMutex(bucket_num));
             StoredValue *v = unlocked_find(key, bucket_num);
             if (v) {
                 rv = v->isClean() ? WAS_CLEAN : WAS_DIRTY;
@@ -168,14 +168,17 @@ namespace kvtest {
             assert(active);
             assert(bucket_num < (int)size);
             assert(bucket_num >= 0);
-            return &mutexes[bucket_num];
+            int lock_num = bucket_num % n_locks;
+            assert(lock_num < (int)n_locks);
+            assert(lock_num >= 0);
+            return &mutexes[lock_num];
         }
 
         // True if it existed
         bool del(std::string &key) {
             assert(active);
             int bucket_num = bucket(key);
-            LockHolder(getMutex(bucket_num));
+            LockHolder lh(getMutex(bucket_num));
 
             StoredValue *v = values[bucket_num];
 
