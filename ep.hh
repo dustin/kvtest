@@ -18,9 +18,9 @@ namespace kvtest {
 
     class StoredValue {
     public:
-        StoredValue(std::string &v) {
+        StoredValue(std::string &v, bool d = false) {
             value = v;
-            dirty = false;
+            dirty = d;
         }
         void markDirty() {
             dirty = true;
