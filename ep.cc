@@ -110,8 +110,11 @@ namespace kvtest {
     void EventuallyPersistentStore::markDirty(std::string &key) {
         // Lock is assumed to be held here.
         std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        if (it != storage.end() && !it->second->isDirty()) {
-            it->second->markDirty();
+        if (it == storage.end() || it->second->isClean()) {
+            if (it != storage.end()) {
+                assert(it->second->isClean());
+                it->second->markDirty();
+            }
 
             towrite->push(key);
             if(pthread_cond_signal(&cond) != 0) {

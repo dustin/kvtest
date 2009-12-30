@@ -20,7 +20,7 @@ namespace kvtest {
     public:
         StoredValue(std::string &v) {
             value = v;
-            markClean();
+            dirty = false;
         }
         void markDirty() {
             dirty = true;
@@ -30,6 +30,9 @@ namespace kvtest {
         }
         bool isDirty() {
             return dirty;
+        }
+        bool isClean() {
+            return !dirty;
         }
         std::string getValue() {
             return value;
