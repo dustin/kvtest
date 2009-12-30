@@ -58,18 +58,16 @@ namespace kvtest {
 
     void EventuallyPersistentStore::set(std::string &key, std::string &val,
                                         Callback<bool> &cb) {
-        bool wasDirty = false;
         LockHolder lh(&mutex);
         std::map<std::string, StoredValue*>::iterator it = storage.find(key);
         if (it != storage.end()) {
-            wasDirty = it->second->isDirty();
-            delete it->second;
+            it->second->setValue(val);
+        } else {
+            storage[key] = new StoredValue(val);
+            markDirty(key);
         }
-
-        storage[key] = new StoredValue(val, wasDirty);
-        bool rv = true;
-        markDirty(key);
         lh.unlock();
+        bool rv = true;
         cb.callback(rv);
     }
 
