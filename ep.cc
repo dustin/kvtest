@@ -140,9 +140,12 @@ namespace kvtest {
 
             RememberingCallback<bool> cb;
             assert(underlying);
+
+            underlying->begin();
             while (!q->empty()) {
                 flushSome(q, cb);
             }
+            underlying->commit();
 
             delete q;
         }
@@ -175,7 +178,6 @@ namespace kvtest {
         }
         lh.unlock();
 
-        underlying->begin();
         // Handle deletes first.
         while (!toDelete.empty()) {
             std::string key = toDelete.front();
@@ -190,7 +192,6 @@ namespace kvtest {
             std::string val = it->second;
             underlying->set(key, val, cb);
         }
-        underlying->commit();
     }
 
 }
