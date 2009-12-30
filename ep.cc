@@ -1,6 +1,8 @@
 #include "ep.hh"
 #include "locks.hh"
 
+#include <string.h>
+
 namespace kvtest {
 
     static void* launch_flusher_thread(void* arg) {
@@ -155,20 +157,21 @@ namespace kvtest {
 
         bool found = v != NULL;
         bool isDirty = (found && v->isDirty());
-        const char *val;
+        const char *val = NULL;
         if (isDirty) {
             v->markClean();
-            val = v->getValue();
+            // Copy it for the duration.
+            val = strdup(v->getValue());
         }
         lh.unlock();
-
-        // UNSAFE usage of val here!
 
         if (found && isDirty) {
             underlying->set(key, val, cb);
         } else if (!found) {
             underlying->del(key, cb);
         }
+
+        free((void*)val);
     }
 
 }

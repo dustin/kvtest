@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdexcept>
 #include <iostream>
 #include <queue>
@@ -24,13 +25,19 @@ namespace kvtest {
     public:
         StoredValue() {
             next = NULL;
+            value = NULL;
             dirty = false;
         }
         StoredValue(std::string &k, const char *v, StoredValue *n) {
             key = k;
+            value = NULL;
             setValue(v);
             dirty = true;
             next = n;
+        }
+        ~StoredValue() {
+            free((void*)value);
+            value = NULL;
         }
         void markDirty() {
             dirty = true;
@@ -48,7 +55,8 @@ namespace kvtest {
             return value;
         }
         void setValue(const char *v) {
-            value = v;
+            free((void*)value);
+            value = strdup(v);
             markDirty();
         }
     private:
