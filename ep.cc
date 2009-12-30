@@ -19,6 +19,7 @@ namespace kvtest {
         pthread_mutex_init(&mutex, NULL);
         pthread_cond_init(&cond, NULL);
         est_size = est;
+        towrite = NULL;
         initQueue();
         flusher = new Flusher(this);
 
