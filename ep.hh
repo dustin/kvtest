@@ -20,7 +20,7 @@ namespace kvtest {
     public:
         StoredValue(std::string &v) {
             value = v;
-            dirty = false;
+            dirty = true;
         }
         void markDirty() {
             dirty = true;
@@ -39,6 +39,7 @@ namespace kvtest {
         }
         void setValue(std::string &v) {
             value = v;
+            markDirty();
         }
     private:
         bool dirty;
@@ -67,7 +68,7 @@ namespace kvtest {
 
     private:
 
-        void markDirty(std::string &key);
+        void queueDirty(std::string &key);
         void flush(bool shouldWait);
         void flushSome(std::queue<std::string> *q, Callback<bool> &cb);
         void initQueue();

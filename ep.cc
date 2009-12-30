@@ -61,10 +61,14 @@ namespace kvtest {
         LockHolder lh(&mutex);
         std::map<std::string, StoredValue*>::iterator it = storage.find(key);
         if (it != storage.end()) {
+            if (it->second->isClean()) {
+                it->second->markDirty();
+                queueDirty(key);
+            }
             it->second->setValue(val);
         } else {
             storage[key] = new StoredValue(val);
-            markDirty(key);
+            queueDirty(key);
         }
         lh.unlock();
         bool rv = true;
@@ -99,7 +103,7 @@ namespace kvtest {
         if(it == storage.end()) {
             rv = false;
         } else {
-            markDirty(key);
+            queueDirty(key);
             delete it->second;
             storage.erase(key);
         }
@@ -107,19 +111,11 @@ namespace kvtest {
         cb.callback(rv);
     }
 
-    void EventuallyPersistentStore::markDirty(std::string &key) {
-        // Lock is assumed to be held here.
-        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
-        if (it == storage.end() || it->second->isClean()) {
-            if (it != storage.end()) {
-                assert(it->second->isClean());
-                it->second->markDirty();
-            }
-
-            towrite->push(key);
-            if(pthread_cond_signal(&cond) != 0) {
-                throw std::runtime_error("Error signaling change.");
-            }
+    void EventuallyPersistentStore::queueDirty(std::string &key) {
+        // Assume locked.
+        towrite->push(key);
+        if(pthread_cond_signal(&cond) != 0) {
+            throw std::runtime_error("Error signaling change.");
         }
     }
 
