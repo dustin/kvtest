@@ -94,10 +94,12 @@ namespace kvtest {
     void EventuallyPersistentStore::del(std::string &key, Callback<bool> &cb) {
         bool rv = true;
         LockHolder lh(&mutex);
-        if(storage.find(key) == storage.end()) {
+        std::map<std::string, StoredValue*>::iterator it = storage.find(key);
+        if(it == storage.end()) {
             rv = false;
         } else {
             markDirty(key);
+            delete it->second;
             storage.erase(key);
         }
         lh.unlock();
