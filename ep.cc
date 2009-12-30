@@ -51,6 +51,7 @@ namespace kvtest {
     }
 
     void EventuallyPersistentStore::initQueue() {
+        assert(!towrite);
         towrite = new std::queue<std::string>;
     }
 
@@ -74,6 +75,7 @@ namespace kvtest {
         LockHolder lh(&mutex);
         underlying->reset();
         delete towrite;
+        towrite = NULL;
         initQueue();
         storage.clear();
     }
@@ -126,6 +128,7 @@ namespace kvtest {
             }
         } else {
             std::queue<std::string> *q = towrite;
+            towrite = NULL;
             initQueue();
             lh.unlock();
 
