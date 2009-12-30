@@ -29,7 +29,7 @@ namespace kvtest {
             assert(steps_run < MAX_STEPS);
             if (rc == SQLITE_ROW) {
                 // This is rather normal
-            } else if (rc == SQLITE_ROW) {
+            } else if (rc == SQLITE_BUSY) {
                 std::cerr << "SQLITE_BUSY (retrying)" << std::endl;
             } else {
                 const char *msg = sqlite3_errmsg(db);
