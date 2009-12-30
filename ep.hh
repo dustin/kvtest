@@ -26,7 +26,7 @@ namespace kvtest {
             next = NULL;
             dirty = false;
         }
-        StoredValue(std::string &k, std::string &v, StoredValue *n) {
+        StoredValue(std::string &k, const char *v, StoredValue *n) {
             key = k;
             setValue(v);
             dirty = true;
@@ -44,11 +44,11 @@ namespace kvtest {
         bool isClean() {
             return !dirty;
         }
-        std::string* getValue() {
+        const char* getValue() {
             return value;
         }
-        void setValue(std::string &v) {
-            value = new std::string(v);
+        void setValue(const char *v) {
+            value = v;
             markDirty();
         }
     private:
@@ -57,7 +57,7 @@ namespace kvtest {
 
         bool dirty;
         std::string key;
-        std::string *value;
+        const char *value;
         StoredValue *next;
         DISALLOW_COPY_AND_ASSIGN(StoredValue);
     };
@@ -112,6 +112,10 @@ namespace kvtest {
 
         // True if this existed and was clean
         mutation_type_t set(std::string &key, std::string &val) {
+            return set(key, val.c_str());
+        }
+
+        mutation_type_t set(std::string &key, const char *val) {
             assert(active);
             mutation_type_t rv = NOT_FOUND;
             int bucket_num = bucket(key);
@@ -211,6 +215,9 @@ namespace kvtest {
         ~EventuallyPersistentStore();
 
         void set(std::string &key, std::string &val,
+                 Callback<bool> &cb);
+
+        void set(std::string &key, const char *val,
                  Callback<bool> &cb);
 
         void get(std::string &key, Callback<GetValue> &cb);

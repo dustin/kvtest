@@ -28,15 +28,15 @@ namespace kvtest {
         /**
          * Grab a value.
          */
-        std::string *nextValue();
+        const char *nextValue();
 
         /**
          * Get the number of values in this Values object.
          */
         size_t length();
     private:
-        std::vector<std::string *> values;
-        std::vector<std::string *>::iterator it;
+        std::vector<const char *> values;
+        std::vector<const char *>::iterator it;
     };
 
 }

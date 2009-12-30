@@ -188,9 +188,14 @@ namespace kvtest {
     }
 
     void Sqlite3::set(std::string &key, std::string &val,
+                          kvtest::Callback<bool> &cb) {
+        set(key, val.c_str(), cb);
+    }
+
+    void Sqlite3::set(std::string &key, const char *val,
                       kvtest::Callback<bool> &cb) {
         ins_stmt->bind(1, key.c_str());
-        ins_stmt->bind(2, val.c_str());
+        ins_stmt->bind(2, val);
         bool rv = ins_stmt->execute() == 1;
         cb.callback(rv);
         ins_stmt->reset();

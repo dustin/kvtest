@@ -100,6 +100,16 @@ namespace kvtest {
                          Callback<bool> &cb) = 0;
 
         /**
+         * Set a given key and (character) value.
+         *
+         * @param key the key to set
+         * @param val the value to set
+         * @param cb callback that will fire with true if the set succeeded
+         */
+        virtual void set(std::string &key, const char *val,
+                         Callback<bool> &cb) = 0;
+
+        /**
          * Get the value for the given key.
          *
          * @param key the key

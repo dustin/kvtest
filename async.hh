@@ -120,6 +120,32 @@ namespace kvtest {
     };
 
     /**
+     * Async set operation.
+     */
+    class SetCStrOperation : public BoolOperation {
+    public:
+
+        /**
+         * Create a set with the given key, value and callback.
+         */
+        SetCStrOperation(std::string &k, const char *v,
+                         Callback<bool> *c) : BoolOperation(c) {
+            key = k;
+            value = v;
+        }
+
+        /**
+         * Call the underlying set method.
+         */
+        void execute(KVStore *tut) {
+            tut->set(key, value, *cb);
+        }
+    private:
+        std::string  key;
+        const char  *value;
+    };
+
+    /**
      * Async delete operation.
      */
     class DeleteOperation : public BoolOperation {
@@ -354,6 +380,14 @@ namespace kvtest {
         void set(std::string &key, std::string &val,
                  Callback<bool> &cb) {
             iq->addOperation(new SetOperation(key, val, &cb));
+        }
+
+        /**
+         * Perform an async set.
+         */
+        void set(std::string &key, const char *val,
+                 Callback<bool> &cb) {
+            iq->addOperation(new SetCStrOperation(key, val, &cb));
         }
 
         /**

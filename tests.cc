@@ -163,9 +163,9 @@ bool EnduranceTest::run(KVStore *tut) {
 
     for(i = 0 ; ; i++) {
         std::string key(k.nextKey());
-        std::string *value = v.nextValue();
+        const char *value = v.nextValue();
 
-        tut->set(key, *value, cb);
+        tut->set(key, value, cb);
         if (alarmed) {
             time_t now = time(NULL);
             int delta = (int)(now - step);

@@ -64,6 +64,18 @@ namespace kvtest {
         cb.callback(rv);
     }
 
+    void EventuallyPersistentStore::set(std::string &key, const char *val,
+                                        Callback<bool> &cb) {
+        mutation_type_t mtype = storage.set(key, val);
+
+        if (mtype == WAS_CLEAN || mtype == NOT_FOUND) {
+            LockHolder lh(&mutex);
+            queueDirty(key);
+        }
+        bool rv = true;
+        cb.callback(rv);
+    }
+
     void EventuallyPersistentStore::reset() {
         flush(false);
         LockHolder lh(&mutex);
@@ -80,8 +92,8 @@ namespace kvtest {
         LockHolder lh(storage.getMutex(bucket_num));
         StoredValue *v = storage.unlocked_find(key, bucket_num);
         bool success = v != NULL;
-        std::string *sval = v ? v->getValue() : NULL;
-        kvtest::GetValue rv(success ? *sval : std::string(":("),
+        const char *sval = v ? v->getValue() : NULL;
+        kvtest::GetValue rv(success ? sval : std::string(":("),
                             success);
         cb.callback(rv);
         lh.unlock();
@@ -143,19 +155,20 @@ namespace kvtest {
 
         bool found = v != NULL;
         bool isDirty = (found && v->isDirty());
-        std::string *val;
+        const char *val;
         if (isDirty) {
             v->markClean();
-            val = new std::string(*v->getValue());
+            val = v->getValue();
         }
         lh.unlock();
 
+        // UNSAFE usage of val here!
+
         if (found && isDirty) {
-            underlying->set(key, *val, cb);
+            underlying->set(key, val, cb);
         } else if (!found) {
             underlying->del(key, cb);
         }
-        delete val;
     }
 
 }

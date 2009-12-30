@@ -163,9 +163,14 @@ namespace kvtest {
         }
 
         /**
-         * Overrides set().
+         * Overrides set() to call the char* variant.
          */
         void set(std::string &key, std::string &val, Callback<bool> &cb);
+
+        /**
+         * Overrides set().
+         */
+        void set(std::string &key, const char *val, Callback<bool> &cb);
 
         /**
          * Overrides get().

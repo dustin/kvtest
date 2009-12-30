@@ -16,6 +16,12 @@ public:
         cb.callback(rv);
     }
 
+    void set(std::string &key, const char *val,
+             kvtest::Callback<bool> &cb) {
+        std::string v = val;
+        set(key, v, cb);
+    }
+
     void get(std::string &key, kvtest::Callback<kvtest::GetValue> &cb) {
         std::map<std::string, std::string>::iterator it = storage.find(key);
         bool success = it != storage.end();

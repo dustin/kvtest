@@ -18,47 +18,37 @@ namespace kvtest {
         return keyvals[random() % strlen(keyvals)];
     }
 
-    /* The generator. */
-    class ARockAPlanetAnAtomBomb {
-    public:
+    static const char* generateValue(size_t min, size_t max) {
+        size_t size = min + (random() & (max - min));
+        assert(size >= min);
+        assert(size <= max);
 
-        ARockAPlanetAnAtomBomb(size_t minSize, size_t maxSize) {
-            min = minSize;
-            max = maxSize;
+        char *rv = (char*)calloc(size + 1, sizeof(char));
+        for (int i = 0; i < (int)size; i++) {
+            rv[i] = nextChar();
         }
+        return rv;
+    }
 
-        std::string *operator()() {
-            size_t size = min + (random() & (max - min));
-            assert(size >= min);
-            assert(size <= max);
-
-            std::string *rv = new std::string(size, char());
-            std::generate_n(rv->begin(), size, nextChar);
-            return rv;
-        };
-
-    private:
-        std::string *data;
-        size_t min;
-        size_t max;
-    };
-
-    static void killValue(std::string *v);
+    static void free_str(const char* p) {
+        free((void*)p);
+    }
 
     Values::Values(size_t n, size_t lower, size_t upper) : values(n) {
-        ARockAPlanetAnAtomBomb generator(lower, upper);
-        std::generate_n(values.begin(), n, generator);
+        for (int i = 0; i < (int)n; i++) {
+            values[i] = generateValue(lower, upper);
+        }
         assert(values.size() == n);
 
         it = values.begin();
     }
 
     Values::~Values() {
-        std::for_each(values.begin(), values.end(), killValue);
+        std::for_each(values.begin(), values.end(), free_str);
     }
 
-    std::string *Values::nextValue() {
-        std::string *rv = *it;
+    const char *Values::nextValue() {
+        const char *rv = *it;
         ++it;
         if (it == values.end()) {
             it = values.begin();
@@ -68,10 +58,6 @@ namespace kvtest {
 
     size_t Values::length() {
         return values.size();
-    }
-
-    static void killValue(std::string *v) {
-        delete v;
     }
 
 }
