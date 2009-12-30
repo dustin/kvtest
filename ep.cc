@@ -44,7 +44,7 @@ namespace kvtest {
         delete towrite;
         for (std::map<std::string, StoredValue*>::iterator it=storage.begin();
              it != storage.end(); it++ ) {
-            delete (*it).second;
+            delete it->second;
         }
         pthread_cond_destroy(&cond);
         pthread_mutex_destroy(&mutex);
